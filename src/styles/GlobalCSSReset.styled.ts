@@ -30,7 +30,6 @@ dd {
 
 /* Set core body defaults */
 body {
-  font-family: 'Roboto', sans-serif;
   min-height: 100vh;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
