@@ -1,14 +1,21 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
+// Define colors
+const primaryColor = "#367c2b";
+const hoverColor = "#275820";
+const textColor = "#f3d204";
+
+// Header styles
 export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: steelblue;
+  background-color: ${primaryColor};
   height: 3em;
 `;
 
+// Navigation styles
 export const NavBar = styled.nav`
   height: 100%;
   width: 100vw;
@@ -23,6 +30,7 @@ export const UnorderedList = styled.ul`
   height: 100%;
 `;
 
+// List item styles
 export const ListItem = styled.li`
   display: flex;
   justify-content: center;
@@ -32,15 +40,16 @@ export const ListItem = styled.li`
   min-height: 100%;
 
   &:hover {
-    background-color: #386890;
+    background-color: ${hoverColor};
   }
 `;
 
+// Navigation link styles
 export const NavLinkAnchor = styled(NavLink)`
   width: 100%;
   height: 100%;
   font-size: 1.2em;
-  color: white;
+  color: ${textColor};
   text-decoration: none;
   display: flex;
   justify-content: center;
@@ -48,10 +57,11 @@ export const NavLinkAnchor = styled(NavLink)`
 
   &:hover {
     font-style: bold;
-    background-color: #386890;
+    background-color: ${hoverColor};
   }
 `;
 
+// Dropdown styles
 export const DropdownContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -61,8 +71,8 @@ export const DropdownContainer = styled.div`
 
 export const DropdownButton = styled.p`
   height: 100%;
-  background-color: steelblue;
-  color: white;
+  background-color: ${primaryColor};
+  color: ${textColor};
   font-size: 1.2em;
   border: none;
   text-decoration: none;
@@ -71,14 +81,14 @@ export const DropdownButton = styled.p`
   align-items: center;
 
   &:hover {
-    background-color: #386890;
+    background-color: ${hoverColor};
   }
 `;
 
 export const DropdownContent = styled.div`
   display: none;
   position: absolute;
-  background-color: steelblue;
+  background-color: ${primaryColor};
   text-align: center;
   min-width: 100%;
   z-index: 1;
@@ -90,9 +100,10 @@ export const DropdownContent = styled.div`
 `;
 
 export const DropdownItem = styled.div`
-  height: 100%;
+  height: 3em;
   width: 100%;
+
   &:hover {
-    background-color: #386890;
+    background-color: ${hoverColor};
   }
 `;
