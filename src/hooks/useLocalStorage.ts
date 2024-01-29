@@ -27,4 +27,5 @@ export const useLocalStorage = (key: string) => {
   return { getItem, setItem, removeItem };
 };
 
+// How to use it.
 // const {getItem,setItem,removeItem} = useLocalStorage('access_token')
