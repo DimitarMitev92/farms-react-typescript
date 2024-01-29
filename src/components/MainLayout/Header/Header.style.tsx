@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { mainColors } from "../../../static/mainColors";
 
 // Define colors
-const primaryColor = "#367c2b";
-const hoverColor = "#275820";
-const textColor = "#f3d204";
+const primaryColor = mainColors.primaryColor;
+const hoverColor = mainColors.hoverColor;
+const textColor = mainColors.textColor;
 
 // Header styles
 export const HeaderContainer = styled.header`

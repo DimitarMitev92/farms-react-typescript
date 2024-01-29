@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { mainColors } from "../../../static/mainColors";
 
-const primaryColor = "#367c2b";
-const textColor = "#f3d204";
+const primaryColor = mainColors.primaryColor;
+const textColor = mainColors.textColor;
 
 export const FooterContainer = styled.footer`
   position: fixed;
