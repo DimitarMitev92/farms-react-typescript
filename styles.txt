@@ -1,0 +1,10 @@
+background-color: #0c0a09;
+primary-text-color: #fafafa;
+secondary-text-color: #9b9ba4;
+hover-color: #9b9ba4;
+padding-left: 0.75em;
+padding-right: 0.75em;
+padding-bottom: 0.5em;
+padding-top: 0.5em;
+font-size: .875rem;
+line-height: 1.25rem;
