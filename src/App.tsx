@@ -1,9 +1,7 @@
+import { Main } from "./components/MainLayout/Main/Main";
+
 function App() {
-  return (
-    <div>
-      <h1>Hello</h1>
-    </div>
-  );
+  return <Main>{/* <Catalog/> */}</Main>;
 }
 
 export default App;
