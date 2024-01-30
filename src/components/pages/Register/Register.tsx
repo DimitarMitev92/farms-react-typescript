@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Form,
   Label,
@@ -17,7 +17,8 @@ import {
 } from "./Register.static";
 import { useNavigate } from "react-router-dom";
 import { registerService } from "./Register.logic";
-import { useAuth } from "../../../hooks/useAuth";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { UserContext } from "../../../context/UserContext";
 
 interface FormData {
   firstName: string;
@@ -36,7 +37,9 @@ export const Register: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { login } = useAuth();
+  const { setItem } = useLocalStorage();
+
+  const { setUser } = useContext(UserContext);
 
   const onRegisterHandler: SubmitHandler<FormData> = async (userObj) => {
     try {
@@ -52,7 +55,8 @@ export const Register: React.FC = () => {
       };
 
       const userDataFromApi = await registerService(API_REGISTER_URL, options);
-      login(userDataFromApi);
+      setItem("user", JSON.stringify(userDataFromApi));
+      setUser(userDataFromApi);
       navigate("/catalog/farm");
     } catch (error: unknown) {
       if (error instanceof Error) {

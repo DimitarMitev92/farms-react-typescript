@@ -1,16 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../hooks/useAuth";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../../../context/UserContext";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
 
 export const Logout = () => {
   const navigate = useNavigate();
 
-  const { logout } = useAuth();
+  const { removeItem } = useLocalStorage();
 
+  const { setUser } = useContext(UserContext);
   useEffect(() => {
-    logout();
+    setUser(null);
+    removeItem("user");
     navigate("/auth/login");
-  }, [logout, navigate]);
+  }, []);
 
   return <div></div>;
 };

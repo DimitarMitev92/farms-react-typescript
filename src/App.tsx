@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Main } from "./components/MainLayout/Main/Main";
@@ -23,73 +25,75 @@ import { NotFound } from "./components/pages/NotFound/NotFound";
 
 import { routes } from "./routes/routes.static";
 
-import { useAuth } from "./hooks/useAuth";
-import { AuthContext } from "./context/AuthContext";
+import { UserContext } from "./context/UserContext";
+import { UserDataFromApi } from "./components/pages/Login/Login";
+import PrivateRoutes from "./guards/PrivateRoutes";
 
 function App() {
-  const { user, setUser } = useAuth();
-
+  const [user, setUser] = useState<UserDataFromApi | null>(null);
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Main>
           <Routes>
             {/* Auth components */}
             <Route path={routes.register} element={<Register />} />
             <Route path={routes.login} element={<Login />} />
-            <Route path={routes.logout} element={<Logout />} />
-            {/* Catalog components */}
-            <Route path={routes.catalogFarm} element={<CatalogFarm />} />
-            <Route path={routes.catalogField} element={<CatalogField />} />
-            <Route
-              path={routes.catalogMachinery}
-              element={<CatalogMachinery />}
-            />
-            <Route
-              path={routes.catalogFieldCultivation}
-              element={<CatalogFieldCultivation />}
-            />
-            {/* Create components */}
-            <Route path={routes.createFarm} element={<CreateFarm />} />
-            <Route path={routes.createField} element={<CreateField />} />
-            <Route
-              path={routes.createMachinery}
-              element={<CreateMachinery />}
-            />
-            <Route
-              path={routes.createFieldCultivation}
-              element={<CreateFieldCultivation />}
-            />
-            {/* Update components */}
-            <Route path={routes.updateFarm} element={<UpdateFarm />} />
-            <Route path={routes.updateField} element={<UpdateField />} />
-            <Route
-              path={routes.updateMachinery}
-              element={<UpdateMachinery />}
-            />
-            <Route
-              path={routes.updateFieldCultivation}
-              element={<UpdateFieldCultivation />}
-            />
-            {/* Reporting components */}
-            <Route
-              path={routes.reportingMostMachineries}
-              element={<MostMachinery />}
-            />
-            <Route
-              path={routes.reportingFieldCropsFarms}
-              element={<FieldByCropsAndFarms />}
-            />
-            <Route
-              path={routes.reportingMostCommonSoil}
-              element={<MostCommonSoil />}
-            />
+            <Route element={<PrivateRoutes />}>
+              <Route path={routes.logout} element={<Logout />} />
+              {/* Catalog components */}
+              <Route path={routes.catalogFarm} element={<CatalogFarm />} />
+              <Route path={routes.catalogField} element={<CatalogField />} />
+              <Route
+                path={routes.catalogMachinery}
+                element={<CatalogMachinery />}
+              />
+              <Route
+                path={routes.catalogFieldCultivation}
+                element={<CatalogFieldCultivation />}
+              />
+              {/* Create components */}
+              <Route path={routes.createFarm} element={<CreateFarm />} />
+              <Route path={routes.createField} element={<CreateField />} />
+              <Route
+                path={routes.createMachinery}
+                element={<CreateMachinery />}
+              />
+              <Route
+                path={routes.createFieldCultivation}
+                element={<CreateFieldCultivation />}
+              />
+              {/* Update components */}
+              <Route path={routes.updateFarm} element={<UpdateFarm />} />
+              <Route path={routes.updateField} element={<UpdateField />} />
+              <Route
+                path={routes.updateMachinery}
+                element={<UpdateMachinery />}
+              />
+              <Route
+                path={routes.updateFieldCultivation}
+                element={<UpdateFieldCultivation />}
+              />
+              {/* Reporting components */}
+              <Route
+                path={routes.reportingMostMachineries}
+                element={<MostMachinery />}
+              />
+              <Route
+                path={routes.reportingFieldCropsFarms}
+                element={<FieldByCropsAndFarms />}
+              />
+              <Route
+                path={routes.reportingMostCommonSoil}
+                element={<MostCommonSoil />}
+              />
+            </Route>
             {/* Not Found component */}
             <Route path={routes.notFound} element={<NotFound />} />
           </Routes>
         </Main>
       </BrowserRouter>
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 }
 

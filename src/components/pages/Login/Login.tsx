@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Form,
   Label,
@@ -17,11 +17,22 @@ import {
 } from "./Login.static";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "./Login.logic";
-import { useAuth } from "../../../hooks/useAuth";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { UserContext } from "../../../context/UserContext";
 
 interface FormData {
   email: string;
   password: string;
+}
+
+export interface UserDataFromApi {
+  user: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    rights: string;
+  };
+  access_token: string;
 }
 
 export const Login: React.FC = () => {
@@ -34,7 +45,9 @@ export const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { login } = useAuth();
+  const { setItem } = useLocalStorage();
+
+  const { setUser } = useContext(UserContext);
 
   const onLoginHandler: SubmitHandler<FormData> = async (userObj) => {
     try {
@@ -48,7 +61,8 @@ export const Login: React.FC = () => {
       };
 
       const userDataFromApi = await loginService(API_LOGIN_URL, options);
-      login(userDataFromApi);
+      setItem("user", JSON.stringify(userDataFromApi));
+      setUser(userDataFromApi);
       navigate("/catalog/farm");
     } catch (error: unknown) {
       if (error instanceof Error) {
