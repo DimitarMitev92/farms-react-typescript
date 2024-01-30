@@ -1,31 +1,30 @@
-export const useLocalStorage = (key: string) => {
-  const setItem = (value: unknown) => {
-    try {
-      window.localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.log(error);
-    }
+import { useState } from "react";
+
+export const useLocalStorage = () => {
+  const [value, setValue] = useState<string | null>(null);
+
+  const setItem = (key: string, value: string) => {
+    localStorage.setItem(key, value);
+    setValue(value);
   };
 
-  const getItem = () => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : undefined;
-    } catch (error) {
-      console.log(error);
-    }
+  const getItem = (key: string) => {
+    const value = localStorage.getItem(key);
+    setValue(value);
+    return value;
   };
 
-  const removeItem = () => {
-    try {
-      window.localStorage.removeItem(key);
-    } catch (error) {
-      console.log(error);
-    }
+  const removeItem = (key: string) => {
+    localStorage.removeItem(key);
+    setValue(null);
   };
 
-  return { getItem, setItem, removeItem };
+  return { value, setItem, getItem, removeItem };
 };
 
 // How to use it.
-// const {getItem,setItem,removeItem} = useLocalStorage('access_token')
+// const {getItem,setItem,removeItem} = useLocalStorage()
+
+// getItem("access_token");
+// setItem("access_token", token);
+// removeItem("access_token");

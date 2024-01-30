@@ -1,6 +1,7 @@
 export const routes = {
   register: "/auth/register",
   login: "/auth/login",
+  logout: "/auth/logout",
   catalogFarm: "/catalog/farm",
   catalogField: "/catalog/field",
   catalogMachinery: "/catalog/machinery",

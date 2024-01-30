@@ -14,10 +14,10 @@ import {
   API_LOGIN_URL,
   API_LOGIN_METHOD,
   API_LOGIN_HEADERS,
-} from "./Logic.static";
+} from "./Login.static";
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "../../../hooks/useLocalStorage";
-import { loginService } from "./Logic.logic";
+import { loginService } from "./Login.logic";
+import { useAuth } from "../../../hooks/useAuth";
 
 interface FormData {
   email: string;
@@ -33,7 +33,8 @@ export const Login: React.FC = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
-  const { setItem } = useLocalStorage("access_token");
+
+  const { login } = useAuth();
 
   const onLoginHandler: SubmitHandler<FormData> = async (userObj) => {
     try {
@@ -47,8 +48,7 @@ export const Login: React.FC = () => {
       };
 
       const userDataFromApi = await loginService(API_LOGIN_URL, options);
-
-      setItem(userDataFromApi.access_token);
+      login(userDataFromApi);
       navigate("/catalog/farm");
     } catch (error: unknown) {
       if (error instanceof Error) {

@@ -16,8 +16,8 @@ import {
   schema,
 } from "./Register.static";
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { registerService } from "./Register.logic";
+import { useAuth } from "../../../hooks/useAuth";
 
 interface FormData {
   firstName: string;
@@ -35,7 +35,8 @@ export const Register: React.FC = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
-  const { setItem } = useLocalStorage("access_token");
+
+  const { login } = useAuth();
 
   const onRegisterHandler: SubmitHandler<FormData> = async (userObj) => {
     try {
@@ -51,8 +52,7 @@ export const Register: React.FC = () => {
       };
 
       const userDataFromApi = await registerService(API_REGISTER_URL, options);
-
-      setItem(userDataFromApi.access_token);
+      login(userDataFromApi);
       navigate("/catalog/farm");
     } catch (error: unknown) {
       if (error instanceof Error) {
