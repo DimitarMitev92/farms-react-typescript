@@ -19,6 +19,7 @@ import { MostMachinery } from "./components/pages/Reporting/MostMachinery/MostMa
 import { FieldByCropsAndFarms } from "./components/pages/Reporting/FieldByCropsAndFarms/FieldByCropsAndFarms";
 import { MostCommonSoil } from "./components/pages/Reporting/MostCommonSoil/MostCommonSoil";
 import { NotFound } from "./components/pages/NotFound/NotFound";
+import { routes } from "./routes/routes.static";
 
 function App() {
   return (
@@ -26,47 +27,50 @@ function App() {
       <Main>
         <Routes>
           {/* Auth components */}
-          <Route path="/auth/register" element={<Register />} />
-          <Route path="/auth/login" element={<Login />} />
+          <Route path={routes.register} element={<Register />} />
+          <Route path={routes.login} element={<Login />} />
           {/* Catalog components */}
-          <Route path="/catalog/farm" element={<CatalogFarm />} />
-          <Route path="/catalog/field" element={<CatalogField />} />
-          <Route path="/catalog/machinery" element={<CatalogMachinery />} />
+          <Route path={routes.catalogFarm} element={<CatalogFarm />} />
+          <Route path={routes.catalogField} element={<CatalogField />} />
           <Route
-            path="/catalog/field-cultivation"
+            path={routes.catalogMachinery}
+            element={<CatalogMachinery />}
+          />
+          <Route
+            path={routes.catalogFieldCultivation}
             element={<CatalogFieldCultivation />}
           />
           {/* Create components */}
-          <Route path="/create/farm" element={<CreateFarm />} />
-          <Route path="/create/field" element={<CreateField />} />
-          <Route path="/create/machinery" element={<CreateMachinery />} />
+          <Route path={routes.createFarm} element={<CreateFarm />} />
+          <Route path={routes.createField} element={<CreateField />} />
+          <Route path={routes.createMachinery} element={<CreateMachinery />} />
           <Route
-            path="/create/field-cultivation"
+            path={routes.createFieldCultivation}
             element={<CreateFieldCultivation />}
           />
           {/* Update components */}
-          <Route path="/update/farm/:id" element={<UpdateFarm />} />
-          <Route path="/update/field/:id" element={<UpdateField />} />
-          <Route path="/update/machinery/:id" element={<UpdateMachinery />} />
+          <Route path={routes.updateFarm} element={<UpdateFarm />} />
+          <Route path={routes.updateField} element={<UpdateField />} />
+          <Route path={routes.updateMachinery} element={<UpdateMachinery />} />
           <Route
-            path="/update/field-cultivation/:id"
+            path={routes.updateFieldCultivation}
             element={<UpdateFieldCultivation />}
           />
           {/* Reporting components */}
           <Route
-            path="/reporting/most-machineries"
+            path={routes.reportingMostMachineries}
             element={<MostMachinery />}
           />
           <Route
-            path="/reporting/field-by-crops-and-farms"
+            path={routes.reportingFieldCropsFarms}
             element={<FieldByCropsAndFarms />}
           />
           <Route
-            path="/reporting/most-common-soil"
+            path={routes.reportingMostCommonSoil}
             element={<MostCommonSoil />}
           />
           {/* Not Found component */}
-          <Route path="/*" element={<NotFound />} />
+          <Route path={routes.notFound} element={<NotFound />} />
         </Routes>
       </Main>
     </BrowserRouter>

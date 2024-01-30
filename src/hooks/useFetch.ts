@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
 
 interface ApiResponse<T> {
-  response: T | null;
+  data: T | null;
   error: Error | null;
   loading: boolean;
 }
 
-const useApi = <T>(
+export const useFetch = <T>(
   url: string,
-  method: string = "GET",
-  data: unknown = null,
-  jwtToken: string | null = null
+  options?: RequestInit
 ): ApiResponse<T> => {
-  const [response, setResponse] = useState<T | null>(null);
+  const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -21,19 +19,10 @@ const useApi = <T>(
       try {
         setLoading(true);
 
-        const options: RequestInit = {
-          method,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: jwtToken ? `Bearer ${jwtToken}` : "",
-          },
-          body: data ? JSON.stringify(data) : null,
-        };
-
         const res = await fetch(url, options);
         const json: T = await res.json();
 
-        setResponse(json);
+        setData(json);
         setLoading(false);
       } catch (error) {
         setError(
@@ -44,9 +33,7 @@ const useApi = <T>(
     };
 
     fetchData();
-  }, [url, method, data, jwtToken]);
+  }, [url, options]);
 
-  return { response, error, loading };
+  return { data, error, loading };
 };
-
-export default useApi;

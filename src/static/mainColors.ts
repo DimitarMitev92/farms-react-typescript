@@ -1,5 +1,5 @@
 export const mainColors = {
-  primaryColor: "#367c2b",
-  hoverColor: "#275820",
-  textColor: "#f3d204",
+  primaryColor: "#adff2f",
+  hoverColor: "#7cfc00",
+  textColor: "#4b0082",
 };
