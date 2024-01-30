@@ -1,4 +1,3 @@
-// Login.tsx
 import React from "react";
 import {
   Form,
@@ -9,7 +8,13 @@ import {
 } from "../../../styles/Form.styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
-import { loginData, schema } from "./Logic.static";
+import {
+  loginData,
+  schema,
+  API_LOGIN_URL,
+  API_LOGIN_METHOD,
+  API_LOGIN_HEADERS,
+} from "./Logic.static";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { loginService } from "./Logic.logic";
@@ -18,12 +23,6 @@ interface FormData {
   email: string;
   password: string;
 }
-
-const API_LOGIN_URL = "http://localhost:8080/auth/login";
-const API_LOGIN_METHOD = "POST";
-const API_LOGIN_HEADERS = {
-  "Content-Type": "application/json",
-};
 
 export const Login: React.FC = () => {
   const {

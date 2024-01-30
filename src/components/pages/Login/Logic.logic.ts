@@ -28,7 +28,6 @@ export const loginService = async (
 
     return data;
   } catch (error: unknown) {
-    // Explicitly specifying the type of 'error'
     if (error instanceof Error) {
       throw new Error(`An unexpected error occurred: ${error.message}`);
     } else {
