@@ -1,4 +1,4 @@
-import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useContext } from "react";
 import {
@@ -16,7 +16,6 @@ import {
   API_CREATE_FARM_URL,
   FarmHandler,
   FarmObj,
-  FormFarmData,
   farmData,
   farmSchema,
 } from "./CreateFarm.static";
@@ -87,11 +86,8 @@ export const CreateFarm: React.FC = () => {
               type={el.type}
               placeholder={el.placeholder}
             />
-            {errors[el.errors as keyof FieldErrors<FormFarmData>] && (
-              <ErrorMsg>
-                {errors[el.errors as keyof FieldErrors<FormFarmData>]
-                  ?.message || ""}
-              </ErrorMsg>
+            {errors[el.errors]?.message && (
+              <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
             )}
           </React.Fragment>
         );
