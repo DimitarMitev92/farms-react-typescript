@@ -97,8 +97,8 @@ export const CreateMachinery = () => {
               placeholder={el.placeholder}
             />
           )}
-          {errors[el.errors] && (
-            <ErrorMsg>{errors[el.errors] as React.ReactNode}</ErrorMsg>
+          {errors[el.errors]?.message && (
+            <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
           )}
         </React.Fragment>
       ))}

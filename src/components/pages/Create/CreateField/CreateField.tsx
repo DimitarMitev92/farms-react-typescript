@@ -83,10 +83,7 @@ export const CreateField = () => {
           <React.Fragment key={key}>
             <Label>{el.placeholder}</Label>
             {el.type === "select" ? (
-              <Select
-                {...register(`${el.registerName}`)}
-                // placeholder={el.placeholder}
-              >
+              <Select {...register(`${el.registerName}`)}>
                 <Option value="" disabled>
                   {el.placeholder}
                 </Option>
@@ -109,8 +106,8 @@ export const CreateField = () => {
                 placeholder={el.placeholder}
               />
             )}
-            {errors[el.errors] && (
-              <ErrorMsg>{errors[el.errors] as React.ReactNode}</ErrorMsg>
+            {errors[el.errors]?.message && (
+              <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
             )}
           </React.Fragment>
         );
