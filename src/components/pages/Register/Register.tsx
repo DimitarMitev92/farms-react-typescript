@@ -12,6 +12,7 @@ import {
   API_REGISTER_HEADERS,
   API_REGISTER_METHOD,
   API_REGISTER_URL,
+  FormRegisterData,
   registerData,
   schema,
 } from "./Register.static";
@@ -20,20 +21,13 @@ import { registerService } from "./Register.logic";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { UserContext } from "../../../context/UserContext";
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
 export const Register: React.FC = () => {
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormRegisterData>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
 
@@ -41,7 +35,9 @@ export const Register: React.FC = () => {
 
   const { setUser } = useContext(UserContext);
 
-  const onRegisterHandler: SubmitHandler<FormData> = async (userObj) => {
+  const onRegisterHandler: SubmitHandler<FormRegisterData> = async (
+    userObj
+  ) => {
     try {
       const options = {
         method: API_REGISTER_METHOD,
@@ -86,9 +82,12 @@ export const Register: React.FC = () => {
               type={el.type}
               placeholder={el.placeholder}
             />
-            {errors[el.errors as keyof FieldErrors<FormData>] && (
+            {errors[el.errors as keyof FieldErrors<FormRegisterData>] && (
               <ErrorMsg>
-                {errors[el.errors as keyof FieldErrors<FormData>]?.message}
+                {
+                  errors[el.errors as keyof FieldErrors<FormRegisterData>]
+                    ?.message
+                }
               </ErrorMsg>
             )}
           </React.Fragment>

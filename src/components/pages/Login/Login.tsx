@@ -14,26 +14,12 @@ import {
   API_LOGIN_URL,
   API_LOGIN_METHOD,
   API_LOGIN_HEADERS,
+  FormLoginData,
 } from "./Login.static";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "./Login.logic";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { UserContext } from "../../../context/UserContext";
-
-interface FormData {
-  email: string;
-  password: string;
-}
-
-export interface UserDataFromApi {
-  user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    rights: string;
-  };
-  access_token: string;
-}
 
 export const Login: React.FC = () => {
   const {
@@ -41,7 +27,7 @@ export const Login: React.FC = () => {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormLoginData>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
 
@@ -49,7 +35,7 @@ export const Login: React.FC = () => {
 
   const { setUser } = useContext(UserContext);
 
-  const onLoginHandler: SubmitHandler<FormData> = async (userObj) => {
+  const onLoginHandler: SubmitHandler<FormLoginData> = async (userObj) => {
     try {
       const options = {
         method: API_LOGIN_METHOD,
@@ -85,9 +71,10 @@ export const Login: React.FC = () => {
             type={el.type}
             placeholder={el.placeholder}
           />
-          {errors[el.errors as keyof FieldErrors<FormData>] && (
+          {errors[el.errors as keyof FieldErrors<FormLoginData>] && (
             <ErrorMsg>
-              {errors[el.errors as keyof FieldErrors<FormData>]?.message || ""}
+              {errors[el.errors as keyof FieldErrors<FormLoginData>]?.message ||
+                ""}
             </ErrorMsg>
           )}
         </React.Fragment>

@@ -1,22 +1,8 @@
-interface RequestOptions {
-  method: string;
-  headers?: Record<string, string>;
-  body?: string;
-}
-
-interface UserDataFromApi {
-  user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    rights: "OWNER" | "OPERATOR" | "VIEWER";
-  };
-  access_token: string;
-}
+import { RequestOptionsLogin, UserDataFromApi } from "./Login.static";
 
 export const loginService = async (
   url: string,
-  options: RequestOptions
+  options: RequestOptionsLogin
 ): Promise<UserDataFromApi> => {
   try {
     const response = await fetch(url, options);
