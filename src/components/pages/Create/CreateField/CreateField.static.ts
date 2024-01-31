@@ -64,13 +64,6 @@ export interface Farm {
   deletedAt: string | null;
 }
 
-export interface FormFieldData {
-  name: string;
-  boundaries: string;
-  soilId: string;
-  farmId: string;
-}
-
 export interface FieldHandler extends FieldValues {
   name: string;
   location: string | { type: string; coordinates: number[][][] };

@@ -1,17 +1,18 @@
 import { UserDataFromApi } from "../../Login/Login.static";
 import {
+  API_CREATE_FIELD_FARM_METHOD,
+  API_CREATE_FIELD_FARM_URL,
   API_CREATE_FIELD_HEADERS,
   API_CREATE_FIELD_METHOD,
+  API_CREATE_FIELD_SOIL_METHOD,
+  API_CREATE_FIELD_SOIL_URL,
   API_CREATE_FIELD_URL,
   FieldHandler,
 } from "./CreateField.static";
 
-// apiService.js
-const apiUrl = "http://localhost:8080";
-
 export const fetchSoils = async (user: UserDataFromApi) => {
-  const soilResponse = await fetch(`${apiUrl}/soil`, {
-    method: "GET",
+  const soilResponse = await fetch(API_CREATE_FIELD_SOIL_URL, {
+    method: API_CREATE_FIELD_SOIL_METHOD,
     headers: { Authorization: `Bearer ${user.access_token}` },
   });
 
@@ -25,8 +26,8 @@ export const fetchSoils = async (user: UserDataFromApi) => {
 };
 
 export const fetchFarms = async (user: UserDataFromApi) => {
-  const farmResponse = await fetch(`${apiUrl}/farm`, {
-    method: "GET",
+  const farmResponse = await fetch(API_CREATE_FIELD_FARM_URL, {
+    method: API_CREATE_FIELD_FARM_METHOD,
     headers: { Authorization: `Bearer ${user.access_token}` },
   });
 
