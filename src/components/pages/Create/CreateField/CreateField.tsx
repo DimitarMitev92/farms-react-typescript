@@ -19,6 +19,7 @@ import {
   TextArea,
   Select,
   Option,
+  FormTitle,
 } from "../../../../styles/Form.styled";
 import React from "react";
 import { FormFarmData } from "../CreateFarm/CreateFarm.static";
@@ -78,6 +79,7 @@ export const CreateField = () => {
 
   return (
     <Form onSubmit={handleSubmit(onFieldHandler)}>
+      <FormTitle>Create a field</FormTitle>
       {fieldData.map((el, key) => {
         return (
           <React.Fragment key={key}>

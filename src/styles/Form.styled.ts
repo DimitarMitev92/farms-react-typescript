@@ -19,10 +19,16 @@ export const Label = styled.label`
   margin-top: 0.6em;
 `;
 
+export const FormTitle = styled.h2`
+  font-size: 2.4em;
+  color: ${textColor};
+  margin-bottom: 1em;
+`;
+
 export const Input = styled.input`
   min-width: 20em;
   margin: 1em 0;
-  padding: 1em;
+  padding: 0.8em;
   font-size: 1em;
   border: 1px solid ${hoverColor};
   border-radius: 0.25em;
@@ -37,7 +43,7 @@ export const Input = styled.input`
 export const TextArea = styled.textarea`
   min-width: 20em;
   margin: 1em 0;
-  padding: 1em;
+  padding: 0.8em;
   font-size: 1em;
   border: 1px solid ${hoverColor};
   border-radius: 0.25em;
@@ -52,7 +58,7 @@ export const TextArea = styled.textarea`
 export const Select = styled.select`
   min-width: 20em;
   margin: 1em 0;
-  padding: 1em;
+  padding: 0.8em;
   font-size: 1em;
   border: 1px solid ${hoverColor};
   border-radius: 0.25em;

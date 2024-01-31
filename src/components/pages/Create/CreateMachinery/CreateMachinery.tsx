@@ -17,6 +17,7 @@ import {
   ErrorMsg,
   Select,
   Option,
+  FormTitle,
 } from "../../../../styles/Form.styled";
 import React from "react";
 import { createMachinery, fetchFarms } from "./CreateMachinery.logic";
@@ -73,6 +74,7 @@ export const CreateMachinery = () => {
 
   return (
     <Form onSubmit={handleSubmit(onMachineryHandler)}>
+      <FormTitle>Create a machinery</FormTitle>
       {machineryData.map((el, key) => (
         <React.Fragment key={key}>
           <Label>{el.placeholder}</Label>

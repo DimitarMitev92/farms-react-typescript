@@ -20,6 +20,7 @@ import {
   ErrorMsg,
   Select,
   Option,
+  FormTitle,
 } from "../../../../styles/Form.styled";
 import React from "react";
 import {
@@ -115,6 +116,7 @@ export const CreateFieldCultivation = () => {
 
   return (
     <Form onSubmit={handleSubmit(onFieldCultivationHandler)}>
+      <FormTitle>Create a field cultivation</FormTitle>
       {fieldCultivationData.map((el, key) => {
         return (
           <React.Fragment key={key}>

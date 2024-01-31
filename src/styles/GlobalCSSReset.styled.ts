@@ -1,5 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 import "roboto-fontface/css/roboto/sass/roboto-fontface.scss";
+import { mainColors } from "../static/mainColors";
+
+const backgroundColorPage = mainColors.backgroundColorPage;
 
 export const GlobalReset = createGlobalStyle`
 /* Box sizing rules */
@@ -34,6 +37,7 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  background-color: ${backgroundColorPage}
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */

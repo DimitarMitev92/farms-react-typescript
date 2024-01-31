@@ -7,6 +7,7 @@ import {
   Input,
   Button,
   ErrorMsg,
+  FormTitle,
 } from "../../../../styles/Form.styled";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../context/UserContext";
@@ -77,6 +78,7 @@ export const CreateFarm: React.FC = () => {
 
   return (
     <Form onSubmit={handleSubmit(onFarmHandler)}>
+      <FormTitle>Create a farm</FormTitle>
       {farmData.map((el, key) => {
         return (
           <React.Fragment key={key}>
