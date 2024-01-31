@@ -1,4 +1,5 @@
 export const routes = {
+  main: "/",
   register: "/auth/register",
   login: "/auth/login",
   logout: "/auth/logout",

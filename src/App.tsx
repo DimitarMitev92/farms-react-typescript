@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { Main } from "./components/MainLayout/Main/Main";
 import { Login } from "./components/pages/Login/Login";
@@ -36,6 +36,10 @@ function App() {
       <BrowserRouter>
         <Main>
           <Routes>
+            <Route
+              path={routes.main}
+              element={<Navigate to={routes.login} replace />}
+            />
             {/* Auth components */}
             <Route path={routes.register} element={<Register />} />
             <Route path={routes.login} element={<Login />} />
