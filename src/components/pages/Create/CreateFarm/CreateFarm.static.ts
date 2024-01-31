@@ -55,7 +55,7 @@ export interface FarmObj {
   };
 }
 
-export interface CustomFormValues extends FieldValues {
+export interface FarmHandler extends FieldValues {
   name: string;
   location: string | { type: string; coordinates: [number, number] };
 }

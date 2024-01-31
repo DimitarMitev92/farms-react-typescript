@@ -14,7 +14,7 @@ import {
   API_CREATE_FARM_HEADERS,
   API_CREATE_FARM_METHOD,
   API_CREATE_FARM_URL,
-  CustomFormValues,
+  FarmHandler,
   FarmObj,
   FormFarmData,
   farmData,
@@ -28,7 +28,7 @@ export const CreateFarm: React.FC = () => {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<CustomFormValues>({
+  } = useForm<FarmHandler>({
     resolver: zodResolver(farmSchema),
   });
 
@@ -36,7 +36,7 @@ export const CreateFarm: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const onFarmHandler: SubmitHandler<CustomFormValues> = async (farmObj) => {
+  const onFarmHandler: SubmitHandler<FarmHandler> = async (farmObj) => {
     try {
       let coordinates: [number, number];
 
