@@ -16,8 +16,8 @@ export const API_CREATE_FIELD_FARM_METHOD = "GET";
 export const fieldSchema = z.object({
   name: z.string().nonempty({ message: "Name is required." }),
   boundaries: z.string().nonempty({ message: "Boundaries is required." }),
-  soilId: z.string().uuid().nonempty({ message: "Soil is required." }),
-  farmId: z.string().uuid().nonempty({ message: "Farm is required" }),
+  soilId: z.string().nonempty({ message: "Soil is required." }),
+  farmId: z.string().nonempty({ message: "Farm is required" }),
 });
 
 export const fieldData = [

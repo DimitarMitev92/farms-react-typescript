@@ -12,7 +12,7 @@ const softDeleteButtonColor = mainColors.softDeleteButtonColor;
 const softDeleteButtonHoverColor = mainColors.softDeleteButtonHoverColor;
 const textColorButton = mainColors.textColorButton;
 
-export const FarmCardContainer = styled.div`
+export const CardContainer = styled.div`
   min-width: 22em;
   border: 1px solid ${primaryColor};
   border-radius: 8px;
@@ -27,19 +27,19 @@ export const FarmCardContainer = styled.div`
   }
 `;
 
-export const FarmCardTitle = styled.h3`
+export const CardTitle = styled.h3`
   margin-top: 1em;
   font-size: 18px;
   text-align: center;
 `;
 
-export const FarmCardSubTitle = styled.h4`
+export const CardSubTitle = styled.h4`
   margin-top: 0.8em;
   font-size: 16px;
   text-align: center;
 `;
 
-export const FarmCardInfo = styled.div`
+export const CardInfo = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@ export const FarmCardInfo = styled.div`
   color: ${textColor};
 `;
 
-export const FarmLocationText = styled.p`
+export const LocationText = styled.p`
   margin-top: 0.5em;
   font-size: 1.2em;
   color: ${textColor};
@@ -74,7 +74,7 @@ export const ButtonContainer = styled.div`
   gap: 1em;
 `;
 
-export const ButtonFarm = styled.button`
+export const ButtonCard = styled.button`
   margin: 1em 0;
   padding: 0.5em 1em;
   font-size: 1em;
@@ -94,7 +94,7 @@ export const ButtonFarm = styled.button`
   }
 `;
 
-export const UpdateButtonFarm = styled(ButtonFarm)`
+export const UpdateButtonCard = styled(ButtonCard)`
   background-color: ${updateButtonColor};
   color: ${textColorButton};
   &:hover {
@@ -102,7 +102,7 @@ export const UpdateButtonFarm = styled(ButtonFarm)`
   }
 `;
 
-export const SoftDeleteButtonFarm = styled(ButtonFarm)`
+export const SoftDeleteButtonCard = styled(ButtonCard)`
   background-color: ${softDeleteButtonColor};
   color: ${textColorButton};
   &:hover {
@@ -110,7 +110,7 @@ export const SoftDeleteButtonFarm = styled(ButtonFarm)`
   }
 `;
 
-export const PermDeleteButtonFarm = styled(ButtonFarm)`
+export const PermDeleteButtonCard = styled(ButtonCard)`
   background-color: ${permDeleteButtonColor};
   color: ${textColorButton};
   &:hover {
@@ -124,33 +124,6 @@ export const CatalogContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-`;
-
-export const CardContainer = styled.div`
-  min-width: 20em;
-  border: 1px solid ${primaryColor};
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px;
-  width: 300px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-export const CardTitle = styled.h3`
-  font-size: 18px;
-  margin-bottom: 8px;
-`;
-
-export const CardInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: ${textColor};
 `;
 
 export const LocationContainer = styled.div`

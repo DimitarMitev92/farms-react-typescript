@@ -3,15 +3,15 @@ import { MapContainer, TileLayer, Polygon, Tooltip } from "react-leaflet";
 import { LatLngTuple } from "leaflet";
 import {
   ButtonContainer,
+  CardContainer,
+  CardInfo,
+  CardSubTitle,
+  CardTitle,
   DatesContainer,
   DatesText,
-  FarmCardContainer,
-  FarmCardInfo,
-  FarmCardSubTitle,
-  FarmCardTitle,
-  PermDeleteButtonFarm,
-  SoftDeleteButtonFarm,
-  UpdateButtonFarm,
+  PermDeleteButtonCard,
+  SoftDeleteButtonCard,
+  UpdateButtonCard,
 } from "../../../../../styles/Card.styled";
 import { FieldCardProps } from "./CatalogFieldCard.static";
 import { UserContext } from "../../../../../context/UserContext";
@@ -41,7 +41,7 @@ const FieldCard: React.FC<FieldCardProps> = ({
     );
 
   return (
-    <FarmCardContainer>
+    <CardContainer>
       <MapContainer
         center={convertedCoordinates[0][0]}
         zoom={13}
@@ -58,10 +58,10 @@ const FieldCard: React.FC<FieldCardProps> = ({
         />
         <Tooltip>{field.name}</Tooltip>
       </MapContainer>
-      <FarmCardInfo>
-        <FarmCardTitle>Name: {field.name}</FarmCardTitle>
-        <FarmCardSubTitle>Farm: {field.farm.name}</FarmCardSubTitle>
-        <FarmCardSubTitle>Soil: {field.soil.soil}</FarmCardSubTitle>
+      <CardInfo>
+        <CardTitle>Name: {field.name}</CardTitle>
+        <CardSubTitle>Farm: {field.farm.name}</CardSubTitle>
+        <CardSubTitle>Soil: {field.soil.soil}</CardSubTitle>
         <DatesContainer>
           <DatesText>
             Created at: {new Date(field.createdAt).toLocaleDateString()}
@@ -70,27 +70,27 @@ const FieldCard: React.FC<FieldCardProps> = ({
             Updated at: {new Date(field.updatedAt).toLocaleDateString()}
           </DatesText>
         </DatesContainer>
-      </FarmCardInfo>
-      <FarmCardInfo>
+      </CardInfo>
+      <CardInfo>
         <ButtonContainer>
           {(userRights === "OWNER" || userRights === "OPERATOR") && (
             <>
-              <UpdateButtonFarm onClick={() => onUpdate(field.id)}>
+              <UpdateButtonCard onClick={() => onUpdate(field.id)}>
                 Update
-              </UpdateButtonFarm>
-              <SoftDeleteButtonFarm onClick={() => onSoftDelete(field.id)}>
+              </UpdateButtonCard>
+              <SoftDeleteButtonCard onClick={() => onSoftDelete(field.id)}>
                 Delete
-              </SoftDeleteButtonFarm>
+              </SoftDeleteButtonCard>
             </>
           )}
           {userRights === "OWNER" && (
-            <PermDeleteButtonFarm onClick={() => onPermDelete(field.id)}>
+            <PermDeleteButtonCard onClick={() => onPermDelete(field.id)}>
               Perm Delete
-            </PermDeleteButtonFarm>
+            </PermDeleteButtonCard>
           )}
         </ButtonContainer>
-      </FarmCardInfo>
-    </FarmCardContainer>
+      </CardInfo>
+    </CardContainer>
   );
 };
 

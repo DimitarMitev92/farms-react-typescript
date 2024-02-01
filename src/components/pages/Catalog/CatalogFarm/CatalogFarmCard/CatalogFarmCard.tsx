@@ -5,15 +5,15 @@ import "leaflet/dist/leaflet.css";
 import { FarmCardProps } from "./CatalogFarmCard.static";
 import {
   ButtonContainer,
+  CardContainer,
+  CardInfo,
+  CardTitle,
   DatesContainer,
   DatesText,
-  FarmCardContainer,
-  FarmCardInfo,
-  FarmCardTitle,
-  FarmLocationText,
-  PermDeleteButtonFarm,
-  SoftDeleteButtonFarm,
-  UpdateButtonFarm,
+  LocationText,
+  PermDeleteButtonCard,
+  SoftDeleteButtonCard,
+  UpdateButtonCard,
 } from "../../../../../styles/Card.styled";
 import { UserContext } from "../../../../../context/UserContext";
 import { rightsOfUser } from "../../../../../utils/helpers";
@@ -42,7 +42,7 @@ export const FarmCard: React.FC<FarmCardProps> = ({
   };
 
   return (
-    <FarmCardContainer>
+    <CardContainer>
       <MapContainer center={mapCenter} zoom={13} style={{ height: "200px" }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -52,11 +52,11 @@ export const FarmCard: React.FC<FarmCardProps> = ({
           <Popup>{farm.name}</Popup>
         </Marker>
       </MapContainer>
-      <FarmCardInfo>
-        <FarmCardTitle>Name: {farm.name}</FarmCardTitle>
-        <FarmLocationText>
+      <CardInfo>
+        <CardTitle>Name: {farm.name}</CardTitle>
+        <LocationText>
           Location: {mapCenter.lat} / {mapCenter.lng}
-        </FarmLocationText>
+        </LocationText>
         <DatesContainer>
           <DatesText>
             Created at: {new Date(farm.createdAt).toLocaleDateString()}
@@ -65,26 +65,26 @@ export const FarmCard: React.FC<FarmCardProps> = ({
             Updated at: {new Date(farm.createdAt).toLocaleDateString()}
           </DatesText>
         </DatesContainer>
-      </FarmCardInfo>
-      <FarmCardInfo>
+      </CardInfo>
+      <CardInfo>
         <ButtonContainer>
           {(userRights === "OWNER" || userRights === "OPERATOR") && (
             <>
-              <UpdateButtonFarm onClick={() => onUpdate(farm.id)}>
+              <UpdateButtonCard onClick={() => onUpdate(farm.id)}>
                 Update
-              </UpdateButtonFarm>
-              <SoftDeleteButtonFarm onClick={() => onSoftDelete(farm.id)}>
+              </UpdateButtonCard>
+              <SoftDeleteButtonCard onClick={() => onSoftDelete(farm.id)}>
                 Delete
-              </SoftDeleteButtonFarm>
+              </SoftDeleteButtonCard>
             </>
           )}
           {userRights === "OWNER" && (
-            <PermDeleteButtonFarm onClick={() => onPermDelete(farm.id)}>
+            <PermDeleteButtonCard onClick={() => onPermDelete(farm.id)}>
               Perm Delete
-            </PermDeleteButtonFarm>
+            </PermDeleteButtonCard>
           )}
         </ButtonContainer>
-      </FarmCardInfo>
-    </FarmCardContainer>
+      </CardInfo>
+    </CardContainer>
   );
 };

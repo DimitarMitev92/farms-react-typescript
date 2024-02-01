@@ -9,7 +9,7 @@ import {
   FieldFromApi,
 } from "./CatalogField.static";
 
-const fetchFields = async (user: UserDataFromApi) => {
+export const fetchFields = async (user: UserDataFromApi) => {
   try {
     const response = await fetch(API_FIELD_URL, {
       method: API_FIELD_METHOD,
@@ -63,12 +63,9 @@ const fetchFields = async (user: UserDataFromApi) => {
         };
       })
     );
-
     return updatedDataArray;
   } catch (error) {
     console.error("Error fetching farms:", error);
     throw error;
   }
 };
-
-export { fetchFields };
