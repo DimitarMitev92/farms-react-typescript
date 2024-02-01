@@ -9,6 +9,7 @@ import {
   Button,
   ColumnContainer,
   SubTitle,
+  Title,
 } from "../../../../styles/Global.styled";
 import {
   ButtonContainer,
@@ -88,53 +89,62 @@ export const CatalogMachinery = () => {
   }
 
   return (
-    <CatalogContainer>
-      {machineries.map((machinery) => (
-        <CardContainer key={machinery.id}>
-          <CardInfo>
-            <CardTitle>Brand: {machinery.brand}</CardTitle>
-            <CardSubTitle>Model: {machinery.model}</CardSubTitle>
-            <CardSubTitle>
-              Farm: {machinery.farm && machinery.farm.name}
-            </CardSubTitle>
+    <>
+      <Title>Catalog Machineries</Title>
 
-            <CardSubTitle>
-              Identification number: {machinery.identificationNumber}
-            </CardSubTitle>
-            <DatesContainer>
-              <DatesText>
-                Created at: {new Date(machinery.createdAt).toLocaleDateString()}
-              </DatesText>
-              <DatesText>
-                Updated at: {new Date(machinery.updatedAt).toLocaleDateString()}
-              </DatesText>
-            </DatesContainer>
-          </CardInfo>
-          <CardInfo>
-            <ButtonContainer>
-              {(userRights === "OWNER" || userRights === "OPERATOR") && (
-                <>
-                  <UpdateButtonCard onClick={() => handleUpdate(machinery.id)}>
-                    Update
-                  </UpdateButtonCard>
-                  <SoftDeleteButtonCard
-                    onClick={() => handleSoftDelete(machinery.id)}
+      <CatalogContainer>
+        {machineries.map((machinery) => (
+          <CardContainer key={machinery.id}>
+            <CardInfo>
+              <CardTitle>Brand: {machinery.brand}</CardTitle>
+              <CardSubTitle>Model: {machinery.model}</CardSubTitle>
+              <CardSubTitle>
+                Farm: {machinery.farm && machinery.farm.name}
+              </CardSubTitle>
+
+              <CardSubTitle>
+                Identification number: {machinery.identificationNumber}
+              </CardSubTitle>
+
+              <DatesContainer>
+                <DatesText>
+                  Created at:{" "}
+                  {new Date(machinery.createdAt).toLocaleDateString()}
+                </DatesText>
+                <DatesText>
+                  Updated at:{" "}
+                  {new Date(machinery.updatedAt).toLocaleDateString()}
+                </DatesText>
+              </DatesContainer>
+            </CardInfo>
+            <CardInfo>
+              <ButtonContainer>
+                {(userRights === "OWNER" || userRights === "OPERATOR") && (
+                  <>
+                    <UpdateButtonCard
+                      onClick={() => handleUpdate(machinery.id)}
+                    >
+                      Update
+                    </UpdateButtonCard>
+                    <SoftDeleteButtonCard
+                      onClick={() => handleSoftDelete(machinery.id)}
+                    >
+                      Delete
+                    </SoftDeleteButtonCard>
+                  </>
+                )}
+                {userRights === "OWNER" && (
+                  <PermDeleteButtonCard
+                    onClick={() => handlePermDelete(machinery.id)}
                   >
-                    Delete
-                  </SoftDeleteButtonCard>
-                </>
-              )}
-              {userRights === "OWNER" && (
-                <PermDeleteButtonCard
-                  onClick={() => handlePermDelete(machinery.id)}
-                >
-                  Perm Delete
-                </PermDeleteButtonCard>
-              )}
-            </ButtonContainer>
-          </CardInfo>
-        </CardContainer>
-      ))}
-    </CatalogContainer>
+                    Perm Delete
+                  </PermDeleteButtonCard>
+                )}
+              </ButtonContainer>
+            </CardInfo>
+          </CardContainer>
+        ))}
+      </CatalogContainer>
+    </>
   );
 };

@@ -14,7 +14,7 @@ export const routes = {
   updateFarm: "/update/farm/:id",
   updateField: "/update/field/:id",
   updateMachinery: "/update/machinery/:id",
-  updateFieldCultivation: "/update/machinery/:id",
+  updateFieldCultivation: "/update/field-cultivation/:id",
   reportingMostMachineries: "/reporting/most-machineries",
   reportingFieldCropsFarms: "/reporting/field-by-crops-and-farms",
   reportingMostCommonSoil: "/reporting/most-common-soil",
