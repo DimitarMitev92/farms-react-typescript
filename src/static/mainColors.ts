@@ -1,8 +1,9 @@
 export const mainColors = {
-  primaryColor: "#adff2f",
-  hoverColor: "#7cfc00",
-  textColor: "#4b0082",
-  backgroundColorPage: "#FFFFF0",
+  primaryColor: "#BFDBF7",
+  hoverColor: "#1F7A8C",
+  textColor: "#022b3a",
+  hoverTextColor: "#FFFAFA",
+  backgroundColorPage: "#E1E5F2",
   updateButtonColor: "#32CD32",
   updateButtonHoverColor: "#008000",
   softDeleteButtonColor: "#FF6347",

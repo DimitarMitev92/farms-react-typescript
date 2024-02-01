@@ -1,11 +1,5 @@
 import React, { useContext } from "react";
-import {
-  Form,
-  Label,
-  Input,
-  ErrorMsg,
-  Button,
-} from "../../../styles/Form.styled";
+import { Form, Label, Input, ErrorMsg } from "../../../styles/Form.styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
 import {
@@ -20,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { loginService } from "./Login.logic";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { UserContext } from "../../../context/UserContext";
+import { Button } from "../../../styles/Global.styled";
 
 export const Login: React.FC = () => {
   const {

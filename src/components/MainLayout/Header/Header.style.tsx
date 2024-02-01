@@ -5,6 +5,7 @@ import { mainColors } from "../../../static/mainColors";
 const primaryColor = mainColors.primaryColor;
 const hoverColor = mainColors.hoverColor;
 const textColor = mainColors.textColor;
+const hoverTextColor = mainColors.hoverTextColor;
 
 export const HeaderContainer = styled.header`
   display: flex;
@@ -54,6 +55,7 @@ export const NavLinkAnchor = styled(NavLink)`
   &:hover {
     font-style: bold;
     background-color: ${hoverColor};
+    color: ${hoverTextColor};
   }
 `;
 
@@ -78,6 +80,7 @@ export const DropdownButton = styled.p`
 
   &:hover {
     background-color: ${hoverColor};
+    color: ${hoverTextColor};
   }
 `;
 
