@@ -34,8 +34,6 @@ export const FarmCard: React.FC<FarmCardProps> = ({
     setUserRights(rightsOfUser(user));
   }, []);
 
-  console.log(userRights);
-
   const mapCenter: LatLngLiteral = {
     lat: farm.location.coordinates[0],
     lng: farm.location.coordinates[1],

@@ -6,3 +6,7 @@ export const API_FARM_METHOD = "GET";
 export interface FarmCatalogProps {
   farms: Farm[];
 }
+
+export interface ApiError {
+  message: string;
+}

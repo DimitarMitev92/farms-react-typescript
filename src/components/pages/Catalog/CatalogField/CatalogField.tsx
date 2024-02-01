@@ -4,9 +4,16 @@ import { CatalogContainer } from "../../../../styles/Card.styled";
 import FieldCard from "./CatalogFieldCard/CatalogFieldCard";
 import { FieldFromApi } from "./CatalogField.static";
 import { fetchFields } from "./CatalogField.logic";
+import { useNavigate } from "react-router-dom";
+import { permDelete, softDelete } from "../../../../services/deleteService";
+import { API_CREATE_FIELD_URL } from "../../Create/CreateField/CreateField.static";
+import { ApiError } from "../CatalogFarm/CatalogFarm.static";
 
 export const CatalogField = () => {
   const [fields, setFields] = useState<FieldFromApi[]>([]);
+  const [triggerDelete, setTriggerDelete] = useState(false);
+
+  const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
 
@@ -14,7 +21,6 @@ export const CatalogField = () => {
     const fetchData = async () => {
       try {
         const fields = await fetchFields(user);
-        console.log(fields);
         setFields(fields);
       } catch (error) {
         console.error(error);
@@ -22,18 +28,28 @@ export const CatalogField = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, [user, triggerDelete]);
 
   const handleUpdate = (id: string) => {
-    console.log(`Updating field with id ${id}`);
+    navigate(`/update/farm/${id}`);
   };
 
-  const handleSoftDelete = (id: string) => {
-    console.log(`Soft deleting field with id ${id}`);
+  const handleSoftDelete = async (id: string) => {
+    try {
+      await softDelete(id, user, API_CREATE_FIELD_URL);
+      setTriggerDelete(!triggerDelete);
+    } catch (error) {
+      console.error(`${(error as ApiError).message}`);
+    }
   };
 
-  const handlePermDelete = (id: string) => {
-    console.log(`Permanently deleting field with id ${id}`);
+  const handlePermDelete = async (id: string) => {
+    try {
+      await permDelete(id, user, API_CREATE_FIELD_URL);
+      setTriggerDelete(!triggerDelete);
+    } catch (error) {
+      console.error(`${(error as ApiError).message}`);
+    }
   };
 
   return (

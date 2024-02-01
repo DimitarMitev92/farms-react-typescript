@@ -5,9 +5,16 @@ import { UserContext } from "../../../../context/UserContext";
 import { Farm } from "./CatalogFarmCard/CatalogFarmCard.static";
 import { CatalogContainer } from "../../../../styles/Card.styled";
 import { fetchFarms } from "./CatalogFarm.logic";
+import { ApiError } from "./CatalogFarm.static";
+import { useNavigate } from "react-router-dom";
+import { API_CREATE_FARM_URL } from "../../Create/CreateFarm/CreateFarm.static";
+import { permDelete, softDelete } from "../../../../services/deleteService";
 
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
+  const [triggerDelete, setTriggerDelete] = useState(false);
+
+  const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
 
@@ -22,18 +29,28 @@ export const CatalogFarm = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, [user, triggerDelete]);
 
   const handleUpdate = (id: string) => {
-    console.log(`Updating farm with id ${id}`);
+    navigate(`/update/farm/${id}`);
   };
 
-  const handleSoftDelete = (id: string) => {
-    console.log(`Soft deleting farm with id ${id}`);
+  const handleSoftDelete = async (id: string) => {
+    try {
+      await softDelete(id, user, API_CREATE_FARM_URL);
+      setTriggerDelete(!triggerDelete);
+    } catch (error) {
+      console.error(`${(error as ApiError).message}`);
+    }
   };
 
-  const handlePermDelete = (id: string) => {
-    console.log(`Permanently deleting farm with id ${id}`);
+  const handlePermDelete = async (id: string) => {
+    try {
+      await permDelete(id, user, API_CREATE_FARM_URL);
+      setTriggerDelete(!triggerDelete);
+    } catch (error) {
+      console.error(`${(error as ApiError).message}`);
+    }
   };
 
   return (
