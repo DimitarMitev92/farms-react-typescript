@@ -1,7 +1,7 @@
 import { UserDataFromApi } from "../../Login/Login.static";
 import { API_FARM_METHOD, API_FARM_URL } from "./CatalogFarm.static";
 
-const fetchFarms = async (user: UserDataFromApi) => {
+export const fetchFarms = async (user: UserDataFromApi) => {
   try {
     const response = await fetch(API_FARM_URL, {
       method: API_FARM_METHOD,
@@ -19,5 +19,3 @@ const fetchFarms = async (user: UserDataFromApi) => {
     throw error;
   }
 };
-
-export { fetchFarms };

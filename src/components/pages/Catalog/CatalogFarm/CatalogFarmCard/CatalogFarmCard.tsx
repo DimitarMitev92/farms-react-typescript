@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { LatLngLiteral } from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -15,6 +15,8 @@ import {
   SoftDeleteButtonFarm,
   UpdateButtonFarm,
 } from "../../../../../styles/Card.styled";
+import { UserContext } from "../../../../../context/UserContext";
+import { rightsOfUser } from "../../../../../utils/helpers";
 
 export const FarmCard: React.FC<FarmCardProps> = ({
   farm,
@@ -22,6 +24,18 @@ export const FarmCard: React.FC<FarmCardProps> = ({
   onSoftDelete,
   onPermDelete,
 }) => {
+  const { user } = useContext(UserContext);
+
+  const [userRights, setUserRights] = useState<
+    "OWNER" | "OPERATOR" | "VIEWER" | null
+  >(null);
+
+  useEffect(() => {
+    setUserRights(rightsOfUser(user));
+  }, []);
+
+  console.log(userRights);
+
   const mapCenter: LatLngLiteral = {
     lat: farm.location.coordinates[0],
     lng: farm.location.coordinates[1],
@@ -54,15 +68,21 @@ export const FarmCard: React.FC<FarmCardProps> = ({
       </FarmCardInfo>
       <FarmCardInfo>
         <ButtonContainer>
-          <UpdateButtonFarm onClick={() => onUpdate(farm.id)}>
-            Update
-          </UpdateButtonFarm>
-          <SoftDeleteButtonFarm onClick={() => onSoftDelete(farm.id)}>
-            Soft Delete
-          </SoftDeleteButtonFarm>
-          <PermDeleteButtonFarm onClick={() => onPermDelete(farm.id)}>
-            Perm Delete
-          </PermDeleteButtonFarm>
+          {(userRights === "OWNER" || userRights === "OPERATOR") && (
+            <>
+              <UpdateButtonFarm onClick={() => onUpdate(farm.id)}>
+                Update
+              </UpdateButtonFarm>
+              <SoftDeleteButtonFarm onClick={() => onSoftDelete(farm.id)}>
+                Soft Delete
+              </SoftDeleteButtonFarm>
+            </>
+          )}
+          {userRights === "OWNER" && (
+            <PermDeleteButtonFarm onClick={() => onPermDelete(farm.id)}>
+              Perm Delete
+            </PermDeleteButtonFarm>
+          )}
         </ButtonContainer>
       </FarmCardInfo>
     </FarmCardContainer>
