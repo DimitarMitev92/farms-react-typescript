@@ -79,10 +79,7 @@ export const CreateMachinery = () => {
         <React.Fragment key={key}>
           <Label>{el.placeholder}</Label>
           {el.type === "select" ? (
-            <Select
-              {...register(`${el.registerName}`)}
-              // placeholder={el.placeholder}
-            >
+            <Select {...register(`${el.registerName}`)}>
               <Option value="" disabled>
                 {el.placeholder}
               </Option>

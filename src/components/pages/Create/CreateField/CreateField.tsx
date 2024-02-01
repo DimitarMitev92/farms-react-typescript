@@ -60,7 +60,7 @@ export const CreateField = () => {
     };
 
     fetchData();
-  }, []);
+  }, [user.access_token]);
 
   const onFieldHandler: SubmitHandler<FieldHandler> = async (fieldObj) => {
     try {

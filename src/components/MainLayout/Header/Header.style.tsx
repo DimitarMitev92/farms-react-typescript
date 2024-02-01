@@ -2,12 +2,10 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { mainColors } from "../../../static/mainColors";
 
-// Define colors
 const primaryColor = mainColors.primaryColor;
 const hoverColor = mainColors.hoverColor;
 const textColor = mainColors.textColor;
 
-// Header styles
 export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
@@ -16,7 +14,6 @@ export const HeaderContainer = styled.header`
   height: 3em;
 `;
 
-// Navigation styles
 export const NavBar = styled.nav`
   height: 100%;
   width: 100vw;
@@ -31,7 +28,6 @@ export const UnorderedList = styled.ul`
   height: 100%;
 `;
 
-// List item styles
 export const ListItem = styled.li`
   display: flex;
   justify-content: center;
@@ -45,7 +41,6 @@ export const ListItem = styled.li`
   }
 `;
 
-// Navigation link styles
 export const NavLinkAnchor = styled(NavLink)`
   width: 100%;
   height: 100%;
@@ -62,12 +57,12 @@ export const NavLinkAnchor = styled(NavLink)`
   }
 `;
 
-// Dropdown styles
 export const DropdownContainer = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
   display: inline-block;
+  z-index: 1000;
 `;
 
 export const DropdownButton = styled.p`
@@ -92,7 +87,7 @@ export const DropdownContent = styled.div`
   background-color: ${primaryColor};
   text-align: center;
   min-width: 100%;
-  z-index: 1;
+  z-index: 100;
   top: 100%;
 
   ${DropdownContainer}:hover & {

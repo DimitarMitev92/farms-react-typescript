@@ -99,7 +99,6 @@ export const CreateFieldCultivation = () => {
         machineryId: fieldCultivationObj.machineryId,
         startingDate: new Date(fieldCultivationObj?.startingDate) || null,
       };
-      console.log(fieldCultivationObjForRes);
       await createFieldCultivation(fieldCultivationObjForRes, user);
 
       navigate("/catalog/field-cultivation");
@@ -122,10 +121,7 @@ export const CreateFieldCultivation = () => {
           <React.Fragment key={key}>
             <Label>{el.placeholder}</Label>
             {el.type === "select" ? (
-              <Select
-                {...register(`${el.registerName}`)}
-                // placeholder={el.placeholder}
-              >
+              <Select {...register(`${el.registerName}`)}>
                 <Option value="" disabled>
                   {el.placeholder}
                 </Option>

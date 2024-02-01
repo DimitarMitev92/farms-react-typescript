@@ -145,7 +145,6 @@ export const createFieldCultivation = async (
   fieldCultivationObjForRes: FieldCultivationHandler,
   user: UserDataFromApi
 ) => {
-  console.log(fieldCultivationObjForRes);
   const response = await fetch(API_CREATE_FIELD_CULTIVATION_URL, {
     method: API_CREATE_FIELD_CULTIVATION_METHOD,
     headers: {
