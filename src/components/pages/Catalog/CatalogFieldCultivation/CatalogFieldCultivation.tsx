@@ -28,11 +28,13 @@ import {
   SoftDeleteButtonCard,
   UpdateButtonCard,
 } from "../../../../styles/Card.styled";
+import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 
 export const CatalogFieldCultivation = () => {
   const [fieldCultivations, setFieldCultivations] = useState<
     FieldCultivationFroApi[]
   >([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [triggerDelete, setTriggerDelete] = useState(false);
   const [userRights, setUserRights] = useState<
     "OWNER" | "OPERATOR" | "VIEWER" | null
@@ -44,6 +46,7 @@ export const CatalogFieldCultivation = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         if (user) {
           const fieldCultivationData = await fetchFieldCultivation(user);
@@ -52,6 +55,8 @@ export const CatalogFieldCultivation = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -83,6 +88,10 @@ export const CatalogFieldCultivation = () => {
       console.error(`${(error as ApiError).message}`);
     }
   };
+
+  if (isLoading) {
+    return <SkeletonCatalog />;
+  }
 
   if (fieldCultivations.length === 0) {
     return (

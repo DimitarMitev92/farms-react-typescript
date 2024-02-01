@@ -25,9 +25,11 @@ import {
   UpdateButtonCard,
 } from "../../../../styles/Card.styled";
 import { rightsOfUser } from "../../../../utils/helpers";
+import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 
 export const CatalogMachinery = () => {
   const [machineries, setMachineries] = useState<MachineryFromApi[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [triggerDelete, setTriggerDelete] = useState(false);
   const [userRights, setUserRights] = useState<
     "OWNER" | "OPERATOR" | "VIEWER" | null
@@ -39,6 +41,7 @@ export const CatalogMachinery = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         if (user) {
           const machineriesData = await fetchMachinery(user);
@@ -47,6 +50,8 @@ export const CatalogMachinery = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -78,6 +83,10 @@ export const CatalogMachinery = () => {
       console.error(`${(error as ApiError).message}`);
     }
   };
+
+  if (isLoading) {
+    return <SkeletonCatalog />;
+  }
 
   if (machineries.length === 0) {
     return (

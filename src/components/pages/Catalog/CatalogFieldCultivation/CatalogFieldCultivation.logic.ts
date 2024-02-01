@@ -47,7 +47,6 @@ export const fetchFieldCultivation = async (user: UserDataFromApi) => {
         }
 
         const cultivationData = await responseCultivation.json();
-        console.log(data.machineryId);
         const responseMachinery = await fetch(
           `${API_FIELD_CULTIVATION_MACHINERY_URL}/${data.machineryId}`,
           {

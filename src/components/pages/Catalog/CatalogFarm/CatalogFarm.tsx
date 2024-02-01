@@ -15,9 +15,11 @@ import {
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
+import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [triggerDelete, setTriggerDelete] = useState(false);
 
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ export const CatalogFarm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         if (user) {
           const farms = await fetchFarms(user);
@@ -33,6 +36,8 @@ export const CatalogFarm = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -64,6 +69,10 @@ export const CatalogFarm = () => {
       console.error(`${(error as ApiError).message}`);
     }
   };
+
+  if (isLoading) {
+    return <SkeletonCatalog />;
+  }
 
   if (farms.length === 0) {
     return (

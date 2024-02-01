@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { mainColors } from "../static/mainColors";
 
 const primaryColor = mainColors.primaryColor;
@@ -47,4 +47,27 @@ export const Button = styled.button`
     background-color: ${hoverColor};
     cursor: not-allowed;
   }
+`;
+
+// SPINNER
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+export const Spinner = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #333;
+  border-radius: 50%;
+  animation: ${spin} 0.8s linear infinite;
 `;
