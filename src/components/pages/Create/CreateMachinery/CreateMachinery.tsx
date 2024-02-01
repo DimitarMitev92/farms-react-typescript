@@ -13,7 +13,6 @@ import {
   Form,
   Label,
   Input,
-  Button,
   ErrorMsg,
   Select,
   Option,
@@ -21,6 +20,7 @@ import {
 } from "../../../../styles/Form.styled";
 import React from "react";
 import { createMachinery, fetchFarms } from "./CreateMachinery.logic";
+import { Button } from "../../../../styles/Global.styled";
 
 export const CreateMachinery = () => {
   const {

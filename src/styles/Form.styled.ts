@@ -77,26 +77,6 @@ export const Option = styled.option`
   }
 `;
 
-export const Button = styled.button`
-  margin: 1em 0 4em 0;
-  padding: 1em 2em;
-  font-size: 18px;
-  background-color: ${primaryColor};
-  color: ${textColor};
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${hoverColor};
-  }
-
-  &:disabled {
-    background-color: ${hoverColor};
-    cursor: not-allowed;
-  }
-`;
-
 export const ErrorMsg = styled.div`
   color: red;
   margin-top: 0.25em;

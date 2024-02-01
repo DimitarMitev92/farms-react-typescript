@@ -16,7 +16,6 @@ import {
   Form,
   Label,
   Input,
-  Button,
   ErrorMsg,
   Select,
   Option,
@@ -31,6 +30,7 @@ import {
   fetchFields,
   fetchMachinery,
 } from "./CreateFieldCultivation.logic";
+import { Button } from "../../../../styles/Global.styled";
 
 export const CreateFieldCultivation = () => {
   const {

@@ -14,7 +14,6 @@ import {
   Form,
   Label,
   Input,
-  Button,
   ErrorMsg,
   TextArea,
   Select,
@@ -24,6 +23,7 @@ import {
 import React from "react";
 import { FormFarmData } from "../CreateFarm/CreateFarm.static";
 import { createField, fetchFarms, fetchSoils } from "./CreateField.logic";
+import { Button } from "../../../../styles/Global.styled";
 
 export const CreateField = () => {
   const {

@@ -5,7 +5,6 @@ import {
   Form,
   Label,
   Input,
-  Button,
   ErrorMsg,
   FormTitle,
 } from "../../../../styles/Form.styled";
@@ -21,6 +20,7 @@ import {
   farmSchema,
 } from "./CreateFarm.static";
 import { farmService } from "./CreateFarm.logic";
+import { Button } from "../../../../styles/Global.styled";
 
 export const CreateFarm: React.FC = () => {
   const {
