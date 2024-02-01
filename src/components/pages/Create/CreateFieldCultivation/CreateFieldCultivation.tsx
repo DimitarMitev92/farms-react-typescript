@@ -55,17 +55,19 @@ export const CreateFieldCultivation = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const cultivationData = await fetchCultivations(user);
-        setCultivationOptions(cultivationData);
+        if (user) {
+          const cultivationData = await fetchCultivations(user);
+          setCultivationOptions(cultivationData);
 
-        const machineryData = await fetchMachinery(user);
-        setMachineryOptions(machineryData);
+          const machineryData = await fetchMachinery(user);
+          setMachineryOptions(machineryData);
 
-        const cropData = await fetchCrops(user);
-        setCropOptions(cropData);
+          const cropData = await fetchCrops(user);
+          setCropOptions(cropData);
 
-        const fieldData = await fetchFields(user);
-        setFieldOptions(fieldData);
+          const fieldData = await fetchFields(user);
+          setFieldOptions(fieldData);
+        }
       } catch (error) {
         if (error instanceof Error) {
           setError("root", {
@@ -88,20 +90,22 @@ export const CreateFieldCultivation = () => {
       fieldId: fieldCultivationObj.fieldId,
     };
     try {
-      const growingProcessObjFromAPI = await createGrowingProcess(
-        growingProcessObj,
-        user
-      );
+      if (user) {
+        const growingProcessObjFromAPI = await createGrowingProcess(
+          growingProcessObj,
+          user
+        );
 
-      const fieldCultivationObjForRes = {
-        growingProcessId: growingProcessObjFromAPI.id,
-        cultivationId: fieldCultivationObj.cultivationId,
-        machineryId: fieldCultivationObj.machineryId,
-        startingDate: new Date(fieldCultivationObj?.startingDate) || null,
-      };
-      await createFieldCultivation(fieldCultivationObjForRes, user);
+        const fieldCultivationObjForRes = {
+          growingProcessId: growingProcessObjFromAPI.id,
+          cultivationId: fieldCultivationObj.cultivationId,
+          machineryId: fieldCultivationObj.machineryId,
+          startingDate: new Date(fieldCultivationObj?.startingDate) || null,
+        };
+        await createFieldCultivation(fieldCultivationObjForRes, user);
 
-      navigate("/catalog/field-cultivation");
+        navigate("/catalog/field-cultivation");
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError("root", {

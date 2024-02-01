@@ -27,8 +27,10 @@ export const CatalogFarm = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const farms = await fetchFarms(user);
-        setFarms(farms);
+        if (user) {
+          const farms = await fetchFarms(user);
+          setFarms(farms);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -43,7 +45,9 @@ export const CatalogFarm = () => {
 
   const handleSoftDelete = async (id: string) => {
     try {
-      await softDelete(id, user, API_CREATE_FARM_URL);
+      if (user) {
+        await softDelete(id, user, API_CREATE_FARM_URL);
+      }
       setTriggerDelete(!triggerDelete);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
@@ -52,7 +56,9 @@ export const CatalogFarm = () => {
 
   const handlePermDelete = async (id: string) => {
     try {
-      await permDelete(id, user, API_CREATE_FARM_URL);
+      if (user) {
+        await permDelete(id, user, API_CREATE_FARM_URL);
+      }
       setTriggerDelete(!triggerDelete);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);

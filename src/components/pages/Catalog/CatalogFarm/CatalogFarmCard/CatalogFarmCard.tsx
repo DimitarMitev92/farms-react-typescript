@@ -31,7 +31,9 @@ export const FarmCard: React.FC<FarmCardProps> = ({
   >(null);
 
   useEffect(() => {
-    setUserRights(rightsOfUser(user));
+    if (user) {
+      setUserRights(rightsOfUser(user));
+    }
   }, []);
 
   const mapCenter: LatLngLiteral = {

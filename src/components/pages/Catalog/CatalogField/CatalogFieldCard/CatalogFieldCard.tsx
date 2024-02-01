@@ -30,7 +30,9 @@ const FieldCard: React.FC<FieldCardProps> = ({
   >(null);
 
   useEffect(() => {
-    setUserRights(rightsOfUser(user));
+    if (user) {
+      setUserRights(rightsOfUser(user));
+    }
   }, []);
 
   const convertedCoordinates: LatLngTuple[][] =

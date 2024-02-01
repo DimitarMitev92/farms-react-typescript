@@ -43,11 +43,13 @@ export const CreateField = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const soils = await fetchSoils(user);
-        setSoilOptions(soils);
+        if (user) {
+          const soils = await fetchSoils(user);
+          setSoilOptions(soils);
 
-        const farms = await fetchFarms(user);
-        setFarmOptions(farms);
+          const farms = await fetchFarms(user);
+          setFarmOptions(farms);
+        }
       } catch (error) {
         if (error instanceof Error) {
           setError("root", {
@@ -60,12 +62,14 @@ export const CreateField = () => {
     };
 
     fetchData();
-  }, [user.access_token]);
+  }, [user, setError]);
 
   const onFieldHandler: SubmitHandler<FieldHandler> = async (fieldObj) => {
     try {
-      await createField(user, fieldObj);
-      navigate("/catalog/field");
+      if (user) {
+        await createField(user, fieldObj);
+        navigate("/catalog/field");
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError("root", {

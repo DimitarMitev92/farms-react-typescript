@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { UserDataFromApi } from "../components/pages/Login/Login";
+import { UserDataFromApi } from "../components/pages/Login/Login.static";
 
 export const UserContext = createContext<{
   user: UserDataFromApi | null;

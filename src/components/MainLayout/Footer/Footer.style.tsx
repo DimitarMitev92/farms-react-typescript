@@ -13,6 +13,7 @@ export const FooterContainer = styled.footer`
   justify-content: center;
   background-color: ${primaryColor};
   height: 3em;
+  z-index: 1000;
 `;
 
 export const FooterText = styled.p`

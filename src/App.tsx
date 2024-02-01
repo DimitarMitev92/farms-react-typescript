@@ -26,7 +26,7 @@ import { NotFound } from "./components/pages/NotFound/NotFound";
 import { routes } from "./routes/routes.static";
 
 import { UserContext } from "./context/UserContext";
-import { UserDataFromApi } from "./components/pages/Login/Login";
+import { UserDataFromApi } from "./components/pages/Login/Login.static";
 import PrivateRoutes from "./guards/PrivateRoutes";
 
 function App() {

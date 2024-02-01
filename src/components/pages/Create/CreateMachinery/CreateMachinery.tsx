@@ -39,8 +39,10 @@ export const CreateMachinery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const farmData = await fetchFarms(user);
-        setFarmOptions(farmData);
+        if (user) {
+          const farmData = await fetchFarms(user);
+          setFarmOptions(farmData);
+        }
       } catch (error) {
         if (error instanceof Error) {
           setError("root", {
@@ -59,8 +61,10 @@ export const CreateMachinery = () => {
     machineryObj
   ) => {
     try {
-      await createMachinery(user, machineryObj);
-      navigate("/catalog/machinery");
+      if (user) {
+        await createMachinery(user, machineryObj);
+        navigate("/catalog/machinery");
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError("root", {

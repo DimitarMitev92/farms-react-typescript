@@ -26,8 +26,10 @@ export const CatalogField = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fields = await fetchFields(user);
-        setFields(fields);
+        if (user) {
+          const fields = await fetchFields(user);
+          setFields(fields);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -42,8 +44,10 @@ export const CatalogField = () => {
 
   const handleSoftDelete = async (id: string) => {
     try {
-      await softDelete(id, user, API_CREATE_FIELD_URL);
-      setTriggerDelete(!triggerDelete);
+      if (user) {
+        await softDelete(id, user, API_CREATE_FIELD_URL);
+        setTriggerDelete(!triggerDelete);
+      }
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
     }
@@ -51,8 +55,10 @@ export const CatalogField = () => {
 
   const handlePermDelete = async (id: string) => {
     try {
-      await permDelete(id, user, API_CREATE_FIELD_URL);
-      setTriggerDelete(!triggerDelete);
+      if (user) {
+        await permDelete(id, user, API_CREATE_FIELD_URL);
+        setTriggerDelete(!triggerDelete);
+      }
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
     }
