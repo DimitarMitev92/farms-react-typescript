@@ -9,6 +9,12 @@ import { ApiError } from "./CatalogFarm.static";
 import { useNavigate } from "react-router-dom";
 import { API_CREATE_FARM_URL } from "../../Create/CreateFarm/CreateFarm.static";
 import { permDelete, softDelete } from "../../../../services/deleteService";
+import {
+  Button,
+  ColumnContainer,
+  SubTitle,
+  Title,
+} from "../../../../styles/Global.styled";
 
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
@@ -53,17 +59,29 @@ export const CatalogFarm = () => {
     }
   };
 
+  if (farms.length === 0) {
+    return (
+      <ColumnContainer>
+        <SubTitle>There are no farms to display.</SubTitle>
+        <Button onClick={() => navigate("/create/farm")}>Create</Button>
+      </ColumnContainer>
+    );
+  }
+
   return (
-    <CatalogContainer>
-      {farms.map((farm) => (
-        <FarmCard
-          key={farm.id}
-          farm={farm}
-          onUpdate={handleUpdate}
-          onSoftDelete={handleSoftDelete}
-          onPermDelete={handlePermDelete}
-        />
-      ))}
-    </CatalogContainer>
+    <>
+      <Title>Catalog Farms</Title>
+      <CatalogContainer>
+        {farms.map((farm) => (
+          <FarmCard
+            key={farm.id}
+            farm={farm}
+            onUpdate={handleUpdate}
+            onSoftDelete={handleSoftDelete}
+            onPermDelete={handlePermDelete}
+          />
+        ))}
+      </CatalogContainer>
+    </>
   );
 };

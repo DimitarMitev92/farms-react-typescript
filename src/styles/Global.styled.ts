@@ -4,11 +4,28 @@ import { mainColors } from "../static/mainColors";
 const primaryColor = mainColors.primaryColor;
 const hoverColor = mainColors.hoverColor;
 const textColor = mainColors.textColor;
+const hoverTextColor = mainColors.hoverTextColor;
 
-export const FormTitle = styled.h2`
-  font-size: 2.4em;
+export const Title = styled.h2`
   color: ${textColor};
   margin-bottom: 1em;
+  text-align: center;
+  margin-top: 2em;
+`;
+
+export const SubTitle = styled.h3`
+  color: ${textColor};
+  margin-bottom: 1em;
+  text-align: center;
+  margin-top: 2em;
+`;
+
+export const ColumnContainer = styled.div`
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Button = styled.button`
@@ -23,6 +40,7 @@ export const Button = styled.button`
 
   &:hover {
     background-color: ${hoverColor};
+    color: ${hoverTextColor};
   }
 
   &:disabled {

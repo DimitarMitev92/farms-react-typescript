@@ -8,6 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { permDelete, softDelete } from "../../../../services/deleteService";
 import { API_CREATE_FIELD_URL } from "../../Create/CreateField/CreateField.static";
 import { ApiError } from "../CatalogFarm/CatalogFarm.static";
+import {
+  Button,
+  ColumnContainer,
+  SubTitle,
+  Title,
+} from "../../../../styles/Global.styled";
 
 export const CatalogField = () => {
   const [fields, setFields] = useState<FieldFromApi[]>([]);
@@ -52,17 +58,29 @@ export const CatalogField = () => {
     }
   };
 
+  if (fields.length === 0) {
+    return (
+      <ColumnContainer>
+        <SubTitle>There are no fields to display.</SubTitle>
+        <Button onClick={() => navigate("/create/field")}>Create</Button>
+      </ColumnContainer>
+    );
+  }
+
   return (
-    <CatalogContainer>
-      {fields.map((field) => (
-        <FieldCard
-          key={field.id}
-          field={field}
-          onUpdate={handleUpdate}
-          onSoftDelete={handleSoftDelete}
-          onPermDelete={handlePermDelete}
-        />
-      ))}
-    </CatalogContainer>
+    <>
+      <Title>Catalog Fields</Title>
+      <CatalogContainer>
+        {fields.map((field) => (
+          <FieldCard
+            key={field.id}
+            field={field}
+            onUpdate={handleUpdate}
+            onSoftDelete={handleSoftDelete}
+            onPermDelete={handlePermDelete}
+          />
+        ))}
+      </CatalogContainer>
+    </>
   );
 };
