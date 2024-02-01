@@ -70,7 +70,7 @@ export const DatesText = styled.p`
 export const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 1em;
 `;
 

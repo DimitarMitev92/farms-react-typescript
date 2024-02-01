@@ -74,7 +74,7 @@ export const FarmCard: React.FC<FarmCardProps> = ({
                 Update
               </UpdateButtonFarm>
               <SoftDeleteButtonFarm onClick={() => onSoftDelete(farm.id)}>
-                Soft Delete
+                Delete
               </SoftDeleteButtonFarm>
             </>
           )}

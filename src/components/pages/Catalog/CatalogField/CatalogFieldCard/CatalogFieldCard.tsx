@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MapContainer, TileLayer, Polygon, Tooltip } from "react-leaflet";
 import { LatLngTuple } from "leaflet";
 import {
@@ -13,27 +13,9 @@ import {
   SoftDeleteButtonFarm,
   UpdateButtonFarm,
 } from "../../../../../styles/Card.styled";
-
-interface FieldCardProps {
-  field: {
-    id: string;
-    name: string;
-    boundaries: {
-      coordinates: number[][][];
-      type: string;
-    };
-    soilId: string;
-    farmId: string;
-    farm: { name: string };
-    soil: { soil: string };
-    createdAt: string;
-    updatedAt: string;
-    deletedAt: string | null;
-  };
-  onUpdate: (id: string) => void;
-  onSoftDelete: (id: string) => void;
-  onPermDelete: (id: string) => void;
-}
+import { FieldCardProps } from "./CatalogFieldCard.static";
+import { UserContext } from "../../../../../context/UserContext";
+import { rightsOfUser } from "../../../../../utils/helpers";
 
 const FieldCard: React.FC<FieldCardProps> = ({
   field,
@@ -41,6 +23,16 @@ const FieldCard: React.FC<FieldCardProps> = ({
   onSoftDelete,
   onPermDelete,
 }) => {
+  const { user } = useContext(UserContext);
+
+  const [userRights, setUserRights] = useState<
+    "OWNER" | "OPERATOR" | "VIEWER" | null
+  >(null);
+
+  useEffect(() => {
+    setUserRights(rightsOfUser(user));
+  }, []);
+
   const convertedCoordinates: LatLngTuple[][] =
     field.boundaries.coordinates.map(
       (layer) => layer.map((point) => [point[0], point[1]]) as LatLngTuple[]
@@ -79,15 +71,21 @@ const FieldCard: React.FC<FieldCardProps> = ({
       </FarmCardInfo>
       <FarmCardInfo>
         <ButtonContainer>
-          <UpdateButtonFarm onClick={() => onUpdate(field.id)}>
-            Update
-          </UpdateButtonFarm>
-          <SoftDeleteButtonFarm onClick={() => onSoftDelete(field.id)}>
-            Soft Delete
-          </SoftDeleteButtonFarm>
-          <PermDeleteButtonFarm onClick={() => onPermDelete(field.id)}>
-            Perm Delete
-          </PermDeleteButtonFarm>
+          {(userRights === "OWNER" || userRights === "OPERATOR") && (
+            <>
+              <UpdateButtonFarm onClick={() => onUpdate(field.id)}>
+                Update
+              </UpdateButtonFarm>
+              <SoftDeleteButtonFarm onClick={() => onSoftDelete(field.id)}>
+                Delete
+              </SoftDeleteButtonFarm>
+            </>
+          )}
+          {userRights === "OWNER" && (
+            <PermDeleteButtonFarm onClick={() => onPermDelete(field.id)}>
+              Perm Delete
+            </PermDeleteButtonFarm>
+          )}
         </ButtonContainer>
       </FarmCardInfo>
     </FarmCardContainer>

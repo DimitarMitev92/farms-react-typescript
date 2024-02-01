@@ -19,4 +19,6 @@ export interface FieldFromApi {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
+  farm: { name: string };
+  soil: { soil: string };
 }
