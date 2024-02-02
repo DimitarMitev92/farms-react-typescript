@@ -44,7 +44,7 @@ export const CatalogField = () => {
   }, [user, triggerDelete]);
 
   const handleUpdate = (id: string) => {
-    navigate(`/update/farm/${id}`);
+    navigate(`/update/field/${id}`);
   };
 
   const handleSoftDelete = async (id: string) => {
