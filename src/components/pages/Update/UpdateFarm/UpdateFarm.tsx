@@ -44,24 +44,16 @@ export const UpdateFarm: React.FC = () => {
   useEffect(() => {
     const fetchFarmData = async () => {
       try {
-        console.log(id);
         const url = `${API_UPDATE_FARM_URL}/${id}`;
-        console.log(url);
-        const responseFarm = await fetch(url, {
+        const options = {
           method: API_UPDATE_FARM_METHOD_GET,
           headers: {
             ...API_UPDATE_FARM_HEADERS,
             Authorization: `Bearer ${user?.access_token}`,
           },
-        });
+        };
 
-        if (!responseFarm.ok) {
-          const errorData = await responseFarm.json();
-          console.error("Server error:", errorData);
-          throw new Error(errorData.message);
-        }
-
-        const farmData = await responseFarm.json();
+        const farmData = await farmService(url, options);
         setValue("name", farmData.name);
         setValue("location", farmData.location.coordinates.join(","));
       } catch (error) {
