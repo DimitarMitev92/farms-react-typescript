@@ -1,7 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  Farm,
-  Soil,
   fieldData,
   fieldSchema,
 } from "../../Create/CreateField/CreateField.static";
@@ -29,6 +27,7 @@ import {
   header,
   method,
 } from "../../../../static/endPoints";
+import { Farm, Soil } from "../../../../static/interfaces";
 
 export const UpdateField = () => {
   const {

@@ -1,8 +1,9 @@
-import { RequestOptionsField } from "./UpdateField.static";
+import { RequestOptions } from "../../../../static/interfaces";
+
 
 export const fieldService = async (
   url: string,
-  options: RequestOptionsField
+  options: RequestOptions
 ) => {
   try {
     const response = await fetch(url, options);

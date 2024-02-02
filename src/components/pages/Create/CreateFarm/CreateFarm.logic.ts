@@ -1,8 +1,9 @@
-import { FarmDataFromApi, RequestOptionsFarm } from "./CreateFarm.static";
+import { RequestOptions } from "../../../../static/interfaces";
+import { FarmDataFromApi } from "./CreateFarm.static";
 
 export const farmService = async (
   url: string,
-  options: RequestOptionsFarm
+  options: RequestOptions
 ): Promise<FarmDataFromApi> => {
   try {
     const response = await fetch(url, options);

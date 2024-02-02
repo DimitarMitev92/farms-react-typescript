@@ -2,10 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { FarmCard } from "./CatalogFarmCard/CatalogFarmCard";
 import { UserContext } from "../../../../context/UserContext";
-import { Farm } from "./CatalogFarmCard/CatalogFarmCard.static";
 import { CatalogContainer } from "../../../../styles/Card.styled";
-import { fetchFarms } from "./CatalogFarm.logic";
-import { ApiError } from "./CatalogFarm.static";
 import { useNavigate } from "react-router-dom";
 import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
@@ -15,7 +12,9 @@ import {
   Title,
 } from "../../../../styles/Global.styled";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
-import { create, endpoint, update } from "../../../../static/endPoints";
+import { create, endpoint, method, update } from "../../../../static/endPoints";
+import { ApiError, Farm } from "../../../../static/interfaces";
+import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
@@ -31,8 +30,14 @@ export const CatalogFarm = () => {
       setIsLoading(true);
       try {
         if (user) {
-          const farms = await fetchFarms(user);
-          setFarms(farms);
+          const fetchedData = await fetchDataFromApi(
+            endpoint.FARM,
+            user,
+            method.GET,
+            null,
+            "Error fetching farms"
+          );
+          setFarms(fetchedData);
         }
       } catch (error) {
         console.error(error);

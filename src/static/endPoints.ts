@@ -13,6 +13,11 @@ export const endpoint = {
   REGISTER: "http://localhost:8080/auth/register",
 };
 
+export const mainRoute = {
+  MAIN: "/",
+  NOT_FOUND: "*",
+};
+
 export const method = {
   GET: "GET",
   POST: "POST",
@@ -39,6 +44,13 @@ export const update = {
   FIELD: "/update/field",
   FIELD_CULTIVATION: "/update/field-cultivation",
   MACHINERY: "/update/machinery",
+};
+
+export const updateRouteId = {
+  FARM: "/update/farm/:id",
+  FIELD: "/update/field/:id",
+  MACHINERY: "/update/machinery/:id",
+  FIELD_CULTIVATION: "/update/field-cultivation/:id",
 };
 
 export const reporting = {

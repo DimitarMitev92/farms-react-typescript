@@ -26,8 +26,8 @@ import { NotFound } from "./components/pages/NotFound/NotFound";
 import { routes } from "./routes/routes.static";
 
 import { UserContext } from "./context/UserContext";
-import { UserDataFromApi } from "./components/pages/Login/Login.static";
 import PrivateRoutes from "./guards/PrivateRoutes";
+import { UserDataFromApi } from "./static/interfaces";
 
 function App() {
   const [user, setUser] = useState<UserDataFromApi | null>(null);

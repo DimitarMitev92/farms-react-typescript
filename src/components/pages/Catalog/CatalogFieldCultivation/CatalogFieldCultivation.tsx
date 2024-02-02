@@ -5,7 +5,6 @@ import { UserContext } from "../../../../context/UserContext";
 import { fetchFieldCultivation } from "./CatalogFieldCultivation.logic";
 import { rightsOfUser } from "../../../../utils/helpers";
 import { permDelete, softDelete } from "../../../../services/deleteService";
-import { ApiError } from "../CatalogFarm/CatalogFarm.static";
 import {
   Button,
   ColumnContainer,
@@ -27,6 +26,7 @@ import {
 } from "../../../../styles/Card.styled";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 import { create, endpoint, update } from "../../../../static/endPoints";
+import { ApiError } from "../../../../static/interfaces";
 
 export const CatalogFieldCultivation = () => {
   const [fieldCultivations, setFieldCultivations] = useState<

@@ -1,9 +1,5 @@
-import { Farm } from "./CatalogFarmCard/CatalogFarmCard.static";
+import { Farm } from "../../../../static/interfaces";
 
 export interface FarmCatalogProps {
   farms: Farm[];
-}
-
-export interface ApiError {
-  message: string;
 }

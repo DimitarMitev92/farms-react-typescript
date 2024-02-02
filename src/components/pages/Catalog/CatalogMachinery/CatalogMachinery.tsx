@@ -3,7 +3,6 @@ import { UserContext } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { fetchMachinery } from "./CatalogMachinery.logic";
 import { permDelete, softDelete } from "../../../../services/deleteService";
-import { ApiError } from "../CatalogFarm/CatalogFarm.static";
 import { MachineryFromApi } from "./CatalogMachinery.static";
 import {
   Button,
@@ -27,6 +26,7 @@ import {
 import { rightsOfUser } from "../../../../utils/helpers";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 import { create, endpoint, update } from "../../../../static/endPoints";
+import { ApiError } from "../../../../static/interfaces";
 
 export const CatalogMachinery = () => {
   const [machineries, setMachineries] = useState<MachineryFromApi[]>([]);

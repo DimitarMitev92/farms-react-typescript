@@ -41,18 +41,6 @@ export const machineryData = [
   },
 ];
 
-export interface Farm {
-  id: string;
-  name: string;
-  location: {
-    coordinates: [number, number];
-    type: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
-
 export interface MachineryHandler extends FieldValues {
   brand: string;
   mode: string;

@@ -1,5 +1,5 @@
 import { endpoint, header, method } from "../../../../static/endPoints";
-import { UserDataFromApi } from "../../Login/Login.static";
+import { UserDataFromApi } from "../../../../static/interfaces";
 import { MachineryHandler } from "./CreateMachinery.static";
 
 export const fetchFarms = async (user: UserDataFromApi) => {

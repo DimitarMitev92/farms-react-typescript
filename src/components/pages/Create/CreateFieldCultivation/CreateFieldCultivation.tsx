@@ -1,11 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  Crop,
-  Cultivation,
   FieldCultivationHandler,
   FieldOption,
-  Machinery,
   fieldCultivationData,
   fieldCultivationSchema,
 } from "./CreateFieldCultivation.static";
@@ -32,6 +29,7 @@ import {
 } from "./CreateFieldCultivation.logic";
 import { Button } from "../../../../styles/Global.styled";
 import { catalog } from "../../../../static/endPoints";
+import { Crop, Cultivation, Machinery } from "../../../../static/interfaces";
 
 export const CreateFieldCultivation = () => {
   const {

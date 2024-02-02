@@ -1,8 +1,8 @@
-import { RequestOptionsMachinery } from "./UpdateMachinery.static";
+import { RequestOptions } from "../../../../static/interfaces";
 
 export const machineryService = async (
   url: string,
-  options: RequestOptionsMachinery
+  options: RequestOptions
 ) => {
   try {
     const response = await fetch(url, options);

@@ -6,7 +6,6 @@ import { FieldFromApi } from "./CatalogField.static";
 import { fetchFields } from "./CatalogField.logic";
 import { useNavigate } from "react-router-dom";
 import { permDelete, softDelete } from "../../../../services/deleteService";
-import { ApiError } from "../CatalogFarm/CatalogFarm.static";
 import {
   Button,
   ColumnContainer,
@@ -15,6 +14,7 @@ import {
 } from "../../../../styles/Global.styled";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 import { create, endpoint, update } from "../../../../static/endPoints";
+import { ApiError } from "../../../../static/interfaces";
 
 export const CatalogField = () => {
   const [fields, setFields] = useState<FieldFromApi[]>([]);

@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  Farm,
   MachineryHandler,
   machineryData,
   machinerySchema,
@@ -22,6 +21,7 @@ import React from "react";
 import { createMachinery, fetchFarms } from "./CreateMachinery.logic";
 import { Button } from "../../../../styles/Global.styled";
 import { catalog } from "../../../../static/endPoints";
+import { Farm } from "../../../../static/interfaces";
 
 export const CreateMachinery = () => {
   const {

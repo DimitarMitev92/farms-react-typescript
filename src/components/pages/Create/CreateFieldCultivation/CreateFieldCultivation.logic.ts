@@ -1,7 +1,7 @@
 // apiServices.js
 
 import { endpoint, header, method } from "../../../../static/endPoints";
-import { UserDataFromApi } from "../../Login/Login.static";
+import { UserDataFromApi } from "../../../../static/interfaces";
 import {
   FieldCultivationHandler,
   GrowingProcessHandler,

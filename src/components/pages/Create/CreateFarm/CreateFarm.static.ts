@@ -54,12 +54,6 @@ export interface FarmHandler extends FieldValues {
   location: string | { type: string; coordinates: [number, number] };
 }
 
-export interface RequestOptionsFarm {
-  method: string;
-  headers?: Record<string, string>;
-  body?: string;
-}
-
 export interface FarmDataFromApi {
   id: string;
   name: string;

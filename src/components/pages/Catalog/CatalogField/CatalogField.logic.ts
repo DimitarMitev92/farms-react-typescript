@@ -1,58 +1,52 @@
+import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 import { endpoint, method } from "../../../../static/endPoints";
-import { UserDataFromApi } from "../../Login/Login.static";
+import { UserDataFromApi } from "../../../../static/interfaces";
 import { FieldFromApi } from "./CatalogField.static";
 
 export const fetchFields = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(endpoint.FIELD, {
-      method: method.GET,
-      headers: { Authorization: `Bearer ${user.access_token}` },
-    });
+    const url = endpoint.FIELD;
+    const methodType = method.GET;
+    const body = null;
+    const errorMsg = "Failed to fetch fields";
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch farms. Status: ${response.status}`);
-    }
-
-    const dataArray = await response.json();
+    const response = await fetchDataFromApi(
+      url,
+      user,
+      methodType,
+      body,
+      errorMsg
+    );
 
     const updatedDataArray = await Promise.all(
-      dataArray.map(async (data: FieldFromApi) => {
-        const responseSoil = await fetch(`${endpoint.SOIL}/${data.soilId}`, {
-          method: method.GET,
-          headers: { Authorization: `Bearer ${user.access_token}` },
-        });
+      response.map(async (data: FieldFromApi) => {
+        const responseSoil = await fetchDataFromApi(
+          `${endpoint.SOIL}/${data.soilId}`,
+          user,
+          method.GET,
+          null,
+          `Failed to fetch soil for field ${data.id}`
+        );
 
-        if (!responseSoil.ok) {
-          throw new Error(
-            `Failed to fetch soil. Status: ${responseSoil.status}`
-          );
-        }
-
-        const soilData = await responseSoil.json();
-
-        const responseFarm = await fetch(`${endpoint.FARM}/${data.farmId}`, {
-          method: method.GET,
-          headers: { Authorization: `Bearer ${user.access_token}` },
-        });
-
-        if (!responseFarm.ok) {
-          throw new Error(
-            `Failed to fetch farm. Status: ${responseFarm.status}`
-          );
-        }
-
-        const farmData = await responseFarm.json();
+        const responseFarm = await fetchDataFromApi(
+          `${endpoint.FARM}/${data.farmId}`,
+          user,
+          method.GET,
+          null,
+          `Failed to fetch farm for field ${data.id}`
+        );
 
         return {
           ...data,
-          farm: { name: farmData.name },
-          soil: { soil: soilData.soil },
+          farm: { name: responseFarm.name },
+          soil: { soil: responseSoil.soil },
         };
       })
     );
+
     return updatedDataArray;
   } catch (error) {
-    console.error("Error fetching farms:", error);
+    console.error("Error fetching fields:", error);
     throw error;
   }
 };

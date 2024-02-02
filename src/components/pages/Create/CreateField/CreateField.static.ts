@@ -32,26 +32,6 @@ export const fieldData = [
   },
 ];
 
-export interface Soil {
-  id: string;
-  soil: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
-
-export interface Farm {
-  id: string;
-  name: string;
-  location: {
-    coordinates: [number, number];
-    type: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
-
 export interface FieldHandler extends FieldValues {
   name: string;
   location: string | { type: string; coordinates: number[][][] };

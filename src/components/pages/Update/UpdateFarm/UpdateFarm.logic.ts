@@ -1,6 +1,6 @@
-import { RequestOptionsFarm } from "../../Create/CreateFarm/CreateFarm.static";
+import { RequestOptions } from "../../../../static/interfaces";
 
-export const farmService = async (url: string, options: RequestOptionsFarm) => {
+export const farmService = async (url: string, options: RequestOptions) => {
   try {
     const response = await fetch(url, options);
     const data = await response.json();

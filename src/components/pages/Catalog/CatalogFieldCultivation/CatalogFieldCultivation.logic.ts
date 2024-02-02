@@ -1,118 +1,80 @@
+import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 import { endpoint, method } from "../../../../static/endPoints";
-import { UserDataFromApi } from "../../Login/Login.static";
+import { UserDataFromApi } from "../../../../static/interfaces";
 import { FieldCultivationFroApi } from "./CatalogFieldCultivation.static";
 
 export const fetchFieldCultivation = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(endpoint.FIELD_CULTIVATION, {
-      method: method.GET,
-      headers: { Authorization: `Bearer ${user.access_token}` },
-    });
+    const url = endpoint.FIELD_CULTIVATION;
+    const methodType = method.GET;
+    const body = null;
+    const errorMsg = "Failed to fetch field cultivation";
 
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch field cultivation: Status: ${response.status}`
-      );
-    }
-
-    const fieldCultivationData = await response.json();
+    const response = await fetchDataFromApi(
+      url,
+      user,
+      methodType,
+      body,
+      errorMsg
+    );
 
     const updatedDataArray = await Promise.all(
-      fieldCultivationData.map(async (data: FieldCultivationFroApi) => {
-        const responseCultivation = await fetch(
+      response.map(async (data: FieldCultivationFroApi) => {
+        const responseCultivation = await fetchDataFromApi(
           `${endpoint.CULTIVATION}/${data.cultivationId}`,
-          {
-            method: method.GET,
-            headers: { Authorization: `Bearer ${user.access_token}` },
-          }
+          user,
+          method.GET,
+          null,
+          `Failed to fetch cultivation for field cultivation ${data.id}`
         );
 
-        if (!responseCultivation.ok) {
-          throw new Error(
-            `Failed to fetch cultivation. Status ${responseCultivation.status}`
-          );
-        }
-
-        const cultivationData = await responseCultivation.json();
-        const responseMachinery = await fetch(
+        const responseMachinery = await fetchDataFromApi(
           `${endpoint.MACHINERY}/${data.machineryId}`,
-          {
-            method: method.GET,
-            headers: { Authorization: `Bearer ${user.access_token}` },
-          }
+          user,
+          method.GET,
+          null,
+          `Failed to fetch machinery for field cultivation ${data.id}`
         );
 
-        if (!responseMachinery.ok) {
-          throw new Error(
-            `Failed to fetch machinery. Status ${responseMachinery.status}`
-          );
-        }
-
-        const machineryData = await responseMachinery.json();
-
-        const responseGrowingProcess = await fetch(
+        const responseGrowingProcess = await fetchDataFromApi(
           `${endpoint.GROWING_PROCESS}/${data.growingProcessId}`,
-          {
-            method: method.GET,
-            headers: { Authorization: `Bearer ${user.access_token}` },
-          }
+          user,
+          method.GET,
+          null,
+          `Failed to fetch growing process for field cultivation ${data.id}`
         );
 
-        if (!responseGrowingProcess.ok) {
-          throw new Error(
-            `Failed to fetch growing process. Status ${responseGrowingProcess.status}`
-          );
-        }
-
-        const growingProcessData = await responseGrowingProcess.json();
-
-        const responseCrop = await fetch(
-          `
-        ${endpoint.CROP}/${growingProcessData.cropId}`,
-          {
-            method: method.GET,
-            headers: { Authorization: `Bearer ${user.access_token}` },
-          }
+        const responseCrop = await fetchDataFromApi(
+          `${endpoint.CROP}/${responseGrowingProcess.cropId}`,
+          user,
+          method.GET,
+          null,
+          `Failed to fetch crop for field cultivation ${data.id}`
         );
 
-        if (!responseCrop.ok) {
-          throw new Error(
-            `Failed to fetch crop. Status ${responseCrop.status}`
-          );
-        }
-
-        const cropData = await responseCrop.json();
-
-        const responseField = await fetch(
-          `${endpoint.FIELD}/${growingProcessData.fieldId}`,
-          {
-            method: method.GET,
-            headers: { Authorization: `Bearer ${user.access_token}` },
-          }
+        const responseField = await fetchDataFromApi(
+          `${endpoint.FIELD}/${responseGrowingProcess.fieldId}`,
+          user,
+          method.GET,
+          null,
+          `Failed to fetch field for field cultivation ${data.id}`
         );
-
-        if (!responseField.ok) {
-          throw new Error(
-            `Failed to fetch field. Status ${responseField.status}`
-          );
-        }
-
-        const fieldData = await responseField.json();
 
         return {
           ...data,
-          cultivation: { cultivation: cultivationData.cultivation },
+          cultivation: { cultivation: responseCultivation.cultivation },
           machinery: {
-            identificationNumber: machineryData.identificationNumber,
+            identificationNumber: responseMachinery.identificationNumber,
           },
-          crop: { crop: cropData.crop },
-          field: { name: fieldData.name },
+          crop: { crop: responseCrop.crop },
+          field: { name: responseField.name },
         };
       })
     );
 
     return updatedDataArray;
   } catch (error) {
-    console.error(`Error fetching field cultivation:`, error);
+    console.error("Error fetching field cultivation:", error);
+    throw error;
   }
 };

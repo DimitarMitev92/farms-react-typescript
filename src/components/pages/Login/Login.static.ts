@@ -26,19 +26,3 @@ export interface FormLoginData {
   email: string;
   password: string;
 }
-
-export interface RequestOptionsLogin {
-  method: string;
-  headers?: Record<string, string>;
-  body?: string;
-}
-
-export interface UserDataFromApi {
-  user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    rights: "OWNER" | "OPERATOR" | "VIEWER";
-  };
-  access_token: string;
-}

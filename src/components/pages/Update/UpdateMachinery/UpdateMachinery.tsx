@@ -11,7 +11,6 @@ import {
 import { Button } from "../../../../styles/Global.styled";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  Farm,
   MachineryHandler,
   machineryData,
   machinerySchema,
@@ -27,6 +26,7 @@ import {
   header,
   method,
 } from "../../../../static/endPoints";
+import { Farm } from "../../../../static/interfaces";
 
 export const UpdateMachinery = () => {
   const {

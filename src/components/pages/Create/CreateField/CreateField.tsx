@@ -1,12 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
-import {
-  Farm,
-  FieldHandler,
-  Soil,
-  fieldData,
-  fieldSchema,
-} from "./CreateField.static";
+import { FieldHandler, fieldData, fieldSchema } from "./CreateField.static";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +19,7 @@ import { FormFarmData } from "../CreateFarm/CreateFarm.static";
 import { createField, fetchFarms, fetchSoils } from "./CreateField.logic";
 import { Button } from "../../../../styles/Global.styled";
 import { catalog } from "../../../../static/endPoints";
+import { Farm, Soil } from "../../../../static/interfaces";
 
 export const CreateField = () => {
   const {

@@ -1,5 +1,5 @@
 import { endpoint, header, method } from "../../../../static/endPoints";
-import { UserDataFromApi } from "../../Login/Login.static";
+import { UserDataFromApi } from "../../../../static/interfaces";
 import { FieldHandler } from "./CreateField.static";
 
 export const fetchSoils = async (user: UserDataFromApi) => {

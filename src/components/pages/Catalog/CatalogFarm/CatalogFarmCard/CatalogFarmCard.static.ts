@@ -1,14 +1,4 @@
-export interface Farm {
-  id: string;
-  name: string;
-  location: {
-    coordinates: [number, number];
-    type: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
+import { Farm } from "../../../../../static/interfaces";
 
 export interface FarmCardProps {
   farm: Farm;

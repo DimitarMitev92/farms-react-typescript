@@ -1,5 +1,6 @@
 import { FieldValues } from "react-hook-form";
 import { z } from "zod";
+import { Field } from "../../../../static/interfaces";
 
 export const fieldCultivationSchema = z.object({
   cultivationId: z
@@ -52,47 +53,6 @@ export const fieldCultivationData = [
     errorsMsg: "startingDate.message",
   },
 ];
-
-export interface Cultivation {
-  id: string;
-  cultivation: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
-
-export interface Machinery {
-  id: string;
-  farmId: string;
-  brand: string;
-  model: string;
-  identificationNumber: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
-
-export interface Crop {
-  id: string;
-  crop: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
-
-export interface Field {
-  id: string;
-  name: string;
-  boundaries: {
-    coordinates: number[][][];
-    type: string;
-  };
-  soilId: string;
-  farmId: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
 
 export interface FieldOption extends Field {
   value: string;

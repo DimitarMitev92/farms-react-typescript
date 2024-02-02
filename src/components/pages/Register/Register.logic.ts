@@ -1,8 +1,8 @@
-import { RequestOptionsRegister, UserDataFromApi } from "./Register.static";
+import { RequestOptions, UserDataFromApi } from "../../../static/interfaces";
 
 export const registerService = async (
   url: string,
-  options: RequestOptionsRegister
+  options: RequestOptions
 ): Promise<UserDataFromApi> => {
   try {
     const response = await fetch(url, options);

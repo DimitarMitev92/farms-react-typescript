@@ -1,4 +1,4 @@
-import { UserDataFromApi } from "../components/pages/Login/Login.static";
+import { UserDataFromApi } from "../static/interfaces";
 
 export const rightsOfUser = (user: UserDataFromApi) => {
   if (user) {

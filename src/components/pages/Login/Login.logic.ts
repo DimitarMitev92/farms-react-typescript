@@ -1,8 +1,8 @@
-import { RequestOptionsLogin, UserDataFromApi } from "./Login.static";
+import { RequestOptions, UserDataFromApi } from "../../../static/interfaces";
 
 export const loginService = async (
   url: string,
-  options: RequestOptionsLogin
+  options: RequestOptions
 ): Promise<UserDataFromApi> => {
   try {
     const response = await fetch(url, options);
