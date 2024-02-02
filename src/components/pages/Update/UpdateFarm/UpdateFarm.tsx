@@ -57,7 +57,7 @@ export const UpdateFarm: React.FC = () => {
         setValue("name", farmData.name);
         setValue("location", farmData.location.coordinates.join(","));
       } catch (error) {
-        console.log("Error fetching farm data:", error);
+        console.error("Error fetching farm data:", error);
       }
     };
 

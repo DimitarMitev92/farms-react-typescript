@@ -88,7 +88,7 @@ export const UpdateMachinery = () => {
         setValue("identificationNumber", machineryData.identificationNumber);
         setValue("farmId", machineryData.farmId);
       } catch (error) {
-        console.log("Error fetching farm data:", error);
+        console.error("Error fetching farm data:", error);
       }
     };
 

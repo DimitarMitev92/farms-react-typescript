@@ -1,6 +1,6 @@
 import { UserDataFromApi } from "../static/interfaces";
 
-class FetchDataError extends Error {
+export class FetchDataError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "FetchDataError";
@@ -32,7 +32,6 @@ export const fetchDataFromApi = async (
       const errorData = await response.json();
       throw new FetchDataError(`${errorMsg}: ${errorData.message}`);
     }
-
     return await response.json();
   } catch (error: unknown) {
     console.error(error);

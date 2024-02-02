@@ -7,7 +7,7 @@ export const machinerySchema = z.object({
   identificationNumber: z
     .string()
     .nonempty({ message: "Identification number is required." }),
-  farmId: z.string().uuid().nonempty({ message: "Farm is required." }),
+  farmId: z.string().nonempty({ message: "Farm is required." }),
 });
 
 export const machineryData = [
@@ -43,7 +43,7 @@ export const machineryData = [
 
 export interface MachineryHandler extends FieldValues {
   brand: string;
-  mode: string;
+  model: string;
   identificationNumber: string;
   farmId: string;
 }

@@ -59,7 +59,6 @@ export const CreateField = () => {
         }
       } catch (error) {
         if (error instanceof Error) {
-          console.log("HIT");
           setError("root", {
             message: error.message,
           });
