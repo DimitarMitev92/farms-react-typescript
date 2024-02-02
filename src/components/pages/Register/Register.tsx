@@ -1,14 +1,20 @@
 import React, { useContext } from "react";
-import { Form, Label, Input, ErrorMsg } from "../../../styles/Form.styled";
+import {
+  Form,
+  Label,
+  Input,
+  ErrorMsg,
+  FormTitle,
+} from "../../../styles/Form.styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
 import { FormRegisterData, registerData, schema } from "./Register.static";
 import { useNavigate } from "react-router-dom";
-import { registerService } from "./Register.logic";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { UserContext } from "../../../context/UserContext";
 import { Button } from "../../../styles/Global.styled";
 import { catalog, endpoint, header, method } from "../../../static/endPoints";
+import { signService } from "../../../services/signService";
 
 export const Register: React.FC = () => {
   const {
@@ -40,7 +46,7 @@ export const Register: React.FC = () => {
         }),
       };
 
-      const userDataFromApi = await registerService(url, options);
+      const userDataFromApi = await signService(url, options);
       setItem("user", JSON.stringify(userDataFromApi));
       setUser(userDataFromApi);
       navigate(`${catalog.FARM}`);
@@ -57,6 +63,7 @@ export const Register: React.FC = () => {
 
   return (
     <Form onSubmit={handleSubmit(onRegisterHandler)}>
+      <FormTitle>Register</FormTitle>
       {registerData.map((el, key) => {
         return (
           <React.Fragment key={key}>

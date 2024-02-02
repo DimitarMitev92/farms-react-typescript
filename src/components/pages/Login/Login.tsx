@@ -1,14 +1,20 @@
 import React, { useContext } from "react";
-import { Form, Label, Input, ErrorMsg } from "../../../styles/Form.styled";
+import {
+  Form,
+  Label,
+  Input,
+  ErrorMsg,
+  FormTitle,
+} from "../../../styles/Form.styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
 import { loginData, schema, FormLoginData } from "./Login.static";
 import { useNavigate } from "react-router-dom";
-import { loginService } from "./Login.logic";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { UserContext } from "../../../context/UserContext";
 import { Button } from "../../../styles/Global.styled";
 import { catalog, endpoint, header, method } from "../../../static/endPoints";
+import { signService } from "../../../services/signService";
 
 export const Login: React.FC = () => {
   const {
@@ -35,7 +41,7 @@ export const Login: React.FC = () => {
         }),
       };
 
-      const userDataFromApi = await loginService(endpoint.LOGIN, options);
+      const userDataFromApi = await signService(endpoint.LOGIN, options);
       setItem("user", JSON.stringify(userDataFromApi));
       setUser(userDataFromApi);
       navigate(`${catalog.FARM}`);
@@ -52,6 +58,7 @@ export const Login: React.FC = () => {
 
   return (
     <Form onSubmit={handleSubmit(onLoginHandler)}>
+      <FormTitle>Login</FormTitle>
       {loginData.map((el, key) => (
         <React.Fragment key={key}>
           <Label>{el.placeholder}</Label>
