@@ -5,8 +5,8 @@ const primaryColor = mainColors.primaryColor;
 
 const pulseAnimation = keyframes`
   0% {
-    transform: scale(1);
-    opacity: 0.8;
+    transform: scale(0.95);
+    opacity: 0.7;
   }
   50% {
     transform: scale(1.01);
