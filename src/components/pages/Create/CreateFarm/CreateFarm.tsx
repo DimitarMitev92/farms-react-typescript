@@ -1,29 +1,25 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useContext } from "react";
-import {
-  Form,
-  Label,
-  Input,
-  ErrorMsg,
-  FormTitle,
-} from "../../../../styles/Form.styled";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../../../context/UserContext";
 import {
   FarmHandler,
   FarmObj,
   farmData,
   farmSchema,
 } from "./CreateFarm.static";
-import { farmService } from "./CreateFarm.logic";
-import { Button } from "../../../../styles/Global.styled";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useContext } from "react";
+import { UserContext } from "../../../../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
+import { catalog, endpoint, method } from "../../../../static/endPoints";
 import {
-  catalog,
-  endpoint,
-  header,
-  method,
-} from "../../../../static/endPoints";
+  ErrorMsg,
+  Form,
+  FormTitle,
+  Input,
+  Label,
+} from "../../../../styles/Form.styled";
+import React from "react";
+import { Button } from "../../../../styles/Global.styled";
 
 export const CreateFarm: React.FC = () => {
   const {
@@ -36,7 +32,6 @@ export const CreateFarm: React.FC = () => {
   });
 
   const { user } = useContext(UserContext);
-
   const navigate = useNavigate();
 
   const onFarmHandler: SubmitHandler<FarmHandler> = async (farmObj) => {
@@ -57,16 +52,15 @@ export const CreateFarm: React.FC = () => {
         coordinates,
       } as FarmObj["location"];
 
-      const options = {
-        method: method.POST,
-        headers: {
-          ...header.CONTENT_TYPE_APP_JSON,
-          Authorization: `Bearer ${user?.access_token}`,
-        },
-        body: JSON.stringify(farmObj),
-      };
-
-      await farmService(endpoint.FARM, options);
+      if (user) {
+        await fetchDataFromApi(
+          endpoint.FARM,
+          user,
+          method.POST,
+          farmObj,
+          "Failed to create farm"
+        );
+      }
       navigate(`${catalog.FARM}`);
     } catch (error) {
       if (error instanceof Error) {
@@ -82,21 +76,19 @@ export const CreateFarm: React.FC = () => {
   return (
     <Form onSubmit={handleSubmit(onFarmHandler)}>
       <FormTitle>Create a farm</FormTitle>
-      {farmData.map((el, key) => {
-        return (
-          <React.Fragment key={key}>
-            <Label>{el.placeholder}</Label>
-            <Input
-              {...register(`${el.registerName}`)}
-              type={el.type}
-              placeholder={el.placeholder}
-            />
-            {errors[el.errors]?.message && (
-              <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
-            )}
-          </React.Fragment>
-        );
-      })}
+      {farmData.map((el, key) => (
+        <React.Fragment key={key}>
+          <Label>{el.placeholder}</Label>
+          <Input
+            {...register(`${el.registerName}`)}
+            type={el.type}
+            placeholder={el.placeholder}
+          />
+          {errors[el.errors]?.message && (
+            <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
+          )}
+        </React.Fragment>
+      ))}
 
       <Button disabled={isSubmitting} type="submit">
         {isSubmitting ? "Loading..." : "Submit"}
