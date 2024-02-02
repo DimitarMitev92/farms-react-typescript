@@ -1,32 +1,27 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  fieldData,
-  fieldSchema,
-} from "../../Create/CreateField/CreateField.static";
+// UpdateField.tsx
+import React, { useContext, useEffect, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../../../context/UserContext";
 import { useNavigate, useParams } from "react-router-dom";
+import { UserContext } from "../../../../context/UserContext";
 import {
+  ErrorMsg,
   Form,
   FormTitle,
   Label,
   Select,
   Option,
   Input,
-  ErrorMsg,
   TextArea,
 } from "../../../../styles/Form.styled";
-import React from "react";
 import { Button } from "../../../../styles/Global.styled";
+import { catalog, endpoint, method } from "../../../../static/endPoints";
 import { FieldUpdateHandler } from "./UpdateField.static";
-import { fieldService } from "./UpdateField.logic";
 import {
-  catalog,
-  endpoint,
-  header,
-  method,
-} from "../../../../static/endPoints";
+  fieldData,
+  fieldSchema,
+} from "../../Create/CreateField/CreateField.static";
+import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 import { Farm, Soil } from "../../../../static/interfaces";
 
 export const UpdateField = () => {
@@ -39,9 +34,7 @@ export const UpdateField = () => {
   } = useForm<FieldUpdateHandler>({ resolver: zodResolver(fieldSchema) });
 
   const { user } = useContext(UserContext);
-
   const navigate = useNavigate();
-
   const { id } = useParams();
 
   const [soilOptions, setSoilOptions] = useState<Soil[]>([]);
@@ -51,63 +44,45 @@ export const UpdateField = () => {
     const fetchSoils = async () => {
       try {
         const url = endpoint.SOIL;
-        const options = {
-          method: method.GET,
-          headers: {
-            ...header.CONTENT_TYPE_APP_JSON,
-            Authorization: `Bearer ${user?.access_token}`,
-          },
-        };
-
-        const soilsData = await fieldService(url, options);
+        const soilsData = await fetchDataFromApi(
+          url,
+          user!,
+          method.GET,
+          null,
+          "Error fetching soils data"
+        );
         setSoilOptions(soilsData);
       } catch (error) {
-        if (error instanceof Error) {
-          setError("root", {
-            message: error.message,
-          });
-        } else {
-          console.error("An unexpected error occurred:", error);
-        }
+        console.error("Error fetching soils data:", error);
       }
     };
 
     const fetchFarms = async () => {
       try {
         const url = endpoint.FARM;
-        const options = {
-          method: method.GET,
-          headers: {
-            ...header.CONTENT_TYPE_APP_JSON,
-            Authorization: `Bearer ${user?.access_token}`,
-          },
-        };
-
-        const farmsData = await fieldService(url, options);
+        const farmsData = await fetchDataFromApi(
+          url,
+          user!,
+          method.GET,
+          null,
+          "Error fetching farms data"
+        );
         setFarmOptions(farmsData);
       } catch (error) {
-        if (error instanceof Error) {
-          setError("root", {
-            message: error.message,
-          });
-        } else {
-          console.error("An unexpected error occurred:", error);
-        }
+        console.error("Error fetching farms data:", error);
       }
     };
 
     const fetchField = async () => {
       try {
         const url = `${endpoint.FIELD}/${id}`;
-        const options = {
-          method: method.GET,
-          headers: {
-            ...header.CONTENT_TYPE_APP_JSON,
-            Authorization: `Bearer ${user?.access_token}`,
-          },
-        };
-
-        const fieldData = await fieldService(url, options);
+        const fieldData = await fetchDataFromApi(
+          url,
+          user!,
+          method.GET,
+          null,
+          "Error fetching field data"
+        );
 
         setValue("name", fieldData.name);
         setValue("farmId", fieldData.farmId);
@@ -117,13 +92,7 @@ export const UpdateField = () => {
           JSON.stringify(fieldData.boundaries.coordinates)
         );
       } catch (error) {
-        if (error instanceof Error) {
-          setError("root", {
-            message: error.message,
-          });
-        } else {
-          console.error("An unexpected error occurred:", error);
-        }
+        console.error("Error fetching field data:", error);
       }
     };
 
@@ -145,16 +114,14 @@ export const UpdateField = () => {
       }
 
       const url = `${endpoint.FIELD}/${id}`;
-      const options = {
-        method: method.PATCH,
-        headers: {
-          ...header.CONTENT_TYPE_APP_JSON,
-          Authorization: `Bearer ${user?.access_token}`,
-        },
-        body: JSON.stringify(fieldObj),
-      };
 
-      await fieldService(url, options);
+      await fetchDataFromApi(
+        url,
+        user!,
+        method.PATCH,
+        fieldObj,
+        "Error updating field data"
+      );
       navigate(`${catalog.FIELD}`);
     } catch (error) {
       if (error instanceof Error) {
@@ -170,40 +137,38 @@ export const UpdateField = () => {
   return (
     <Form onSubmit={handleSubmit(onFieldHandler)}>
       <FormTitle>Create a field</FormTitle>
-      {fieldData.map((el, key) => {
-        return (
-          <React.Fragment key={key}>
-            <Label>{el.placeholder}</Label>
-            {el.type === "select" ? (
-              <Select {...register(`${el.registerName}`)}>
-                <Option value="" disabled>
-                  {el.placeholder}
-                </Option>
-                {el.registerName === "farmId"
-                  ? farmOptions.map((farm) => (
-                      <Option key={farm.id} value={farm.id}>
-                        {farm.name}
-                      </Option>
-                    ))
-                  : soilOptions.map((soil) => (
-                      <Option key={soil.id} value={soil.id}>
-                        {soil.soil}
-                      </Option>
-                    ))}
-              </Select>
-            ) : (
-              <Input
-                {...register(`${el.registerName}`)}
-                type={el.type}
-                placeholder={el.placeholder}
-              />
-            )}
-            {errors[el.errors]?.message && (
-              <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
-            )}
-          </React.Fragment>
-        );
-      })}
+      {fieldData.map((el, key) => (
+        <React.Fragment key={key}>
+          <Label>{el.placeholder}</Label>
+          {el.type === "select" ? (
+            <Select {...register(`${el.registerName}`)}>
+              <Option value="" disabled>
+                {el.placeholder}
+              </Option>
+              {el.registerName === "farmId"
+                ? farmOptions.map((farm) => (
+                    <Option key={farm.id} value={farm.id}>
+                      {farm.name}
+                    </Option>
+                  ))
+                : soilOptions.map((soil) => (
+                    <Option key={soil.id} value={soil.id}>
+                      {soil.soil}
+                    </Option>
+                  ))}
+            </Select>
+          ) : (
+            <Input
+              {...register(`${el.registerName}`)}
+              type={el.type}
+              placeholder={el.placeholder}
+            />
+          )}
+          {errors[el.errors]?.message && (
+            <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
+          )}
+        </React.Fragment>
+      ))}
       <Label>Boundaries</Label>
       <TextArea {...register(`boundaries`)} placeholder="Boundaries"></TextArea>
       {errors.boundaries && (

@@ -1,31 +1,26 @@
+// UpdateMachinery.tsx
 import React, { useContext, useEffect, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate, useParams } from "react-router-dom";
+import { UserContext } from "../../../../context/UserContext";
 import {
+  ErrorMsg,
   Form,
   FormTitle,
   Label,
   Select,
   Option,
   Input,
-  ErrorMsg,
 } from "../../../../styles/Form.styled";
 import { Button } from "../../../../styles/Global.styled";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { catalog, endpoint, method } from "../../../../static/endPoints";
 import {
   MachineryHandler,
   machineryData,
   machinerySchema,
 } from "../../Create/CreateMachinery/CreateMachinery.static";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UserContext } from "../../../../context/UserContext";
-import { useNavigate, useParams } from "react-router-dom";
-import { farmService } from "../UpdateFarm/UpdateFarm.logic";
-import { machineryService } from "./UpdateMachinery.logic";
-import {
-  catalog,
-  endpoint,
-  header,
-  method,
-} from "../../../../static/endPoints";
+import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 import { Farm } from "../../../../static/interfaces";
 
 export const UpdateMachinery = () => {
@@ -38,9 +33,7 @@ export const UpdateMachinery = () => {
   } = useForm<MachineryHandler>({ resolver: zodResolver(machinerySchema) });
 
   const { user } = useContext(UserContext);
-
   const navigate = useNavigate();
-
   const { id } = useParams();
 
   const [farmOptions, setFarmOptions] = useState<Farm[]>([]);
@@ -49,15 +42,13 @@ export const UpdateMachinery = () => {
     const fetchFarms = async () => {
       try {
         const url = endpoint.FARM;
-        const options = {
-          method: method.GET,
-          headers: {
-            ...header.CONTENT_TYPE_APP_JSON,
-            Authorization: `Bearer ${user?.access_token}`,
-          },
-        };
-
-        const farmsData = await farmService(url, options);
+        const farmsData = await fetchDataFromApi(
+          url,
+          user!,
+          method.GET,
+          null,
+          "Error fetching farms data"
+        );
         setFarmOptions(farmsData);
       } catch (error) {
         if (error instanceof Error) {
@@ -73,22 +64,20 @@ export const UpdateMachinery = () => {
     const fetchMachinery = async () => {
       try {
         const url = `${endpoint.MACHINERY}/${id}`;
-        const options = {
-          method: method.GET,
-          headers: {
-            ...header.CONTENT_TYPE_APP_JSON,
-            Authorization: `Bearer ${user?.access_token}`,
-          },
-        };
-
-        const machineryData = await machineryService(url, options);
+        const machineryData = await fetchDataFromApi(
+          url,
+          user!,
+          method.GET,
+          null,
+          "Error fetching machinery data"
+        );
 
         setValue("brand", machineryData.brand);
         setValue("model", machineryData.model);
         setValue("identificationNumber", machineryData.identificationNumber);
         setValue("farmId", machineryData.farmId);
       } catch (error) {
-        console.error("Error fetching farm data:", error);
+        console.error("Error fetching machinery data:", error);
       }
     };
 
@@ -101,16 +90,14 @@ export const UpdateMachinery = () => {
   ) => {
     try {
       const url = `${endpoint.MACHINERY}/${id}`;
-      const options = {
-        method: method.PATCH,
-        headers: {
-          ...header.CONTENT_TYPE_APP_JSON,
-          Authorization: `Bearer ${user?.access_token}`,
-        },
-        body: JSON.stringify(machineryObj),
-      };
 
-      await machineryService(url, options);
+      await fetchDataFromApi(
+        url,
+        user!,
+        method.PATCH,
+        machineryObj,
+        "Error updating machinery data"
+      );
       navigate(`${catalog.MACHINERY}`);
     } catch (error) {
       if (error instanceof Error) {

@@ -1,10 +1,7 @@
 import { RequestOptions } from "../../../../static/interfaces";
 
-
-export const fieldService = async (
-  url: string,
-  options: RequestOptions
-) => {
+// DELETE THIS AND REFACTOR UPDATE MACHINERY
+export const farmService = async (url: string, options: RequestOptions) => {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
