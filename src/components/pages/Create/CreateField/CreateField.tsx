@@ -1,24 +1,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FieldHandler, fieldData, fieldSchema } from "./CreateField.static";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
+import { catalog, endpoint, method } from "../../../../static/endPoints";
 import {
   Form,
+  FormTitle,
   Label,
-  Input,
-  ErrorMsg,
-  TextArea,
   Select,
   Option,
-  FormTitle,
+  Input,
+  ErrorMsg,
 } from "../../../../styles/Form.styled";
 import React from "react";
-import { FormFarmData } from "../CreateFarm/CreateFarm.static";
-import { createField, fetchFarms, fetchSoils } from "./CreateField.logic";
 import { Button } from "../../../../styles/Global.styled";
-import { catalog } from "../../../../static/endPoints";
 import { Farm, Soil } from "../../../../static/interfaces";
 
 export const CreateField = () => {
@@ -30,7 +28,6 @@ export const CreateField = () => {
   } = useForm<FieldHandler>({ resolver: zodResolver(fieldSchema) });
 
   const { user } = useContext(UserContext);
-
   const navigate = useNavigate();
 
   const [soilOptions, setSoilOptions] = useState<Soil[]>([]);
@@ -40,14 +37,29 @@ export const CreateField = () => {
     const fetchData = async () => {
       try {
         if (user) {
-          const soils = await fetchSoils(user);
-          setSoilOptions(soils);
+          const [soils, farms] = await Promise.all([
+            fetchDataFromApi(
+              endpoint.SOIL,
+              user,
+              method.GET,
+              null,
+              "Failed to fetch soils"
+            ),
+            fetchDataFromApi(
+              endpoint.FARM,
+              user,
+              method.GET,
+              null,
+              "Failed to fetch farms"
+            ),
+          ]);
 
-          const farms = await fetchFarms(user);
+          setSoilOptions(soils);
           setFarmOptions(farms);
         }
       } catch (error) {
         if (error instanceof Error) {
+          console.log("HIT");
           setError("root", {
             message: error.message,
           });
@@ -63,64 +75,63 @@ export const CreateField = () => {
   const onFieldHandler: SubmitHandler<FieldHandler> = async (fieldObj) => {
     try {
       if (user) {
-        await createField(user, fieldObj);
+        const coordinates = JSON.parse(fieldObj.boundaries);
+
+        fieldObj.boundaries = {
+          type: "Polygon",
+          coordinates,
+        };
+
+        await fetchDataFromApi(
+          endpoint.FIELD,
+          user,
+          method.POST,
+          fieldObj,
+          "Failed to create field"
+        );
         navigate(`${catalog.FIELD}`);
       }
     } catch (error) {
-      if (error instanceof Error) {
-        setError("root", {
-          message: error.message,
-        });
-      } else {
-        console.error("An unexpected error occurred:", error);
-      }
+      setError("root", {
+        message: String(error),
+      });
     }
   };
-
   return (
     <Form onSubmit={handleSubmit(onFieldHandler)}>
       <FormTitle>Create a field</FormTitle>
-      {fieldData.map((el, key) => {
-        return (
-          <React.Fragment key={key}>
-            <Label>{el.placeholder}</Label>
-            {el.type === "select" ? (
-              <Select {...register(`${el.registerName}`)}>
-                <Option value="" disabled>
-                  {el.placeholder}
-                </Option>
-                {el.registerName === "farmId"
-                  ? farmOptions.map((farm) => (
-                      <Option key={farm.id} value={farm.id}>
-                        {farm.name}
-                      </Option>
-                    ))
-                  : soilOptions.map((soil) => (
-                      <Option key={soil.id} value={soil.id}>
-                        {soil.soil}
-                      </Option>
-                    ))}
-              </Select>
-            ) : (
-              <Input
-                {...register(`${el.registerName}`)}
-                type={el.type}
-                placeholder={el.placeholder}
-              />
-            )}
-            {errors[el.errors]?.message && (
-              <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
-            )}
-          </React.Fragment>
-        );
-      })}
-      <Label>Boundaries</Label>
-      <TextArea {...register(`boundaries`)} placeholder="Boundaries"></TextArea>
-      {errors.boundaries && (
-        <ErrorMsg>
-          {errors.boundaries.message as keyof FieldErrors<FormFarmData>}
-        </ErrorMsg>
-      )}
+      {fieldData.map((el, key) => (
+        <React.Fragment key={key}>
+          <Label>{el.placeholder}</Label>
+          {el.type === "select" ? (
+            <Select {...register(`${el.registerName}`)}>
+              <Option value="" disabled>
+                {el.placeholder}
+              </Option>
+              {el.registerName === "farmId"
+                ? farmOptions.map((farm) => (
+                    <Option key={farm.id} value={farm.id}>
+                      {farm.name}
+                    </Option>
+                  ))
+                : soilOptions.map((soil) => (
+                    <Option key={soil.id} value={soil.id}>
+                      {soil.soil}
+                    </Option>
+                  ))}
+            </Select>
+          ) : (
+            <Input
+              {...register(`${el.registerName}`)}
+              type={el.type}
+              placeholder={el.placeholder}
+            />
+          )}
+          {errors[el.errors]?.message && (
+            <ErrorMsg>{errors[el.errors]?.message as string}</ErrorMsg>
+          )}
+        </React.Fragment>
+      ))}
 
       <Button disabled={isSubmitting} type="submit">
         {isSubmitting ? "Loading..." : "Submit"}

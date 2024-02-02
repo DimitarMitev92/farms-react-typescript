@@ -12,22 +12,27 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 3em;
+  border: 1px solid ${hoverColor}; /* Добавен бордер */
+  padding: 1em; /* Добавен padding за по-добър изглед */
 `;
+
 export const Label = styled.label`
+  display: block; /* Променен display на block */
   font-size: 1.2em;
   color: ${textColor};
   margin-top: 0.6em;
 `;
 
 export const FormTitle = styled.h2`
-  font-size: 2.4em;
+  font-size: 1.5em;
   color: ${textColor};
   margin-bottom: 1em;
 `;
 
 export const Input = styled.input`
   min-width: 20em;
-  margin: 1em 0;
+  margin: 0.2em 0; /* Променен margin за по-добър изглед с Label */
   padding: 0.8em;
   font-size: 1em;
   border: 1px solid ${hoverColor};
@@ -79,6 +84,6 @@ export const Option = styled.option`
 
 export const ErrorMsg = styled.div`
   color: red;
-  margin-top: 0.25em;
+  margin-top: 0.1em;
   font-size: 1em;
 `;

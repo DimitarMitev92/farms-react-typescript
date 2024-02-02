@@ -3,16 +3,10 @@ import { z } from "zod";
 import { Field } from "../../../../static/interfaces";
 
 export const fieldCultivationSchema = z.object({
-  cultivationId: z
-    .string()
-    .uuid()
-    .nonempty({ message: "Cultivation is required." }),
-  machineryId: z
-    .string()
-    .uuid()
-    .nonempty({ message: "Machinery is required." }),
-  cropId: z.string().uuid().nonempty({ message: "Crop is required." }),
-  fieldId: z.string().uuid().nonempty({ message: "Field is required." }),
+  cultivationId: z.string().nonempty({ message: "Cultivation is required." }),
+  machineryId: z.string().nonempty({ message: "Machinery is required." }),
+  cropId: z.string().nonempty({ message: "Crop is required." }),
+  fieldId: z.string().nonempty({ message: "Field is required." }),
   startingDate: z.string().nullable(),
 });
 
@@ -27,7 +21,7 @@ export const fieldCultivationData = [
   {
     registerName: "machineryId",
     type: "select",
-    placeholder: "Select machinery",
+    placeholder: "Select machinery id",
     errors: "machineryId",
     errorsMsg: "machineryId.message",
   },
@@ -59,14 +53,16 @@ export interface FieldOption extends Field {
   label: string;
 }
 
+export interface FieldCultivationForRes {
+  growingProcessId: string;
+  cultivationId: string;
+  machineryId: string;
+  startingDate: Date;
+}
+
 export interface FieldCultivationHandler extends FieldValues {
   cultivationId: string;
   machineryId: string;
   growingProcessId: string;
   startingDate: Date;
-}
-
-export interface GrowingProcessHandler {
-  cropId: string;
-  fieldId: string;
 }

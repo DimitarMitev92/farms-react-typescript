@@ -29,7 +29,7 @@ export const ColumnContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  margin: 1em 0 4em 0;
+  margin: 1em 0 0.5em 0;
   padding: 1em 2em;
   font-size: 18px;
   background-color: ${primaryColor};

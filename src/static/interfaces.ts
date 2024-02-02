@@ -1,5 +1,5 @@
 export interface Farm {
-  id: string;
+  id?: string;
   name: string;
   location: {
     coordinates: [number, number];
@@ -11,7 +11,7 @@ export interface Farm {
 }
 
 export interface Soil {
-  id: string;
+  id?: string;
   soil: string;
   createdAt: string;
   updatedAt: string;
@@ -19,7 +19,7 @@ export interface Soil {
 }
 
 export interface Cultivation {
-  id: string;
+  id?: string;
   cultivation: string;
   createdAt: string;
   updatedAt: string;
@@ -27,7 +27,7 @@ export interface Cultivation {
 }
 
 export interface Machinery {
-  id: string;
+  id?: string;
   farmId: string;
   brand: string;
   model: string;
@@ -38,7 +38,7 @@ export interface Machinery {
 }
 
 export interface Crop {
-  id: string;
+  id?: string;
   crop: string;
   createdAt: string;
   updatedAt: string;
@@ -46,7 +46,7 @@ export interface Crop {
 }
 
 export interface Field {
-  id: string;
+  id?: string;
   name: string;
   boundaries: {
     coordinates: number[][][];
@@ -57,6 +57,23 @@ export interface Field {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
+}
+
+export interface GrowingProcess {
+  id?: string;
+  cropId: string;
+  fieldId: string;
+}
+
+export interface FieldCultivation {
+  id?: string;
+  cultivationId: string;
+  machineryId: string;
+  growingProcessId: string;
+  startingDate: null | string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null | string;
 }
 
 export interface UserDataFromApi {

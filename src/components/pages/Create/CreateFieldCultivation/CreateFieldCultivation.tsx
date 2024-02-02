@@ -137,7 +137,7 @@ export const CreateFieldCultivation = () => {
                   : el.registerName === "machineryId"
                   ? machineryOptions.map((machinery) => (
                       <Option key={machinery.id} value={machinery.id}>
-                        {machinery.brand}
+                        {machinery.identificationNumber}
                       </Option>
                     ))
                   : el.registerName === "cropId"

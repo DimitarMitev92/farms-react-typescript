@@ -30,6 +30,13 @@ export const fieldData = [
     errors: "farmId",
     errorsMsg: "farmId.message",
   },
+  {
+    registerName: "boundaries",
+    type: "text",
+    placeholder: "Boundaries",
+    errors: "boundaries",
+    errorMsg: "boundaries.message",
+  },
 ];
 
 export interface FieldHandler extends FieldValues {

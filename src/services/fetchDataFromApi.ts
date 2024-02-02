@@ -1,5 +1,12 @@
 import { UserDataFromApi } from "../static/interfaces";
 
+class FetchDataError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "FetchDataError";
+  }
+}
+
 export const fetchDataFromApi = async (
   url: string,
   user: UserDataFromApi,
@@ -22,12 +29,13 @@ export const fetchDataFromApi = async (
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      throw new Error(`${errorMsg} Status: ${response.status}`);
+      const errorData = await response.json();
+      throw new FetchDataError(`${errorMsg}: ${errorData.message}`);
     }
 
     return await response.json();
-  } catch (error) {
-    console.error(`Error fetching data: ${errorMsg}`, error);
+  } catch (error: unknown) {
+    console.error(error);
     throw error;
   }
 };
