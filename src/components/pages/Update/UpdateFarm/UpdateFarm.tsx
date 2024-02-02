@@ -1,15 +1,9 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  FarmHandler,
-  FarmObj,
-  farmData,
-  farmSchema,
-} from "../../Create/CreateFarm/CreateFarm.static";
+// UpdateFarm.tsx
+import React, { useContext, useEffect } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../../../../context/UserContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { farmService } from "./UpdateFarm.logic";
+import { UserContext } from "../../../../context/UserContext";
 import {
   ErrorMsg,
   Form,
@@ -17,14 +11,15 @@ import {
   Input,
   Label,
 } from "../../../../styles/Form.styled";
-import React from "react";
 import { Button } from "../../../../styles/Global.styled";
+import { catalog, endpoint, method } from "../../../../static/endPoints";
 import {
-  catalog,
-  endpoint,
-  header,
-  method,
-} from "../../../../static/endPoints";
+  FarmHandler,
+  FarmObj,
+  farmData,
+  farmSchema,
+} from "../../Create/CreateFarm/CreateFarm.static";
+import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 
 export const UpdateFarm: React.FC = () => {
   const {
@@ -45,15 +40,14 @@ export const UpdateFarm: React.FC = () => {
     const fetchFarmData = async () => {
       try {
         const url = `${endpoint.FARM}/${id}`;
-        const options = {
-          method: method.GET,
-          headers: {
-            ...header.CONTENT_TYPE_APP_JSON,
-            Authorization: `Bearer ${user?.access_token}`,
-          },
-        };
 
-        const farmData = await farmService(url, options);
+        const farmData = await fetchDataFromApi(
+          url,
+          user!,
+          method.GET,
+          null,
+          "Error fetching farm data"
+        );
         setValue("name", farmData.name);
         setValue("location", farmData.location.coordinates.join(","));
       } catch (error) {
@@ -82,16 +76,15 @@ export const UpdateFarm: React.FC = () => {
         coordinates,
       } as FarmObj["location"];
 
-      const options = {
-        method: method.PATCH,
-        headers: {
-          ...header.CONTENT_TYPE_APP_JSON,
-          Authorization: `Bearer ${user?.access_token}`,
-        },
-        body: JSON.stringify(farmObj),
-      };
+      const url = `${endpoint.FARM}/${id}`;
 
-      await farmService(`${endpoint.FARM}/${id}`, options);
+      await fetchDataFromApi(
+        url,
+        user!,
+        method.PATCH,
+        farmObj,
+        "Error updating farm data"
+      );
       navigate(`${catalog.FARM}`);
     } catch (error) {
       if (error instanceof Error) {
