@@ -7,7 +7,6 @@ import { CatalogContainer } from "../../../../styles/Card.styled";
 import { fetchFarms } from "./CatalogFarm.logic";
 import { ApiError } from "./CatalogFarm.static";
 import { useNavigate } from "react-router-dom";
-import { API_CREATE_FARM_URL } from "../../Create/CreateFarm/CreateFarm.static";
 import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
   Button,
@@ -16,6 +15,7 @@ import {
   Title,
 } from "../../../../styles/Global.styled";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
+import { create, endpoint, update } from "../../../../static/endPoints";
 
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
@@ -45,13 +45,13 @@ export const CatalogFarm = () => {
   }, [user, triggerDelete]);
 
   const handleUpdate = (id: string) => {
-    navigate(`/update/farm/${id}`);
+    navigate(`${update.FARM}/${id}`);
   };
 
   const handleSoftDelete = async (id: string) => {
     try {
       if (user) {
-        await softDelete(id, user, API_CREATE_FARM_URL);
+        await softDelete(id, user, endpoint.FARM);
       }
       setTriggerDelete(!triggerDelete);
     } catch (error) {
@@ -62,7 +62,7 @@ export const CatalogFarm = () => {
   const handlePermDelete = async (id: string) => {
     try {
       if (user) {
-        await permDelete(id, user, API_CREATE_FARM_URL);
+        await permDelete(id, user, endpoint.FARM);
       }
       setTriggerDelete(!triggerDelete);
     } catch (error) {
@@ -78,7 +78,7 @@ export const CatalogFarm = () => {
     return (
       <ColumnContainer>
         <SubTitle>There are no farms to display.</SubTitle>
-        <Button onClick={() => navigate("/create/farm")}>Create</Button>
+        <Button onClick={() => navigate(`${create.FARM}`)}>Create</Button>
       </ColumnContainer>
     );
   }

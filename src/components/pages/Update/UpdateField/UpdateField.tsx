@@ -1,9 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  API_CREATE_FIELD_FARM_METHOD,
-  API_CREATE_FIELD_FARM_URL,
-  API_CREATE_FIELD_SOIL_METHOD,
-  API_CREATE_FIELD_SOIL_URL,
   Farm,
   Soil,
   fieldData,
@@ -25,14 +21,14 @@ import {
 } from "../../../../styles/Form.styled";
 import React from "react";
 import { Button } from "../../../../styles/Global.styled";
-import {
-  API_UPDATE_FIELD_HEADERS,
-  API_UPDATE_FIELD_METHOD_GET,
-  API_UPDATE_FIELD_METHOD_PATCH,
-  API_UPDATE_FIELD_URL,
-  FieldUpdateHandler,
-} from "./UpdateField.static";
+import { FieldUpdateHandler } from "./UpdateField.static";
 import { fieldService } from "./UpdateField.logic";
+import {
+  catalog,
+  endpoint,
+  header,
+  method,
+} from "../../../../static/endPoints";
 
 export const UpdateField = () => {
   const {
@@ -55,11 +51,11 @@ export const UpdateField = () => {
   useEffect(() => {
     const fetchSoils = async () => {
       try {
-        const url = API_CREATE_FIELD_SOIL_URL;
+        const url = endpoint.SOIL;
         const options = {
-          method: API_CREATE_FIELD_SOIL_METHOD,
+          method: method.GET,
           headers: {
-            ...API_UPDATE_FIELD_HEADERS,
+            ...header.CONTENT_TYPE_APP_JSON,
             Authorization: `Bearer ${user?.access_token}`,
           },
         };
@@ -79,11 +75,11 @@ export const UpdateField = () => {
 
     const fetchFarms = async () => {
       try {
-        const url = API_CREATE_FIELD_FARM_URL;
+        const url = endpoint.FARM;
         const options = {
-          method: API_CREATE_FIELD_FARM_METHOD,
+          method: method.GET,
           headers: {
-            ...API_UPDATE_FIELD_HEADERS,
+            ...header.CONTENT_TYPE_APP_JSON,
             Authorization: `Bearer ${user?.access_token}`,
           },
         };
@@ -103,11 +99,11 @@ export const UpdateField = () => {
 
     const fetchField = async () => {
       try {
-        const url = `${API_UPDATE_FIELD_URL}/${id}`;
+        const url = `${endpoint.FIELD}/${id}`;
         const options = {
-          method: API_UPDATE_FIELD_METHOD_GET,
+          method: method.GET,
           headers: {
-            ...API_UPDATE_FIELD_HEADERS,
+            ...header.CONTENT_TYPE_APP_JSON,
             Authorization: `Bearer ${user?.access_token}`,
           },
         };
@@ -149,18 +145,18 @@ export const UpdateField = () => {
         }
       }
 
-      const url = `${API_UPDATE_FIELD_URL}/${id}`;
+      const url = `${endpoint.FIELD}/${id}`;
       const options = {
-        method: API_UPDATE_FIELD_METHOD_PATCH,
+        method: method.PATCH,
         headers: {
-          ...API_UPDATE_FIELD_HEADERS,
+          ...header.CONTENT_TYPE_APP_JSON,
           Authorization: `Bearer ${user?.access_token}`,
         },
         body: JSON.stringify(fieldObj),
       };
 
       await fieldService(url, options);
-      navigate("/catalog/field");
+      navigate(`${catalog.FIELD}`);
     } catch (error) {
       if (error instanceof Error) {
         setError("root", {

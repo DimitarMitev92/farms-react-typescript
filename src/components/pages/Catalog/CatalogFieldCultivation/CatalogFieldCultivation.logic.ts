@@ -1,24 +1,11 @@
+import { endpoint, method } from "../../../../static/endPoints";
 import { UserDataFromApi } from "../../Login/Login.static";
-import {
-  API_FIELD_CULTIVATION_CROP_METHOD,
-  API_FIELD_CULTIVATION_CROP_URL,
-  API_FIELD_CULTIVATION_CULTIVATION_METHOD,
-  API_FIELD_CULTIVATION_CULTIVATION_URL,
-  API_FIELD_CULTIVATION_FIELD_METHOD,
-  API_FIELD_CULTIVATION_FIELD_URL,
-  API_FIELD_CULTIVATION_GROWING_PROCESS_METHOD,
-  API_FIELD_CULTIVATION_GROWING_PROCESS_URL,
-  API_FIELD_CULTIVATION_MACHINERY_METHOD,
-  API_FIELD_CULTIVATION_MACHINERY_URL,
-  API_FIELD_CULTIVATION_METHOD,
-  API_FIELD_CULTIVATION_URL,
-  FieldCultivationFroApi,
-} from "./CatalogFieldCultivation.static";
+import { FieldCultivationFroApi } from "./CatalogFieldCultivation.static";
 
 export const fetchFieldCultivation = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(API_FIELD_CULTIVATION_URL, {
-      method: API_FIELD_CULTIVATION_METHOD,
+    const response = await fetch(endpoint.FIELD_CULTIVATION, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 
@@ -33,9 +20,9 @@ export const fetchFieldCultivation = async (user: UserDataFromApi) => {
     const updatedDataArray = await Promise.all(
       fieldCultivationData.map(async (data: FieldCultivationFroApi) => {
         const responseCultivation = await fetch(
-          `${API_FIELD_CULTIVATION_CULTIVATION_URL}/${data.cultivationId}`,
+          `${endpoint.CULTIVATION}/${data.cultivationId}`,
           {
-            method: API_FIELD_CULTIVATION_CULTIVATION_METHOD,
+            method: method.GET,
             headers: { Authorization: `Bearer ${user.access_token}` },
           }
         );
@@ -48,9 +35,9 @@ export const fetchFieldCultivation = async (user: UserDataFromApi) => {
 
         const cultivationData = await responseCultivation.json();
         const responseMachinery = await fetch(
-          `${API_FIELD_CULTIVATION_MACHINERY_URL}/${data.machineryId}`,
+          `${endpoint.MACHINERY}/${data.machineryId}`,
           {
-            method: API_FIELD_CULTIVATION_MACHINERY_METHOD,
+            method: method.GET,
             headers: { Authorization: `Bearer ${user.access_token}` },
           }
         );
@@ -64,9 +51,9 @@ export const fetchFieldCultivation = async (user: UserDataFromApi) => {
         const machineryData = await responseMachinery.json();
 
         const responseGrowingProcess = await fetch(
-          `${API_FIELD_CULTIVATION_GROWING_PROCESS_URL}/${data.growingProcessId}`,
+          `${endpoint.GROWING_PROCESS}/${data.growingProcessId}`,
           {
-            method: API_FIELD_CULTIVATION_GROWING_PROCESS_METHOD,
+            method: method.GET,
             headers: { Authorization: `Bearer ${user.access_token}` },
           }
         );
@@ -81,9 +68,9 @@ export const fetchFieldCultivation = async (user: UserDataFromApi) => {
 
         const responseCrop = await fetch(
           `
-        ${API_FIELD_CULTIVATION_CROP_URL}/${growingProcessData.cropId}`,
+        ${endpoint.CROP}/${growingProcessData.cropId}`,
           {
-            method: API_FIELD_CULTIVATION_CROP_METHOD,
+            method: method.GET,
             headers: { Authorization: `Bearer ${user.access_token}` },
           }
         );
@@ -97,9 +84,9 @@ export const fetchFieldCultivation = async (user: UserDataFromApi) => {
         const cropData = await responseCrop.json();
 
         const responseField = await fetch(
-          `${API_FIELD_CULTIVATION_FIELD_URL}/${growingProcessData.fieldId}`,
+          `${endpoint.FIELD}/${growingProcessData.fieldId}`,
           {
-            method: API_FIELD_CULTIVATION_FIELD_METHOD,
+            method: method.GET,
             headers: { Authorization: `Bearer ${user.access_token}` },
           }
         );

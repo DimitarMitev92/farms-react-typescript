@@ -1,19 +1,11 @@
+import { endpoint, header, method } from "../../../../static/endPoints";
 import { UserDataFromApi } from "../../Login/Login.static";
-import {
-  API_CREATE_FIELD_FARM_METHOD,
-  API_CREATE_FIELD_FARM_URL,
-  API_CREATE_FIELD_HEADERS,
-  API_CREATE_FIELD_METHOD,
-  API_CREATE_FIELD_SOIL_METHOD,
-  API_CREATE_FIELD_SOIL_URL,
-  API_CREATE_FIELD_URL,
-  FieldHandler,
-} from "./CreateField.static";
+import { FieldHandler } from "./CreateField.static";
 
 export const fetchSoils = async (user: UserDataFromApi) => {
   try {
-    const soilResponse = await fetch(API_CREATE_FIELD_SOIL_URL, {
-      method: API_CREATE_FIELD_SOIL_METHOD,
+    const soilResponse = await fetch(endpoint.SOIL, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 
@@ -35,8 +27,8 @@ export const fetchSoils = async (user: UserDataFromApi) => {
 
 export const fetchFarms = async (user: UserDataFromApi) => {
   try {
-    const farmResponse = await fetch(API_CREATE_FIELD_FARM_URL, {
-      method: API_CREATE_FIELD_FARM_METHOD,
+    const farmResponse = await fetch(endpoint.FARM, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 
@@ -68,11 +60,11 @@ export const createField = async (
       coordinates: coordinates,
     };
 
-    const url = API_CREATE_FIELD_URL;
+    const url = endpoint.FIELD;
     const options = {
-      method: API_CREATE_FIELD_METHOD,
+      method: method.POST,
       headers: {
-        ...API_CREATE_FIELD_HEADERS,
+        ...header.CONTENT_TYPE_APP_JSON,
         Authorization: `Bearer ${user.access_token}`,
       },
       body: JSON.stringify(fieldObj),

@@ -1,15 +1,6 @@
 import { FieldValues } from "react-hook-form";
 import { z } from "zod";
 
-export const API_CREATE_MACHINERY_URL = "http://localhost:8080/machinery";
-export const API_CREATE_MACHINERY_METHOD = "POST";
-export const API_CREATE_MACHINERY_HEADERS = {
-  "Content-Type": "application/json",
-};
-
-export const API_CREATE_MACHINERY_FARM_URL = "http://localhost:8080/farm";
-export const API_CREATE_MACHINERY_FARM_METHOD = "GET";
-
 export const machinerySchema = z.object({
   brand: z.string().nonempty({ message: "Brand is required." }),
   model: z.string().nonempty({ message: "Model is required." }),

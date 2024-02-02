@@ -21,6 +21,7 @@ import {
 import React from "react";
 import { createMachinery, fetchFarms } from "./CreateMachinery.logic";
 import { Button } from "../../../../styles/Global.styled";
+import { catalog } from "../../../../static/endPoints";
 
 export const CreateMachinery = () => {
   const {
@@ -63,7 +64,7 @@ export const CreateMachinery = () => {
     try {
       if (user) {
         await createMachinery(user, machineryObj);
-        navigate("/catalog/machinery");
+        navigate(`${catalog.MACHINERY}`);
       }
     } catch (error) {
       if (error instanceof Error) {

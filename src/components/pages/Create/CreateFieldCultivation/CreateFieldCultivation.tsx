@@ -31,6 +31,7 @@ import {
   fetchMachinery,
 } from "./CreateFieldCultivation.logic";
 import { Button } from "../../../../styles/Global.styled";
+import { catalog } from "../../../../static/endPoints";
 
 export const CreateFieldCultivation = () => {
   const {
@@ -104,7 +105,7 @@ export const CreateFieldCultivation = () => {
         };
         await createFieldCultivation(fieldCultivationObjForRes, user);
 
-        navigate("/catalog/field-cultivation");
+        navigate(`${catalog.FIELD_CULTIVATION}`);
       }
     } catch (error) {
       if (error instanceof Error) {

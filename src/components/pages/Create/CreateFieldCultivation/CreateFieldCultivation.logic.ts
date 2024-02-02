@@ -1,29 +1,16 @@
 // apiServices.js
 
+import { endpoint, header, method } from "../../../../static/endPoints";
 import { UserDataFromApi } from "../../Login/Login.static";
 import {
-  API_CREATE_FIELD_CULTIVATION_CROP_METHOD,
-  API_CREATE_FIELD_CULTIVATION_CROP_URL,
-  API_CREATE_FIELD_CULTIVATION_CULTIVATION_METHOD,
-  API_CREATE_FIELD_CULTIVATION_CULTIVATION_URL,
-  API_CREATE_FIELD_CULTIVATION_FIELD_METHOD,
-  API_CREATE_FIELD_CULTIVATION_FIELD_URL,
-  API_CREATE_FIELD_CULTIVATION_GROWING_PROCESS_HEADERS,
-  API_CREATE_FIELD_CULTIVATION_GROWING_PROCESS_METHOD,
-  API_CREATE_FIELD_CULTIVATION_GROWING_PROCESS_URL,
-  API_CREATE_FIELD_CULTIVATION_HEADERS,
-  API_CREATE_FIELD_CULTIVATION_MACHINERY_METHOD,
-  API_CREATE_FIELD_CULTIVATION_MACHINERY_URL,
-  API_CREATE_FIELD_CULTIVATION_METHOD,
-  API_CREATE_FIELD_CULTIVATION_URL,
   FieldCultivationHandler,
   GrowingProcessHandler,
 } from "./CreateFieldCultivation.static";
 
 export const fetchCultivations = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(API_CREATE_FIELD_CULTIVATION_CULTIVATION_URL, {
-      method: API_CREATE_FIELD_CULTIVATION_CULTIVATION_METHOD,
+    const response = await fetch(endpoint.CULTIVATION, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 
@@ -44,8 +31,8 @@ export const fetchCultivations = async (user: UserDataFromApi) => {
 
 export const fetchMachinery = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(API_CREATE_FIELD_CULTIVATION_MACHINERY_URL, {
-      method: API_CREATE_FIELD_CULTIVATION_MACHINERY_METHOD,
+    const response = await fetch(endpoint.MACHINERY, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 
@@ -66,8 +53,8 @@ export const fetchMachinery = async (user: UserDataFromApi) => {
 
 export const fetchCrops = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(API_CREATE_FIELD_CULTIVATION_CROP_URL, {
-      method: API_CREATE_FIELD_CULTIVATION_CROP_METHOD,
+    const response = await fetch(endpoint.CROP, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 
@@ -88,8 +75,8 @@ export const fetchCrops = async (user: UserDataFromApi) => {
 
 export const fetchFields = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(API_CREATE_FIELD_CULTIVATION_FIELD_URL, {
-      method: API_CREATE_FIELD_CULTIVATION_FIELD_METHOD,
+    const response = await fetch(endpoint.FIELD, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 
@@ -113,17 +100,14 @@ export const createGrowingProcess = async (
   user: UserDataFromApi
 ) => {
   try {
-    const response = await fetch(
-      API_CREATE_FIELD_CULTIVATION_GROWING_PROCESS_URL,
-      {
-        method: API_CREATE_FIELD_CULTIVATION_GROWING_PROCESS_METHOD,
-        headers: {
-          ...API_CREATE_FIELD_CULTIVATION_GROWING_PROCESS_HEADERS,
-          Authorization: `Bearer ${user.access_token}`,
-        },
-        body: JSON.stringify(growingProcessObj),
-      }
-    );
+    const response = await fetch(endpoint.GROWING_PROCESS, {
+      method: method.POST,
+      headers: {
+        ...header.CONTENT_TYPE_APP_JSON,
+        Authorization: `Bearer ${user.access_token}`,
+      },
+      body: JSON.stringify(growingProcessObj),
+    });
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(
@@ -145,10 +129,10 @@ export const createFieldCultivation = async (
   fieldCultivationObjForRes: FieldCultivationHandler,
   user: UserDataFromApi
 ) => {
-  const response = await fetch(API_CREATE_FIELD_CULTIVATION_URL, {
-    method: API_CREATE_FIELD_CULTIVATION_METHOD,
+  const response = await fetch(endpoint.FIELD_CULTIVATION, {
+    method: method.POST,
     headers: {
-      ...API_CREATE_FIELD_CULTIVATION_HEADERS,
+      ...header.CONTENT_TYPE_APP_JSON,
       Authorization: `Bearer ${user.access_token}`,
     },
     body: JSON.stringify(fieldCultivationObjForRes),

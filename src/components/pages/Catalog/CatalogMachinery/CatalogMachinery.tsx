@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchMachinery } from "./CatalogMachinery.logic";
 import { permDelete, softDelete } from "../../../../services/deleteService";
 import { ApiError } from "../CatalogFarm/CatalogFarm.static";
-import { API_MACHINERY_URL, MachineryFromApi } from "./CatalogMachinery.static";
+import { MachineryFromApi } from "./CatalogMachinery.static";
 import {
   Button,
   ColumnContainer,
@@ -26,6 +26,7 @@ import {
 } from "../../../../styles/Card.styled";
 import { rightsOfUser } from "../../../../utils/helpers";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
+import { create, endpoint, update } from "../../../../static/endPoints";
 
 export const CatalogMachinery = () => {
   const [machineries, setMachineries] = useState<MachineryFromApi[]>([]);
@@ -59,13 +60,13 @@ export const CatalogMachinery = () => {
   }, [user, triggerDelete]);
 
   const handleUpdate = (id: string) => {
-    navigate(`/update/machinery/${id}`);
+    navigate(`${update.MACHINERY}/${id}`);
   };
 
   const handleSoftDelete = async (id: string) => {
     try {
       if (user) {
-        await softDelete(id, user, API_MACHINERY_URL);
+        await softDelete(id, user, endpoint.MACHINERY);
         setTriggerDelete(!triggerDelete);
       }
     } catch (error) {
@@ -76,7 +77,7 @@ export const CatalogMachinery = () => {
   const handlePermDelete = async (id: string) => {
     try {
       if (user) {
-        await permDelete(id, user, API_MACHINERY_URL);
+        await permDelete(id, user, endpoint.MACHINERY);
         setTriggerDelete(!triggerDelete);
       }
     } catch (error) {
@@ -92,7 +93,7 @@ export const CatalogMachinery = () => {
     return (
       <ColumnContainer>
         <SubTitle>There are no machinery to display.</SubTitle>
-        <Button onClick={() => navigate("/create/machinery")}>Create</Button>
+        <Button onClick={() => navigate(`${create.MACHINERY}`)}>Create</Button>
       </ColumnContainer>
     );
   }

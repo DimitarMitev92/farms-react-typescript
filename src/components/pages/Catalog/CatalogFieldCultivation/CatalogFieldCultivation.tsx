@@ -1,8 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  API_FIELD_CULTIVATION_URL,
-  FieldCultivationFroApi,
-} from "./CatalogFieldCultivation.static";
+import { FieldCultivationFroApi } from "./CatalogFieldCultivation.static";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../context/UserContext";
 import { fetchFieldCultivation } from "./CatalogFieldCultivation.logic";
@@ -29,6 +26,7 @@ import {
   UpdateButtonCard,
 } from "../../../../styles/Card.styled";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
+import { create, endpoint, update } from "../../../../static/endPoints";
 
 export const CatalogFieldCultivation = () => {
   const [fieldCultivations, setFieldCultivations] = useState<
@@ -64,13 +62,13 @@ export const CatalogFieldCultivation = () => {
   }, [user, triggerDelete]);
 
   const handleUpdate = (id: string) => {
-    navigate(`/update/field-cultivation/${id}`);
+    navigate(`${update.FIELD_CULTIVATION}/${id}`);
   };
 
   const handleSoftDelete = async (id: string) => {
     try {
       if (user) {
-        await softDelete(id, user, API_FIELD_CULTIVATION_URL);
+        await softDelete(id, user, endpoint.FIELD_CULTIVATION);
         setTriggerDelete(!triggerDelete);
       }
     } catch (error) {
@@ -81,7 +79,7 @@ export const CatalogFieldCultivation = () => {
   const handlePermDelete = async (id: string) => {
     try {
       if (user) {
-        await permDelete(id, user, API_FIELD_CULTIVATION_URL);
+        await permDelete(id, user, endpoint.FIELD_CULTIVATION);
         setTriggerDelete(!triggerDelete);
       }
     } catch (error) {
@@ -97,7 +95,7 @@ export const CatalogFieldCultivation = () => {
     return (
       <ColumnContainer>
         <SubTitle>There are no field cultivations to display.</SubTitle>
-        <Button onClick={() => navigate("/create/field-cultivation")}>
+        <Button onClick={() => navigate(`${create.FIELD_CULTIVATION}`)}>
           Create
         </Button>
       </ColumnContainer>

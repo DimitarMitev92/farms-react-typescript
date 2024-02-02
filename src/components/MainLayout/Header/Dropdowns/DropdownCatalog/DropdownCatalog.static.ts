@@ -1,6 +1,8 @@
+import { catalog } from "../../../../../static/endPoints";
+
 export const catalogItems = [
-  { name: "Farm", to: "/catalog/farm" },
-  { name: "Field", to: "/catalog/field" },
-  { name: "Field cultivation", to: "/catalog/field-cultivation" },
-  { name: "Machinery", to: "/catalog/machinery" },
+  { name: "Farm", to: catalog.FARM },
+  { name: "Field", to: catalog.FIELD },
+  { name: "Field cultivation", to: catalog.FIELD_CULTIVATION },
+  { name: "Machinery", to: catalog.MACHINERY },
 ];

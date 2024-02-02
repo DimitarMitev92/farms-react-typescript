@@ -2,19 +2,13 @@ import React, { useContext } from "react";
 import { Form, Label, Input, ErrorMsg } from "../../../styles/Form.styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
-import {
-  loginData,
-  schema,
-  API_LOGIN_URL,
-  API_LOGIN_METHOD,
-  API_LOGIN_HEADERS,
-  FormLoginData,
-} from "./Login.static";
+import { loginData, schema, FormLoginData } from "./Login.static";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "./Login.logic";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { UserContext } from "../../../context/UserContext";
 import { Button } from "../../../styles/Global.styled";
+import { catalog, endpoint, header, method } from "../../../static/endPoints";
 
 export const Login: React.FC = () => {
   const {
@@ -33,18 +27,18 @@ export const Login: React.FC = () => {
   const onLoginHandler: SubmitHandler<FormLoginData> = async (userObj) => {
     try {
       const options = {
-        method: API_LOGIN_METHOD,
-        headers: API_LOGIN_HEADERS,
+        method: method.POST,
+        headers: header.CONTENT_TYPE_APP_JSON,
         body: JSON.stringify({
           email: userObj.email,
           password: userObj.password,
         }),
       };
 
-      const userDataFromApi = await loginService(API_LOGIN_URL, options);
+      const userDataFromApi = await loginService(endpoint.LOGIN, options);
       setItem("user", JSON.stringify(userDataFromApi));
       setUser(userDataFromApi);
-      navigate("/catalog/farm");
+      navigate(`${catalog.FARM}`);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError("root", {

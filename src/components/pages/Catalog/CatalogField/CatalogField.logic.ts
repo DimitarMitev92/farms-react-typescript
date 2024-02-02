@@ -1,18 +1,11 @@
+import { endpoint, method } from "../../../../static/endPoints";
 import { UserDataFromApi } from "../../Login/Login.static";
-import {
-  API_FIELD_FARM_METHOD,
-  API_FIELD_FARM_URL,
-  API_FIELD_METHOD,
-  API_FIELD_SOIL_METHOD,
-  API_FIELD_SOIL_URL,
-  API_FIELD_URL,
-  FieldFromApi,
-} from "./CatalogField.static";
+import { FieldFromApi } from "./CatalogField.static";
 
 export const fetchFields = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(API_FIELD_URL, {
-      method: API_FIELD_METHOD,
+    const response = await fetch(endpoint.FIELD, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 
@@ -24,13 +17,10 @@ export const fetchFields = async (user: UserDataFromApi) => {
 
     const updatedDataArray = await Promise.all(
       dataArray.map(async (data: FieldFromApi) => {
-        const responseSoil = await fetch(
-          `${API_FIELD_SOIL_URL}/${data.soilId}`,
-          {
-            method: API_FIELD_SOIL_METHOD,
-            headers: { Authorization: `Bearer ${user.access_token}` },
-          }
-        );
+        const responseSoil = await fetch(`${endpoint.SOIL}/${data.soilId}`, {
+          method: method.GET,
+          headers: { Authorization: `Bearer ${user.access_token}` },
+        });
 
         if (!responseSoil.ok) {
           throw new Error(
@@ -40,13 +30,10 @@ export const fetchFields = async (user: UserDataFromApi) => {
 
         const soilData = await responseSoil.json();
 
-        const responseFarm = await fetch(
-          `${API_FIELD_FARM_URL}/${data.farmId}`,
-          {
-            method: API_FIELD_FARM_METHOD,
-            headers: { Authorization: `Bearer ${user.access_token}` },
-          }
-        );
+        const responseFarm = await fetch(`${endpoint.FARM}/${data.farmId}`, {
+          method: method.GET,
+          headers: { Authorization: `Bearer ${user.access_token}` },
+        });
 
         if (!responseFarm.ok) {
           throw new Error(

@@ -1,18 +1,6 @@
 import { FieldValues } from "react-hook-form";
 import { z } from "zod";
 
-export const API_CREATE_FIELD_URL = "http://localhost:8080/field";
-export const API_CREATE_FIELD_METHOD = "POST";
-export const API_CREATE_FIELD_HEADERS = {
-  "Content-Type": "application/json",
-};
-
-export const API_CREATE_FIELD_SOIL_URL = "http://localhost:8080/soil";
-export const API_CREATE_FIELD_SOIL_METHOD = "GET";
-
-export const API_CREATE_FIELD_FARM_URL = "http://localhost:8080/farm";
-export const API_CREATE_FIELD_FARM_METHOD = "GET";
-
 export const fieldSchema = z.object({
   name: z.string().nonempty({ message: "Name is required." }),
   boundaries: z.string().nonempty({ message: "Boundaries is required." }),

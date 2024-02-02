@@ -24,6 +24,7 @@ import React from "react";
 import { FormFarmData } from "../CreateFarm/CreateFarm.static";
 import { createField, fetchFarms, fetchSoils } from "./CreateField.logic";
 import { Button } from "../../../../styles/Global.styled";
+import { catalog } from "../../../../static/endPoints";
 
 export const CreateField = () => {
   const {
@@ -68,7 +69,7 @@ export const CreateField = () => {
     try {
       if (user) {
         await createField(user, fieldObj);
-        navigate("/catalog/field");
+        navigate(`${catalog.FIELD}`);
       }
     } catch (error) {
       if (error instanceof Error) {

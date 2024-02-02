@@ -11,9 +11,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../context/UserContext";
 import {
-  API_CREATE_FARM_HEADERS,
-  API_CREATE_FARM_METHOD,
-  API_CREATE_FARM_URL,
   FarmHandler,
   FarmObj,
   farmData,
@@ -21,6 +18,12 @@ import {
 } from "./CreateFarm.static";
 import { farmService } from "./CreateFarm.logic";
 import { Button } from "../../../../styles/Global.styled";
+import {
+  catalog,
+  endpoint,
+  header,
+  method,
+} from "../../../../static/endPoints";
 
 export const CreateFarm: React.FC = () => {
   const {
@@ -55,16 +58,16 @@ export const CreateFarm: React.FC = () => {
       } as FarmObj["location"];
 
       const options = {
-        method: API_CREATE_FARM_METHOD,
+        method: method.POST,
         headers: {
-          ...API_CREATE_FARM_HEADERS,
+          ...header.CONTENT_TYPE_APP_JSON,
           Authorization: `Bearer ${user?.access_token}`,
         },
         body: JSON.stringify(farmObj),
       };
 
-      await farmService(API_CREATE_FARM_URL, options);
-      navigate("/catalog/farm");
+      await farmService(endpoint.FARM, options);
+      navigate(`${catalog.FARM}`);
     } catch (error) {
       if (error instanceof Error) {
         setError("root", {

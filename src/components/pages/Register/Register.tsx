@@ -2,19 +2,13 @@ import React, { useContext } from "react";
 import { Form, Label, Input, ErrorMsg } from "../../../styles/Form.styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
-import {
-  API_REGISTER_HEADERS,
-  API_REGISTER_METHOD,
-  API_REGISTER_URL,
-  FormRegisterData,
-  registerData,
-  schema,
-} from "./Register.static";
+import { FormRegisterData, registerData, schema } from "./Register.static";
 import { useNavigate } from "react-router-dom";
 import { registerService } from "./Register.logic";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { UserContext } from "../../../context/UserContext";
 import { Button } from "../../../styles/Global.styled";
+import { catalog, endpoint, header, method } from "../../../static/endPoints";
 
 export const Register: React.FC = () => {
   const {
@@ -34,9 +28,10 @@ export const Register: React.FC = () => {
     userObj
   ) => {
     try {
+      const url = endpoint.REGISTER;
       const options = {
-        method: API_REGISTER_METHOD,
-        headers: API_REGISTER_HEADERS,
+        method: method.POST,
+        headers: header.CONTENT_TYPE_APP_JSON,
         body: JSON.stringify({
           firstName: userObj.firstName,
           lastName: userObj.lastName,
@@ -45,10 +40,10 @@ export const Register: React.FC = () => {
         }),
       };
 
-      const userDataFromApi = await registerService(API_REGISTER_URL, options);
+      const userDataFromApi = await registerService(url, options);
       setItem("user", JSON.stringify(userDataFromApi));
       setUser(userDataFromApi);
-      navigate("/catalog/farm");
+      navigate(`${catalog.FARM}`);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError("root", {

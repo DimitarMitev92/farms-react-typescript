@@ -11,7 +11,6 @@ import {
 import { Button } from "../../../../styles/Global.styled";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  API_CREATE_MACHINERY_URL,
   Farm,
   MachineryHandler,
   machineryData,
@@ -20,16 +19,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserContext } from "../../../../context/UserContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_CREATE_FARM_URL } from "../../Create/CreateFarm/CreateFarm.static";
-import { API_CREATE_MACHINERY_FARM_METHOD } from "../../Catalog/CatalogMachinery/CatalogMachinery.static";
-import {
-  API_UPDATE_MACHINERY_HEADERS,
-  API_UPDATE_MACHINERY_METHOD_GET,
-  API_UPDATE_MACHINERY_METHOD_PATCH,
-  API_UPDATE_MACHINERY_URL,
-} from "./UpdateMachinery.static";
 import { farmService } from "../UpdateFarm/UpdateFarm.logic";
 import { machineryService } from "./UpdateMachinery.logic";
+import {
+  catalog,
+  endpoint,
+  header,
+  method,
+} from "../../../../static/endPoints";
 
 export const UpdateMachinery = () => {
   const {
@@ -51,11 +48,11 @@ export const UpdateMachinery = () => {
   useEffect(() => {
     const fetchFarms = async () => {
       try {
-        const url = API_CREATE_FARM_URL;
+        const url = endpoint.FARM;
         const options = {
-          method: API_CREATE_MACHINERY_FARM_METHOD,
+          method: method.GET,
           headers: {
-            ...API_UPDATE_MACHINERY_HEADERS,
+            ...header.CONTENT_TYPE_APP_JSON,
             Authorization: `Bearer ${user?.access_token}`,
           },
         };
@@ -75,11 +72,11 @@ export const UpdateMachinery = () => {
 
     const fetchMachinery = async () => {
       try {
-        const url = `${API_CREATE_MACHINERY_URL}/${id}`;
+        const url = `${endpoint.MACHINERY}/${id}`;
         const options = {
-          method: API_UPDATE_MACHINERY_METHOD_GET,
+          method: method.GET,
           headers: {
-            ...API_UPDATE_MACHINERY_HEADERS,
+            ...header.CONTENT_TYPE_APP_JSON,
             Authorization: `Bearer ${user?.access_token}`,
           },
         };
@@ -103,18 +100,18 @@ export const UpdateMachinery = () => {
     machineryObj
   ) => {
     try {
-      const url = `${API_UPDATE_MACHINERY_URL}/${id}`;
+      const url = `${endpoint.MACHINERY}/${id}`;
       const options = {
-        method: API_UPDATE_MACHINERY_METHOD_PATCH,
+        method: method.PATCH,
         headers: {
-          ...API_UPDATE_MACHINERY_HEADERS,
+          ...header.CONTENT_TYPE_APP_JSON,
           Authorization: `Bearer ${user?.access_token}`,
         },
         body: JSON.stringify(machineryObj),
       };
 
       await machineryService(url, options);
-      navigate("/catalog/machinery");
+      navigate(`${catalog.MACHINERY}`);
     } catch (error) {
       if (error instanceof Error) {
         setError("root", {

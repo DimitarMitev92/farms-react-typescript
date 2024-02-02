@@ -1,17 +1,11 @@
+import { endpoint, header, method } from "../../../../static/endPoints";
 import { UserDataFromApi } from "../../Login/Login.static";
-import {
-  API_CREATE_MACHINERY_FARM_METHOD,
-  API_CREATE_MACHINERY_FARM_URL,
-  API_CREATE_MACHINERY_HEADERS,
-  API_CREATE_MACHINERY_METHOD,
-  API_CREATE_MACHINERY_URL,
-  MachineryHandler,
-} from "./CreateMachinery.static";
+import { MachineryHandler } from "./CreateMachinery.static";
 
 export const fetchFarms = async (user: UserDataFromApi) => {
   try {
-    const farmResponse = await fetch(API_CREATE_MACHINERY_FARM_URL, {
-      method: API_CREATE_MACHINERY_FARM_METHOD,
+    const farmResponse = await fetch(endpoint.FARM, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
     if (!farmResponse.ok) {
@@ -35,11 +29,11 @@ export const createMachinery = async (
   machineryObj: MachineryHandler
 ) => {
   try {
-    const url = API_CREATE_MACHINERY_URL;
+    const url = endpoint.MACHINERY;
     const options = {
-      method: API_CREATE_MACHINERY_METHOD,
+      method: method.POST,
       headers: {
-        ...API_CREATE_MACHINERY_HEADERS,
+        ...header.CONTENT_TYPE_APP_JSON,
         Authorization: `Bearer ${user.access_token}`,
       },
       body: JSON.stringify(machineryObj),

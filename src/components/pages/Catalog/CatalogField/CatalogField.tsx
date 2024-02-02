@@ -6,7 +6,6 @@ import { FieldFromApi } from "./CatalogField.static";
 import { fetchFields } from "./CatalogField.logic";
 import { useNavigate } from "react-router-dom";
 import { permDelete, softDelete } from "../../../../services/deleteService";
-import { API_CREATE_FIELD_URL } from "../../Create/CreateField/CreateField.static";
 import { ApiError } from "../CatalogFarm/CatalogFarm.static";
 import {
   Button,
@@ -15,6 +14,7 @@ import {
   Title,
 } from "../../../../styles/Global.styled";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
+import { create, endpoint, update } from "../../../../static/endPoints";
 
 export const CatalogField = () => {
   const [fields, setFields] = useState<FieldFromApi[]>([]);
@@ -44,13 +44,13 @@ export const CatalogField = () => {
   }, [user, triggerDelete]);
 
   const handleUpdate = (id: string) => {
-    navigate(`/update/field/${id}`);
+    navigate(`${update.FIELD}/${id}`);
   };
 
   const handleSoftDelete = async (id: string) => {
     try {
       if (user) {
-        await softDelete(id, user, API_CREATE_FIELD_URL);
+        await softDelete(id, user, endpoint.FIELD);
         setTriggerDelete(!triggerDelete);
       }
     } catch (error) {
@@ -61,7 +61,7 @@ export const CatalogField = () => {
   const handlePermDelete = async (id: string) => {
     try {
       if (user) {
-        await permDelete(id, user, API_CREATE_FIELD_URL);
+        await permDelete(id, user, endpoint.FIELD);
         setTriggerDelete(!triggerDelete);
       }
     } catch (error) {
@@ -77,7 +77,7 @@ export const CatalogField = () => {
     return (
       <ColumnContainer>
         <SubTitle>There are no fields to display.</SubTitle>
-        <Button onClick={() => navigate("/create/field")}>Create</Button>
+        <Button onClick={() => navigate(`${create.FIELD}`)}>Create</Button>
       </ColumnContainer>
     );
   }

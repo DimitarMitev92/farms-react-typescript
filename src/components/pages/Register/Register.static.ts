@@ -1,9 +1,5 @@
 import { z } from "zod";
 
-export const API_REGISTER_URL = "http://localhost:8080/auth/register";
-export const API_REGISTER_METHOD = "POST";
-export const API_REGISTER_HEADERS = { "Content-Type": "application/json" };
-
 export const schema = z.object({
   firstName: z.string().min(2),
   lastName: z.string().min(2),

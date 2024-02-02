@@ -1,10 +1,10 @@
+import { endpoint, method } from "../../../../static/endPoints";
 import { UserDataFromApi } from "../../Login/Login.static";
-import { API_FARM_METHOD, API_FARM_URL } from "./CatalogFarm.static";
 
 export const fetchFarms = async (user: UserDataFromApi) => {
   try {
-    const response = await fetch(API_FARM_URL, {
-      method: API_FARM_METHOD,
+    const response = await fetch(endpoint.FARM, {
+      method: method.GET,
       headers: { Authorization: `Bearer ${user.access_token}` },
     });
 

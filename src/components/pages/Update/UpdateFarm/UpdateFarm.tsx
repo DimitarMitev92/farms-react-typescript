@@ -20,11 +20,11 @@ import {
 import React from "react";
 import { Button } from "../../../../styles/Global.styled";
 import {
-  API_UPDATE_FARM_HEADERS,
-  API_UPDATE_FARM_METHOD_GET,
-  API_UPDATE_FARM_METHOD_PATCH,
-  API_UPDATE_FARM_URL,
-} from "./UpdateFarm.static";
+  catalog,
+  endpoint,
+  header,
+  method,
+} from "../../../../static/endPoints";
 
 export const UpdateFarm: React.FC = () => {
   const {
@@ -44,11 +44,11 @@ export const UpdateFarm: React.FC = () => {
   useEffect(() => {
     const fetchFarmData = async () => {
       try {
-        const url = `${API_UPDATE_FARM_URL}/${id}`;
+        const url = `${endpoint.FARM}/${id}`;
         const options = {
-          method: API_UPDATE_FARM_METHOD_GET,
+          method: method.GET,
           headers: {
-            ...API_UPDATE_FARM_HEADERS,
+            ...header.CONTENT_TYPE_APP_JSON,
             Authorization: `Bearer ${user?.access_token}`,
           },
         };
@@ -83,16 +83,16 @@ export const UpdateFarm: React.FC = () => {
       } as FarmObj["location"];
 
       const options = {
-        method: API_UPDATE_FARM_METHOD_PATCH,
+        method: method.PATCH,
         headers: {
-          ...API_UPDATE_FARM_HEADERS,
+          ...header.CONTENT_TYPE_APP_JSON,
           Authorization: `Bearer ${user?.access_token}`,
         },
         body: JSON.stringify(farmObj),
       };
 
-      await farmService(`${API_UPDATE_FARM_URL}/${id}`, options);
-      navigate("/catalog/farm");
+      await farmService(`${endpoint.FARM}/${id}`, options);
+      navigate(`${catalog.FARM}`);
     } catch (error) {
       if (error instanceof Error) {
         setError("root", {

@@ -1,12 +1,6 @@
 import { FieldValues } from "react-hook-form";
 import { z } from "zod";
 
-export const API_CREATE_FARM_URL = "http://localhost:8080/farm";
-export const API_CREATE_FARM_METHOD = "POST";
-export const API_CREATE_FARM_HEADERS = {
-  "Content-Type": "application/json",
-};
-
 export const farmSchema = z.object({
   name: z.string().nonempty({ message: "Name is required." }),
   location: z.string().refine(
