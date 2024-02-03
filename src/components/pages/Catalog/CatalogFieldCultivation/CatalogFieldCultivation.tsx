@@ -196,7 +196,7 @@ export const CatalogFieldCultivation = () => {
       {showSoftDeletePopup && (
         <PopupDelete
           title={`Confirm Soft Deletion`}
-          message={`Are you sure you want to soft delete this field?`}
+          message={`Are you sure you want to soft delete this field cultivation?`}
           onDelete={handleConfirmSoftDelete}
           onCancel={handleCancelDelete}
         />
@@ -205,7 +205,7 @@ export const CatalogFieldCultivation = () => {
       {showPermDeletePopup && (
         <PopupDelete
           title={`Confirm Permanent Deletion`}
-          message={`Are you sure you want to permanently delete this field?`}
+          message={`Are you sure you want to permanently delete this field cultivation?`}
           onDelete={handleConfirmPermDelete}
           onCancel={handleCancelDelete}
         />

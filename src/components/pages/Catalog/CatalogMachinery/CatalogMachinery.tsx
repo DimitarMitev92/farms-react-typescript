@@ -27,11 +27,15 @@ import { rightsOfUser } from "../../../../utils/helpers";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 import { create, endpoint, update } from "../../../../static/endPoints";
 import { ApiError } from "../../../../static/interfaces";
+import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
 export const CatalogMachinery = () => {
   const [machineries, setMachineries] = useState<MachineryFromApi[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [triggerDelete, setTriggerDelete] = useState(false);
+  const [showSoftDeletePopup, setShowSoftDeletePopup] = useState(false);
+  const [showPermDeletePopup, setShowPermDeletePopup] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState("");
   const [userRights, setUserRights] = useState<
     "OWNER" | "OPERATOR" | "VIEWER" | null
   >(null);
@@ -64,25 +68,42 @@ export const CatalogMachinery = () => {
   };
 
   const handleSoftDelete = async (id: string) => {
+    setDeleteItemId(id);
+    setShowSoftDeletePopup(true);
+  };
+
+  const handlePermDelete = async (id: string) => {
+    setDeleteItemId(id);
+    setShowPermDeletePopup(true);
+  };
+
+  const handleConfirmSoftDelete = async () => {
     try {
       if (user) {
-        await softDelete(id, user, endpoint.MACHINERY);
-        setTriggerDelete(!triggerDelete);
+        await softDelete(deleteItemId, user, endpoint.MACHINERY);
       }
+      setTriggerDelete(!triggerDelete);
+      setShowSoftDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
     }
   };
 
-  const handlePermDelete = async (id: string) => {
+  const handleConfirmPermDelete = async () => {
     try {
       if (user) {
-        await permDelete(id, user, endpoint.MACHINERY);
-        setTriggerDelete(!triggerDelete);
+        await permDelete(deleteItemId, user, endpoint.MACHINERY);
       }
+      setTriggerDelete(!triggerDelete);
+      setShowPermDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowSoftDeletePopup(false);
+    setShowPermDeletePopup(false);
   };
 
   if (isLoading) {
@@ -155,6 +176,24 @@ export const CatalogMachinery = () => {
           </CardContainer>
         ))}
       </CatalogContainer>
+
+      {showSoftDeletePopup && (
+        <PopupDelete
+          title={`Confirm Soft Deletion`}
+          message={`Are you sure you want to soft delete this machinery?`}
+          onDelete={handleConfirmSoftDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
+
+      {showPermDeletePopup && (
+        <PopupDelete
+          title={`Confirm Permanent Deletion`}
+          message={`Are you sure you want to permanently delete this machinery?`}
+          onDelete={handleConfirmPermDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </>
   );
 };
