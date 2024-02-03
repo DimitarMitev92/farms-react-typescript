@@ -20,6 +20,7 @@ export const DeletePopup = styled.div`
   padding: 1em;
   width: 300px;
   max-width: 80%;
+  min-width: 30%;
   text-align: center;
   z-index: 100000;
 `;

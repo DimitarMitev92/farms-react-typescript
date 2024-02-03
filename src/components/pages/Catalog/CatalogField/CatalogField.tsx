@@ -15,11 +15,15 @@ import {
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 import { create, endpoint, update } from "../../../../static/endPoints";
 import { ApiError } from "../../../../static/interfaces";
+import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
 export const CatalogField = () => {
   const [fields, setFields] = useState<FieldFromApi[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [triggerDelete, setTriggerDelete] = useState(false);
+  const [showSoftDeletePopup, setShowSoftDeletePopup] = useState(false);
+  const [showPermDeletePopup, setShowPermDeletePopup] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState("");
 
   const navigate = useNavigate();
 
@@ -48,25 +52,42 @@ export const CatalogField = () => {
   };
 
   const handleSoftDelete = async (id: string) => {
+    setDeleteItemId(id);
+    setShowSoftDeletePopup(true);
+  };
+
+  const handlePermDelete = async (id: string) => {
+    setDeleteItemId(id);
+    setShowPermDeletePopup(true);
+  };
+
+  const handleConfirmSoftDelete = async () => {
     try {
       if (user) {
-        await softDelete(id, user, endpoint.FIELD);
-        setTriggerDelete(!triggerDelete);
+        await softDelete(deleteItemId, user, endpoint.FIELD);
       }
+      setTriggerDelete(!triggerDelete);
+      setShowSoftDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
     }
   };
 
-  const handlePermDelete = async (id: string) => {
+  const handleConfirmPermDelete = async () => {
     try {
       if (user) {
-        await permDelete(id, user, endpoint.FIELD);
-        setTriggerDelete(!triggerDelete);
+        await permDelete(deleteItemId, user, endpoint.FIELD);
       }
+      setTriggerDelete(!triggerDelete);
+      setShowPermDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowSoftDeletePopup(false);
+    setShowPermDeletePopup(false);
   };
 
   if (isLoading) {
@@ -96,6 +117,24 @@ export const CatalogField = () => {
           />
         ))}
       </CatalogContainer>
+
+      {showSoftDeletePopup && (
+        <PopupDelete
+          title={`Confirm Soft Deletion`}
+          message={`Are you sure you want to soft delete this field?`}
+          onDelete={handleConfirmSoftDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
+
+      {showPermDeletePopup && (
+        <PopupDelete
+          title={`Confirm Permanent Deletion`}
+          message={`Are you sure you want to permanently delete this field?`}
+          onDelete={handleConfirmPermDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </>
   );
 };

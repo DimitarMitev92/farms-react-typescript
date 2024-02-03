@@ -126,7 +126,7 @@ export const CatalogFarm = () => {
       {showSoftDeletePopup && (
         <PopupDelete
           title={`Confirm Soft Deletion`}
-          message={`Are you sure you want to soft delete this item?`}
+          message={`Are you sure you want to soft delete this farm?`}
           onDelete={handleConfirmSoftDelete}
           onCancel={handleCancelDelete}
         />
@@ -135,7 +135,7 @@ export const CatalogFarm = () => {
       {showPermDeletePopup && (
         <PopupDelete
           title={`Confirm Permanent Deletion`}
-          message={`Are you sure you want to permanently delete this item?`}
+          message={`Are you sure you want to permanently delete this farm?`}
           onDelete={handleConfirmPermDelete}
           onCancel={handleCancelDelete}
         />
