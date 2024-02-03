@@ -2,6 +2,7 @@ import {
   DropdownButton,
   DropdownContainer,
   HeaderContainer,
+  HeaderTitle,
   ListItem,
   NavBar,
   NavLinkAnchor,
@@ -28,53 +29,59 @@ export const Header = () => {
     </DropdownContainer>
   );
   return (
-    <HeaderContainer>
-      <NavBar>
-        <UnorderedList>
-          {!user &&
-            publicHeaderData.map(({ name, to }, key) => {
-              return (
+    <>
+      {user && (
+        <HeaderTitle>{`${user.user.firstName}: ${user.user.rights}`}</HeaderTitle>
+      )}
+      <HeaderContainer>
+        <NavBar>
+          <UnorderedList>
+            {!user &&
+              publicHeaderData.map(({ name, to }, key) => {
+                return (
+                  <ListItem key={key}>
+                    <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
+                  </ListItem>
+                );
+              })}
+            {user &&
+              user?.user.rights !== "VIEWER" &&
+              privateHeaderDataOwnerAndOperator.map(({ name, to }, key) => (
                 <ListItem key={key}>
-                  <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
+                  {name === "Catalog" &&
+                    renderDropdown(name, <DropdownCatalog />)}
+                  {name === "Create" &&
+                    renderDropdown(name, <DropdownCreate />)}
+                  {name === "Reporting" &&
+                    renderDropdown(name, <DropdownReporting />)}
+                  {name !== "Catalog" &&
+                    name !== "Create" &&
+                    name !== "Reporting" &&
+                    to !== undefined && (
+                      <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
+                    )}
                 </ListItem>
-              );
-            })}
-          {user &&
-            user?.user.rights !== "VIEWER" &&
-            privateHeaderDataOwnerAndOperator.map(({ name, to }, key) => (
-              <ListItem key={key}>
-                {name === "Catalog" &&
-                  renderDropdown(name, <DropdownCatalog />)}
-                {name === "Create" && renderDropdown(name, <DropdownCreate />)}
-                {name === "Reporting" &&
-                  renderDropdown(name, <DropdownReporting />)}
-                {name !== "Catalog" &&
-                  name !== "Create" &&
-                  name !== "Reporting" &&
-                  to !== undefined && (
-                    <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
-                  )}
-              </ListItem>
-            ))}
-          {user &&
-            user?.user.rights === "VIEWER" &&
-            privateHeaderDataViewer.map(({ name, to }, key) => (
-              <ListItem key={key}>
-                {name === "Catalog" &&
-                  renderDropdown(name, <DropdownCatalog />)}
-                {/* {name === "Create" && renderDropdown(name, <DropdownCreate />)} */}
-                {name === "Reporting" &&
-                  renderDropdown(name, <DropdownReporting />)}
-                {name !== "Catalog" &&
-                  // name !== "Create" &&
-                  name !== "Reporting" &&
-                  to !== undefined && (
-                    <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
-                  )}
-              </ListItem>
-            ))}
-        </UnorderedList>
-      </NavBar>
-    </HeaderContainer>
+              ))}
+            {user &&
+              user?.user.rights === "VIEWER" &&
+              privateHeaderDataViewer.map(({ name, to }, key) => (
+                <ListItem key={key}>
+                  {name === "Catalog" &&
+                    renderDropdown(name, <DropdownCatalog />)}
+                  {/* {name === "Create" && renderDropdown(name, <DropdownCreate />)} */}
+                  {name === "Reporting" &&
+                    renderDropdown(name, <DropdownReporting />)}
+                  {name !== "Catalog" &&
+                    // name !== "Create" &&
+                    name !== "Reporting" &&
+                    to !== undefined && (
+                      <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
+                    )}
+                </ListItem>
+              ))}
+          </UnorderedList>
+        </NavBar>
+      </HeaderContainer>
+    </>
   );
 };

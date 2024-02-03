@@ -11,4 +11,6 @@ export const mainColors = {
   permDeleteButtonColor: "#FF0000",
   permDeleteButtonHoverColor: "#8B0000",
   textColorButton: "#FFFAFA",
+  popupBackgroundColor: "#E1E5F2",
+  popupBorderColor: "#1F7A8C",
 };

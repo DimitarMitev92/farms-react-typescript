@@ -15,6 +15,15 @@ export const HeaderContainer = styled.header`
   height: 3em;
 `;
 
+export const HeaderTitle = styled.h1`
+  text-align: center;
+  margin-left: 0.5em;
+  font-size: 1em;
+  white-space: nowrap;
+  color: ${textColor};
+  background-color: ${primaryColor};
+`;
+
 export const NavBar = styled.nav`
   height: 100%;
   width: 100vw;

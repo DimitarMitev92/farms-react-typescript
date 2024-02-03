@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 import { FarmCard } from "./CatalogFarmCard/CatalogFarmCard";
 import { UserContext } from "../../../../context/UserContext";
 import { CatalogContainer } from "../../../../styles/Card.styled";
@@ -15,12 +14,15 @@ import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
 import { create, endpoint, method, update } from "../../../../static/endPoints";
 import { ApiError, Farm } from "../../../../static/interfaces";
 import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
-
+import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [triggerDelete, setTriggerDelete] = useState(false);
+  const [showSoftDeletePopup, setShowSoftDeletePopup] = useState(false);
+  const [showPermDeletePopup, setShowPermDeletePopup] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState("");
 
   const navigate = useNavigate();
 
@@ -55,25 +57,42 @@ export const CatalogFarm = () => {
   };
 
   const handleSoftDelete = async (id: string) => {
+    setDeleteItemId(id);
+    setShowSoftDeletePopup(true);
+  };
+
+  const handlePermDelete = async (id: string) => {
+    setDeleteItemId(id);
+    setShowPermDeletePopup(true);
+  };
+
+  const handleConfirmSoftDelete = async () => {
     try {
       if (user) {
-        await softDelete(id, user, endpoint.FARM);
+        await softDelete(deleteItemId, user, endpoint.FARM);
       }
       setTriggerDelete(!triggerDelete);
+      setShowSoftDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
     }
   };
 
-  const handlePermDelete = async (id: string) => {
+  const handleConfirmPermDelete = async () => {
     try {
       if (user) {
-        await permDelete(id, user, endpoint.FARM);
+        await permDelete(deleteItemId, user, endpoint.FARM);
       }
       setTriggerDelete(!triggerDelete);
+      setShowPermDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowSoftDeletePopup(false);
+    setShowPermDeletePopup(false);
   };
 
   if (isLoading) {
@@ -103,6 +122,24 @@ export const CatalogFarm = () => {
           />
         ))}
       </CatalogContainer>
+
+      {showSoftDeletePopup && (
+        <PopupDelete
+          title={`Confirm Soft Deletion`}
+          message={`Are you sure you want to soft delete this item?`}
+          onDelete={handleConfirmSoftDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
+
+      {showPermDeletePopup && (
+        <PopupDelete
+          title={`Confirm Permanent Deletion`}
+          message={`Are you sure you want to permanently delete this item?`}
+          onDelete={handleConfirmPermDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </>
   );
 };

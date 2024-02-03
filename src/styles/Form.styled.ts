@@ -13,12 +13,12 @@ export const Form = styled.form`
   justify-content: center;
   align-items: center;
   margin-bottom: 3em;
-  border: 1px solid ${hoverColor}; /* Добавен бордер */
-  padding: 1em; /* Добавен padding за по-добър изглед */
+  border: 1px solid ${hoverColor};
+  padding: 1em;
 `;
 
 export const Label = styled.label`
-  display: block; /* Променен display на block */
+  display: block;
   font-size: 1.2em;
   color: ${textColor};
   margin-top: 0.6em;
@@ -32,7 +32,7 @@ export const FormTitle = styled.h2`
 
 export const Input = styled.input`
   min-width: 20em;
-  margin: 0.2em 0; /* Променен margin за по-добър изглед с Label */
+  margin: 0.2em 0;
   padding: 0.8em;
   font-size: 1em;
   border: 1px solid ${hoverColor};
