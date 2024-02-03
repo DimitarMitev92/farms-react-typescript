@@ -27,7 +27,6 @@ export const Header = () => {
       {content}
     </DropdownContainer>
   );
-  console.log(user);
   return (
     <HeaderContainer>
       <NavBar>

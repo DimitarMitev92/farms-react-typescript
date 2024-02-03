@@ -32,7 +32,10 @@ export const fetchDataFromApi = async (
       const errorData = await response.json();
       throw new FetchDataError(`${errorMsg}: ${errorData.message}`);
     }
-    return await response.json();
+
+    const data = await response.json();
+
+    return data;
   } catch (error: unknown) {
     console.error(error);
     throw error;

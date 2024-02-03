@@ -16,6 +16,7 @@ import { create, endpoint, method, update } from "../../../../static/endPoints";
 import { ApiError, Farm } from "../../../../static/interfaces";
 import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 
+
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
   const [isLoading, setIsLoading] = useState(false);

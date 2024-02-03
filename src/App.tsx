@@ -28,6 +28,7 @@ import { routes } from "./routes/routes.static";
 import { UserContext } from "./context/UserContext";
 import PrivateRoutes from "./guards/PrivateRoutes";
 import { UserDataFromApi } from "./static/interfaces";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [user, setUser] = useState<UserDataFromApi | null>(null);
@@ -95,6 +96,7 @@ function App() {
             {/* Not Found component */}
             <Route path={routes.notFound} element={<NotFound />} />
           </Routes>
+          <ToastContainer />
         </Main>
       </BrowserRouter>
     </UserContext.Provider>

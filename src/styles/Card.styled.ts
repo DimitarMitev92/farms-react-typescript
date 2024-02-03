@@ -15,10 +15,10 @@ const textColorButton = mainColors.textColorButton;
 export const CardContainer = styled.div`
   min-width: 22em;
   border: 1px solid ${primaryColor};
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px;
-  width: 300px;
+  border-radius: 0.5em;
+  padding: 1em;
+  margin: 1em;
+  width: 18.75em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
 
