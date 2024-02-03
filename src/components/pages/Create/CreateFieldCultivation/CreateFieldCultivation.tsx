@@ -31,6 +31,9 @@ import { Button } from "../../../../styles/Global.styled";
 import { catalog } from "../../../../static/endPoints";
 import { Crop, Cultivation, Machinery } from "../../../../static/interfaces";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const CreateFieldCultivation = () => {
   const {
     register,
@@ -72,8 +75,10 @@ export const CreateFieldCultivation = () => {
           setError("root", {
             message: error.message,
           });
+          toast.error(`${error.message}`);
         } else {
           console.error("An unexpected error occurred:", error);
+          toast.error(`${error}`);
         }
       }
     };
@@ -110,8 +115,10 @@ export const CreateFieldCultivation = () => {
         setError("root", {
           message: error.message,
         });
+        toast.error(`${error.message}`);
       } else {
         console.error("An unexpected error occurred:", error);
+        toast.error(`${error}`);
       }
     }
   };

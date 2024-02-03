@@ -19,6 +19,9 @@ import React from "react";
 import { Button } from "../../../../styles/Global.styled";
 import { Farm, Soil } from "../../../../static/interfaces";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const CreateField = () => {
   const {
     register,
@@ -62,8 +65,10 @@ export const CreateField = () => {
           setError("root", {
             message: error.message,
           });
+          toast.error(`${error.message}`);
         } else {
           console.error("An unexpected error occurred:", error);
+          toast.error(`${error}`);
         }
       }
     };
