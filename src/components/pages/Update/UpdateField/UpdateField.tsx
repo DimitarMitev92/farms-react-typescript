@@ -24,6 +24,9 @@ import {
 import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 import { Farm, Soil } from "../../../../static/interfaces";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const UpdateField = () => {
   const {
     register,
@@ -54,6 +57,7 @@ export const UpdateField = () => {
         setSoilOptions(soilsData);
       } catch (error) {
         console.error("Error fetching soils data:", error);
+        toast.error(`${error}`);
       }
     };
 
@@ -70,6 +74,7 @@ export const UpdateField = () => {
         setFarmOptions(farmsData);
       } catch (error) {
         console.error("Error fetching farms data:", error);
+        toast.error(`${error}`);
       }
     };
 
@@ -93,6 +98,7 @@ export const UpdateField = () => {
         );
       } catch (error) {
         console.error("Error fetching field data:", error);
+        toast.error(`${error}`);
       }
     };
 
@@ -128,8 +134,10 @@ export const UpdateField = () => {
         setError("root", {
           message: error.message,
         });
+        toast.error(`${error.message}`);
       } else {
         console.error("An unexpected error occurred:", error);
+        toast.error(`${error}`);
       }
     }
   };

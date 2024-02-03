@@ -16,6 +16,9 @@ import { Button } from "../../../styles/Global.styled";
 import { catalog, endpoint, header, method } from "../../../static/endPoints";
 import { signService } from "../../../services/signService";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const Login: React.FC = () => {
   const {
     register,
@@ -50,8 +53,10 @@ export const Login: React.FC = () => {
         setError("root", {
           message: error.message,
         });
+        toast.error(`${error.message}`);
       } else {
         console.error("An unexpected error occurred:", error);
+        toast.error(`${error}`);
       }
     }
   };

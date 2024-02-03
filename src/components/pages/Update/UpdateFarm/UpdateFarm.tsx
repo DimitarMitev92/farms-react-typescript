@@ -21,6 +21,9 @@ import {
 } from "../../Create/CreateFarm/CreateFarm.static";
 import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const UpdateFarm: React.FC = () => {
   const {
     register,
@@ -52,6 +55,7 @@ export const UpdateFarm: React.FC = () => {
         setValue("location", farmData.location.coordinates.join(","));
       } catch (error) {
         console.error("Error fetching farm data:", error);
+        toast.error(`${error}`);
       }
     };
 
@@ -91,8 +95,10 @@ export const UpdateFarm: React.FC = () => {
         setError("root", {
           message: error.message,
         });
+        toast.error(`${error.message}`);
       } else {
         console.error("An unexpected error occurred:", error);
+        toast.error(`${error}`);
       }
     }
   };

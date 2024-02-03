@@ -23,6 +23,9 @@ import {
 import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 import { Farm } from "../../../../static/interfaces";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const UpdateMachinery = () => {
   const {
     register,
@@ -55,8 +58,10 @@ export const UpdateMachinery = () => {
           setError("root", {
             message: error.message,
           });
+          toast.error(`${error.message}`);
         } else {
           console.error("An unexpected error occurred:", error);
+          toast.error(`${error}`);
         }
       }
     };
@@ -78,6 +83,7 @@ export const UpdateMachinery = () => {
         setValue("farmId", machineryData.farmId);
       } catch (error) {
         console.error("Error fetching machinery data:", error);
+        toast.error(`${error}`);
       }
     };
 
@@ -104,8 +110,10 @@ export const UpdateMachinery = () => {
         setError("root", {
           message: error.message,
         });
+        toast.error(`${error.message}`);
       } else {
         console.error("An unexpected error occurred:", error);
+        toast.error(`${error}`);
       }
     }
   };
