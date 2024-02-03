@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { fetchMachinery } from "./CatalogMachinery.logic";
@@ -29,6 +29,9 @@ import { create, endpoint, update } from "../../../../static/endPoints";
 import { ApiError } from "../../../../static/interfaces";
 import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const CatalogMachinery = () => {
   const [machineries, setMachineries] = useState<MachineryFromApi[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +58,7 @@ export const CatalogMachinery = () => {
         }
       } catch (error) {
         console.error(error);
+        toast.error("Error fetching machineries");
       } finally {
         setIsLoading(false);
       }
@@ -86,6 +90,7 @@ export const CatalogMachinery = () => {
       setShowSoftDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
+      toast.error(`${(error as ApiError).message}`);
     }
   };
 
@@ -98,6 +103,7 @@ export const CatalogMachinery = () => {
       setShowPermDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
+      toast.error(`${(error as ApiError).message}`);
     }
   };
 

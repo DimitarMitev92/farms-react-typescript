@@ -16,6 +16,9 @@ import { ApiError, Farm } from "../../../../static/interfaces";
 import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +47,7 @@ export const CatalogFarm = () => {
         }
       } catch (error) {
         console.error(error);
+        toast.error("Error fetching farms");
       } finally {
         setIsLoading(false);
       }
@@ -75,6 +79,7 @@ export const CatalogFarm = () => {
       setShowSoftDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
+      toast.error(`${(error as ApiError).message}`);
     }
   };
 
@@ -87,6 +92,7 @@ export const CatalogFarm = () => {
       setShowPermDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
+      toast.error(`${(error as ApiError).message}`);
     }
   };
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FieldCultivationFroApi } from "./CatalogFieldCultivation.static";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../context/UserContext";
@@ -29,6 +29,9 @@ import { create, endpoint, update } from "../../../../static/endPoints";
 import { ApiError } from "../../../../static/interfaces";
 import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const CatalogFieldCultivation = () => {
   const [fieldCultivations, setFieldCultivations] = useState<
     FieldCultivationFroApi[]
@@ -57,6 +60,7 @@ export const CatalogFieldCultivation = () => {
         }
       } catch (error) {
         console.error(error);
+        toast.error("Error fetching field cultivations");
       } finally {
         setIsLoading(false);
       }
@@ -88,6 +92,7 @@ export const CatalogFieldCultivation = () => {
       setShowSoftDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
+      toast.error(`${(error as ApiError).message}`);
     }
   };
 
@@ -100,6 +105,7 @@ export const CatalogFieldCultivation = () => {
       setShowPermDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
+      toast.error(`${(error as ApiError).message}`);
     }
   };
 

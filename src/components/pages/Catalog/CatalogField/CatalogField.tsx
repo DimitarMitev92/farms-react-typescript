@@ -17,6 +17,9 @@ import { create, endpoint, update } from "../../../../static/endPoints";
 import { ApiError } from "../../../../static/interfaces";
 import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const CatalogField = () => {
   const [fields, setFields] = useState<FieldFromApi[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,6 +42,7 @@ export const CatalogField = () => {
         }
       } catch (error) {
         console.error(error);
+        toast.error("Error fetching fields");
       } finally {
         setIsLoading(false);
       }
@@ -70,6 +74,7 @@ export const CatalogField = () => {
       setShowSoftDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
+      toast.error(`${(error as ApiError).message}`);
     }
   };
 
@@ -82,6 +87,7 @@ export const CatalogField = () => {
       setShowPermDeletePopup(false);
     } catch (error) {
       console.error(`${(error as ApiError).message}`);
+      toast.error(`${(error as ApiError).message}`);
     }
   };
 
