@@ -1,7 +1,5 @@
-import { useState } from "react";
-
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Main } from "./components/MainLayout/Main/Main";
 import { Login } from "./components/pages/Login/Login";
 import { Register } from "./components/pages/Register/Register";
@@ -32,6 +30,28 @@ import { ToastContainer } from "react-toastify";
 
 function App() {
   const [user, setUser] = useState<UserDataFromApi | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
+
+    if (storedUser && storedToken) {
+      const parsedUser = JSON.parse(storedUser);
+      const parsedToken = JSON.parse(storedToken);
+
+      const expirationTime = parsedToken?.expires_in || 0;
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      if (currentTime > expirationTime) {
+        setUser(null);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+      } else {
+        setUser({ user: parsedUser, access_token: parsedToken });
+      }
+    }
+  }, []);
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
