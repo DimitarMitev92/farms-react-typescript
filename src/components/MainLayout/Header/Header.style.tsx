@@ -73,7 +73,7 @@ export const DropdownContainer = styled.div`
   height: 100%;
   position: relative;
   display: inline-block;
-  z-index: 1000;
+  z-index: 100000;
 `;
 
 export const DropdownButton = styled.p`
