@@ -24,7 +24,6 @@ export const Form = styled.form`
   justify-content: center;
   align-items: center;
   margin-bottom: 3em;
-  border: 1px solid ${hoverColor};
   padding: 1em;
   animation: ${fadeInUp} 0.5s ease-in-out;
 `;
