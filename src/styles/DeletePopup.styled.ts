@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { mainColors } from "../static/mainColors";
 import { SoftDeleteButtonCard } from "./Card.styled";
 
@@ -9,6 +9,15 @@ const hoverTextColor = mainColors.hoverTextColor;
 const popupBackgroundColor = mainColors.popupBackgroundColor;
 const popupBorderColor = mainColors.popupBorderColor;
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 export const DeletePopup = styled.div`
   position: fixed;
   top: 50%;
@@ -16,13 +25,14 @@ export const DeletePopup = styled.div`
   transform: translate(-50%, -50%);
   background-color: ${popupBackgroundColor};
   border: 1px solid ${popupBorderColor};
-  border-radius: 0%.5em;
+  border-radius: 0.5em;
   padding: 1em;
   width: 300px;
   max-width: 80%;
   min-width: 30%;
   text-align: center;
   z-index: 100000;
+  animation: ${fadeIn} 0.2s ease-in-out;
 `;
 
 export const DeleteButtonPopup = styled(SoftDeleteButtonCard)`

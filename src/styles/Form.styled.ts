@@ -1,9 +1,20 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { mainColors } from "../static/mainColors";
 
 const primaryColor = mainColors.primaryColor;
 const hoverColor = mainColors.hoverColor;
 const textColor = mainColors.textColor;
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const Form = styled.form`
   min-height: calc(100vh - 6em);
@@ -15,6 +26,7 @@ export const Form = styled.form`
   margin-bottom: 3em;
   border: 1px solid ${hoverColor};
   padding: 1em;
+  animation: ${fadeInUp} 0.5s ease-in-out;
 `;
 
 export const Label = styled.label`
