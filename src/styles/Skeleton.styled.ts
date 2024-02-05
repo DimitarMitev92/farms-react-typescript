@@ -24,6 +24,7 @@ export const SkeletonWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1em;
+  animation: ${pulseAnimation} 1.5s infinite alternate;
 `;
 
 export const SkeletonContainer = styled.div`

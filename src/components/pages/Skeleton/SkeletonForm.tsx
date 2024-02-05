@@ -1,4 +1,5 @@
 import {
+  SkeletonContainer,
   SkeletonSubtitle,
   SkeletonTitle,
   SkeletonWrapper,
