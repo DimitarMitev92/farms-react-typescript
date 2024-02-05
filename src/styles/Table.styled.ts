@@ -1,0 +1,38 @@
+import styled from "styled-components";
+import { mainColors } from "../static/mainColors";
+
+const primaryColor = mainColors.primaryColor;
+const hoverTextColor = mainColors.hoverTextColor;
+const hoverColor = mainColors.hoverColor;
+
+export const TableContainer = styled.div`
+  margin: 2em;
+`;
+
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+export const TableHead = styled.thead`
+  background-color: ${primaryColor};
+  color: ${hoverTextColor};
+`;
+
+export const TableHeadCell = styled.th`
+  padding: 1em;
+`;
+
+export const TableBody = styled.tbody``;
+
+export const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: ${hoverColor};
+  }
+`;
+
+export const TableCell = styled.td`
+  text-align: center;
+  color: #333;
+  padding: 1em;
+`;

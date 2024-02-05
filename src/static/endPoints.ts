@@ -54,9 +54,9 @@ export const updateRouteId = {
 };
 
 export const reporting = {
-  MOST_MACHINERIES: "/reporting/most-machineries",
-  FIELD_BY_CROPS_AND_FARMS: "/reporting/field-by-crops-and-farms",
-  MOST_COMMON_SOIL: "/reporting/most-common-soil",
+  MOST_MACHINERIES: "/most-machineries",
+  FIELD_BY_CROPS_AND_FARMS: "/field-by-crops-and-farms",
+  MOST_COMMON_SOIL: "/most-common-soil",
 };
 
 export const auth = {

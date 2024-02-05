@@ -68,18 +68,19 @@ export const FarmCard: React.FC<FarmCardProps> = ({
       </CardInfo>
       <CardInfo>
         <ButtonContainer>
-          {(userRights === "OWNER" || userRights === "OPERATOR") && (
-            <>
-              <UpdateButtonCard onClick={() => onUpdate(farm.id)}>
-                Update
-              </UpdateButtonCard>
-              <SoftDeleteButtonCard onClick={() => onSoftDelete(farm.id)}>
-                Delete
-              </SoftDeleteButtonCard>
-            </>
-          )}
-          {userRights === "OWNER" && (
-            <PermDeleteButtonCard onClick={() => onPermDelete(farm.id)}>
+          {(userRights === "OWNER" || userRights === "OPERATOR") &&
+            farm.id !== undefined && (
+              <>
+                <UpdateButtonCard onClick={() => onUpdate(farm.id!)}>
+                  Update
+                </UpdateButtonCard>
+                <SoftDeleteButtonCard onClick={() => onSoftDelete(farm.id!)}>
+                  Delete
+                </SoftDeleteButtonCard>
+              </>
+            )}
+          {userRights === "OWNER" && farm.id !== undefined && (
+            <PermDeleteButtonCard onClick={() => onPermDelete(farm.id!)}>
               Perm Delete
             </PermDeleteButtonCard>
           )}

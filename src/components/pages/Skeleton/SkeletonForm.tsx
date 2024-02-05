@@ -23,7 +23,7 @@ export const FormSkeleton = () => {
         <SkeletonSubtitle />
         <Input disabled />
         <Button disabled>
-          <Skeleton width={1200} />
+          <Skeleton width={150} />
         </Button>
       </Form>
     </SkeletonWrapper>

@@ -43,6 +43,7 @@ export const SkeletonTitle = styled.div`
   width: 100px;
   height: 20px;
   margin-bottom: 10px;
+  margin-bottom: 10px;
   background-color: ${hoverTextColor};
   animation: ${pulseAnimation} 1.5s infinite alternate;
 `;
@@ -50,7 +51,8 @@ export const SkeletonTitle = styled.div`
 export const SkeletonSubtitle = styled.div`
   width: 80px;
   height: 15px;
-  margin-bottom: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   background-color: ${hoverTextColor};
   animation: ${pulseAnimation} 1.5s infinite alternate;
 `;
