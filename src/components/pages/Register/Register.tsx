@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Form,
   Label,
   Input,
   ErrorMsg,
   FormTitle,
+  PasswordInputContainer,
+  EyeIcon,
 } from "../../../styles/Form.styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
@@ -15,6 +17,8 @@ import { UserContext } from "../../../context/UserContext";
 import { Button } from "../../../styles/Global.styled";
 import { catalog, endpoint, header, method } from "../../../static/endPoints";
 import { signService } from "../../../services/signService";
+
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,6 +36,8 @@ export const Register: React.FC = () => {
   const { setItem } = useLocalStorage();
 
   const { setUser } = useContext(UserContext);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const onRegisterHandler: SubmitHandler<FormRegisterData> = async (
     userObj
@@ -66,13 +72,40 @@ export const Register: React.FC = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <Form onSubmit={handleSubmit(onRegisterHandler)}>
       <FormTitle>Register</FormTitle>
-      {registerData.map((el, key) => {
-        return (
-          <React.Fragment key={key}>
-            <Label>{el.placeholder}</Label>
+      {registerData.map((el, key) => (
+        <React.Fragment key={key}>
+          <Label>{el.placeholder}</Label>
+          {el.type === "password" ? (
+            <PasswordInputContainer>
+              <Input
+                {...register(
+                  `${el.registerName}` as
+                    | "firstName"
+                    | "lastName"
+                    | "email"
+                    | "password"
+                )}
+                type={showPassword ? "text" : "password"}
+                placeholder={el.placeholder}
+              />
+              {showPassword ? (
+                <EyeIcon onClick={togglePasswordVisibility}>
+                  <FiEye />
+                </EyeIcon>
+              ) : (
+                <EyeIcon onClick={togglePasswordVisibility}>
+                  <FiEyeOff />
+                </EyeIcon>
+              )}
+            </PasswordInputContainer>
+          ) : (
             <Input
               {...register(
                 `${el.registerName}` as
@@ -84,22 +117,20 @@ export const Register: React.FC = () => {
               type={el.type}
               placeholder={el.placeholder}
             />
-            {errors[el.errors as keyof FieldErrors<FormRegisterData>] && (
-              <ErrorMsg>
-                {
-                  errors[el.errors as keyof FieldErrors<FormRegisterData>]
-                    ?.message
-                }
-              </ErrorMsg>
-            )}
-          </React.Fragment>
-        );
-      })}
-
+          )}
+          {errors[el.errors as keyof FieldErrors<FormRegisterData>] && (
+            <ErrorMsg>
+              {
+                errors[el.errors as keyof FieldErrors<FormRegisterData>]
+                  ?.message
+              }
+            </ErrorMsg>
+          )}
+        </React.Fragment>
+      ))}
       <Button disabled={isSubmitting} type="submit">
         {isSubmitting ? "Loading..." : "Submit"}
       </Button>
-
       {errors.root && <ErrorMsg>{errors.root.message}</ErrorMsg>}
     </Form>
   );

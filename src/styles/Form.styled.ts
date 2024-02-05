@@ -98,3 +98,25 @@ export const ErrorMsg = styled.div`
   margin-top: 0.1em;
   font-size: 1em;
 `;
+
+export const TogglePasswordButton = styled.button`
+  background-color: transparent;
+  border: none;
+  padding: 0.5em;
+  font-size: 0.9em;
+  cursor: pointer;
+  color: #555;
+  margin-left: -2em; /* Adjust as needed */
+`;
+
+export const PasswordInputContainer = styled.div`
+  position: relative;
+`;
+
+export const EyeIcon = styled.span`
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+`;

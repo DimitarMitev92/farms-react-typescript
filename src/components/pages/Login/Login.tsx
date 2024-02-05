@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Form,
   Label,
   Input,
   ErrorMsg,
   FormTitle,
+  PasswordInputContainer,
+  EyeIcon,
 } from "../../../styles/Form.styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
@@ -18,6 +20,7 @@ import { signService } from "../../../services/signService";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export const Login: React.FC = () => {
   const {
@@ -32,6 +35,8 @@ export const Login: React.FC = () => {
   const { setItem } = useLocalStorage();
 
   const { setUser } = useContext(UserContext);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const onLoginHandler: SubmitHandler<FormLoginData> = async (userObj) => {
     try {
@@ -61,17 +66,40 @@ export const Login: React.FC = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <Form onSubmit={handleSubmit(onLoginHandler)}>
       <FormTitle>Login</FormTitle>
       {loginData.map((el, key) => (
         <React.Fragment key={key}>
           <Label>{el.placeholder}</Label>
-          <Input
-            {...register(`${el.registerName}` as "email" | "password")}
-            type={el.type}
-            placeholder={el.placeholder}
-          />
+          {el.type === "password" ? (
+            <PasswordInputContainer>
+              <Input
+                {...register(`${el.registerName}` as "email" | "password")}
+                type={showPassword ? "text" : "password"}
+                placeholder={el.placeholder}
+              />
+              {showPassword ? (
+                <EyeIcon onClick={togglePasswordVisibility}>
+                  <FiEye />
+                </EyeIcon>
+              ) : (
+                <EyeIcon onClick={togglePasswordVisibility}>
+                  <FiEyeOff />
+                </EyeIcon>
+              )}
+            </PasswordInputContainer>
+          ) : (
+            <Input
+              {...register(`${el.registerName}` as "email" | "password")}
+              type={el.type}
+              placeholder={el.placeholder}
+            />
+          )}
           {errors[el.errors as keyof FieldErrors<FormLoginData>] && (
             <ErrorMsg>
               {errors[el.errors as keyof FieldErrors<FormLoginData>]?.message ||
