@@ -81,14 +81,14 @@ export const MostCommonSoil = () => {
         <TableHead>
           <TableRow>
             <TableHeadCell>Count Fields</TableHeadCell>
-            <TableHeadCell>Soil ID</TableHeadCell>
+            <TableHeadCell>Soil</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {items.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.count}</TableCell>
-              <TableCell>{item.soilid}</TableCell>
+              <TableCell>{item.soil}</TableCell>
             </TableRow>
           ))}
         </TableBody>

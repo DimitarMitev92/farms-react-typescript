@@ -76,21 +76,21 @@ export const FieldByCropsAndFarms = () => {
 
   return (
     <TableContainer>
-      <Title>Most Common Soil</Title>
+      <Title>Fields By Crops And Farms</Title>
       <Table>
         <TableHead>
           <TableRow>
             <TableHeadCell>Count Fields</TableHeadCell>
-            <TableHeadCell>Farm ID</TableHeadCell>
-            <TableHeadCell>Crop ID</TableHeadCell>
+            <TableHeadCell>Farm</TableHeadCell>
+            <TableHeadCell>Crop</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {items.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.count}</TableCell>
-              <TableCell>{item.farmid}</TableCell>
-              <TableCell>{item.cropid}</TableCell>
+              <TableCell>{item.farmname}</TableCell>
+              <TableCell>{item.cropname}</TableCell>
             </TableRow>
           ))}
         </TableBody>
