@@ -1,4 +1,8 @@
 export interface IMostMachinery {
-  countmachinery: number;
-  farmid: string;
+  count: number;
+  name: string;
+  location: {
+    type: string;
+    coordinates: [number, number];
+  };
 }

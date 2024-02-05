@@ -83,14 +83,18 @@ export const MostMachinery = () => {
         <TableHead>
           <TableRow>
             <TableHeadCell>Count Machinery</TableHeadCell>
-            <TableHeadCell>Farm ID</TableHeadCell>
+            <TableHeadCell>Farm Name</TableHeadCell>
+            <TableHeadCell>Farm Location</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {items.map((item, index) => (
             <TableRow key={index}>
-              <TableCell>{item.countmachinery}</TableCell>
-              <TableCell>{item.farmid}</TableCell>
+              <TableCell>{item.count}</TableCell>
+              <TableCell>{item.name}</TableCell>
+              <TableCell>
+                {item.location.coordinates[0]} / {item.location.coordinates[1]}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
