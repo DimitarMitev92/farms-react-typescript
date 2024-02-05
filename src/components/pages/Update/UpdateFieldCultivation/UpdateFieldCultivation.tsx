@@ -216,8 +216,6 @@ export const UpdateFieldCultivation = () => {
   };
 
   const getDefaultOptionValue = (registerName: string) => {
-    console.log("asd");
-    console.log(registerName);
     switch (registerName) {
       case "cultivationId":
         return currentFieldCultivation?.cultivationId || "";

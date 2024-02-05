@@ -27,14 +27,18 @@ import { UserContext } from "./context/UserContext";
 import PrivateRoutes from "./guards/PrivateRoutes";
 import { UserDataFromApi } from "./static/interfaces";
 import { ToastContainer } from "react-toastify";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { Spinner, SpinnerContainer } from "./styles/Global.styled";
 
 function App() {
   const [user, setUser] = useState<UserDataFromApi | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { getItem } = useLocalStorage();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
-
+    const storedUser = getItem("user");
+    const storedToken = getItem("token");
+    if (storedUser) setUser(JSON.parse(storedUser));
     if (storedUser && storedToken) {
       const parsedUser = JSON.parse(storedUser);
       const parsedToken = JSON.parse(storedToken);
@@ -50,17 +54,34 @@ function App() {
         setUser({ user: parsedUser, access_token: parsedToken });
       }
     }
+    setIsLoading(false);
   }, []);
+
+  if (isLoading) {
+    return (
+      <SpinnerContainer>
+        <Spinner />
+      </SpinnerContainer>
+    );
+  }
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Main>
           <Routes>
-            <Route
-              path={routes.main}
-              element={<Navigate to={routes.login} replace />}
-            />
+            {user ? (
+              <Route
+                path={routes.main}
+                element={<Navigate to={routes.catalogFarm} replace />}
+              />
+            ) : (
+              <Route
+                path={routes.main}
+                element={<Navigate to={routes.catalogFarm} replace />}
+              />
+            )}
+
             {/* Auth components */}
             <Route path={routes.register} element={<Register />} />
             <Route path={routes.login} element={<Login />} />

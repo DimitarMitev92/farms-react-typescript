@@ -1,10 +1,31 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { mainColors } from "../static/mainColors";
 
 const primaryColor = mainColors.primaryColor;
 const hoverColor = mainColors.hoverColor;
 const textColor = mainColors.textColor;
 const hoverTextColor = mainColors.hoverTextColor;
+
+const spinAnimation = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+export const SpinnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+`;
+
+export const Spinner = styled.div`
+  border: 4px solid ${primaryColor};
+  border-top: 4px solid ${hoverColor};
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: ${spinAnimation} 0.8s linear infinite;
+`;
 
 export const Title = styled.h2`
   color: ${textColor};
