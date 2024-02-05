@@ -10,7 +10,7 @@ import {
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
-import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
+import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalog";
 import { create, endpoint, method, update } from "../../../../static/endPoints";
 import { ApiError, Farm } from "../../../../static/interfaces";
 import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";

@@ -24,7 +24,7 @@ import {
   SoftDeleteButtonCard,
   UpdateButtonCard,
 } from "../../../../styles/Card.styled";
-import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalogMachinery";
+import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalog";
 import { create, endpoint, update } from "../../../../static/endPoints";
 import { ApiError } from "../../../../static/interfaces";
 import { PopupDelete } from "../../PopupDelete/PopupDelete";

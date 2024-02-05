@@ -17,7 +17,6 @@ export const HeaderContainer = styled.header`
 
 export const HeaderTitle = styled.h1`
   text-align: center;
-  margin-left: 0.5em;
   font-size: 1em;
   white-space: nowrap;
   color: ${textColor};

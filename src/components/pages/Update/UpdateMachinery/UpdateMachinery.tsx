@@ -25,6 +25,7 @@ import { Farm } from "../../../../static/interfaces";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FormSkeleton } from "../../Skeleton/SkeletonForm";
 
 export const UpdateMachinery = () => {
   const {
@@ -35,6 +36,8 @@ export const UpdateMachinery = () => {
     formState: { errors, isSubmitting },
   } = useForm<MachineryHandler>({ resolver: zodResolver(machinerySchema) });
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -42,17 +45,33 @@ export const UpdateMachinery = () => {
   const [farmOptions, setFarmOptions] = useState<Farm[]>([]);
 
   useEffect(() => {
-    const fetchFarms = async () => {
+    const fetchData = async () => {
       try {
-        const url = endpoint.FARM;
-        const farmsData = await fetchDataFromApi(
-          url,
-          user!,
-          method.GET,
-          null,
-          "Error fetching farms data"
-        );
+        const [farmsData, machineryData] = await Promise.all([
+          fetchDataFromApi(
+            endpoint.FARM,
+            user!,
+            method.GET,
+            null,
+            "Error fetching farms data"
+          ),
+          fetchDataFromApi(
+            `${endpoint.MACHINERY}/${id}`,
+            user!,
+            method.GET,
+            null,
+            "Error fetching machinery data"
+          ),
+        ]);
+
         setFarmOptions(farmsData);
+
+        setValue("brand", machineryData.brand);
+        setValue("model", machineryData.model);
+        setValue("identificationNumber", machineryData.identificationNumber);
+        setValue("farmId", machineryData.farmId);
+
+        setIsLoading(false);
       } catch (error) {
         if (error instanceof Error) {
           setError("root", {
@@ -63,32 +82,12 @@ export const UpdateMachinery = () => {
           console.error("An unexpected error occurred:", error);
           toast.error(`${error}`);
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    const fetchMachinery = async () => {
-      try {
-        const url = `${endpoint.MACHINERY}/${id}`;
-        const machineryData = await fetchDataFromApi(
-          url,
-          user!,
-          method.GET,
-          null,
-          "Error fetching machinery data"
-        );
-
-        setValue("brand", machineryData.brand);
-        setValue("model", machineryData.model);
-        setValue("identificationNumber", machineryData.identificationNumber);
-        setValue("farmId", machineryData.farmId);
-      } catch (error) {
-        console.error("Error fetching machinery data:", error);
-        toast.error(`${error}`);
-      }
-    };
-
-    fetchFarms();
-    fetchMachinery();
+    fetchData();
   }, [id, user, setValue]);
 
   const onMachineryHandler: SubmitHandler<MachineryHandler> = async (
@@ -117,6 +116,10 @@ export const UpdateMachinery = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <FormSkeleton />;
+  }
 
   return (
     <Form onSubmit={handleSubmit(onMachineryHandler)}>

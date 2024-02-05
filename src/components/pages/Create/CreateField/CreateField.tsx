@@ -14,6 +14,7 @@ import {
   Option,
   Input,
   ErrorMsg,
+  TextArea,
 } from "../../../../styles/Form.styled";
 import React from "react";
 import { Button } from "../../../../styles/Global.styled";
@@ -136,6 +137,11 @@ export const CreateField = () => {
           )}
         </React.Fragment>
       ))}
+      <Label>Boundaries</Label>
+      <TextArea {...register(`boundaries`)} placeholder="Boundaries"></TextArea>
+      {errors.boundaries && (
+        <ErrorMsg>{errors.boundaries.message as string}</ErrorMsg>
+      )}
 
       <Button disabled={isSubmitting} type="submit">
         {isSubmitting ? "Loading..." : "Submit"}

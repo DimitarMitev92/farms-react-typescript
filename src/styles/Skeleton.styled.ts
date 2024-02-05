@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { mainColors } from "../static/mainColors";
 
 const primaryColor = mainColors.primaryColor;
+const hoverTextColor = mainColors.hoverTextColor;
 
 const pulseAnimation = keyframes`
   0% {
@@ -42,7 +43,7 @@ export const SkeletonTitle = styled.div`
   width: 100px;
   height: 20px;
   margin-bottom: 10px;
-  background-color: #f0f0f0;
+  background-color: ${hoverTextColor};
   animation: ${pulseAnimation} 1.5s infinite alternate;
 `;
 
@@ -50,7 +51,7 @@ export const SkeletonSubtitle = styled.div`
   width: 80px;
   height: 15px;
   margin-bottom: 5px;
-  background-color: #f0f0f0;
+  background-color: ${hoverTextColor};
   animation: ${pulseAnimation} 1.5s infinite alternate;
 `;
 
@@ -62,7 +63,7 @@ export const SkeletonDates = styled.div`
 export const SkeletonDateText = styled.div`
   width: 100px;
   height: 12px;
-  background-color: #f0f0f0;
+  background-color: ${hoverTextColor};
   margin-bottom: 5px;
   animation: ${pulseAnimation} 1.5s infinite alternate;
 `;
