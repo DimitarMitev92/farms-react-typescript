@@ -26,6 +26,7 @@ import { Farm, Soil } from "../../../../static/interfaces";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FormSkeleton } from "../../Skeleton/SkeletonForm";
 
 export const UpdateField = () => {
   const {
@@ -43,51 +44,37 @@ export const UpdateField = () => {
   const [soilOptions, setSoilOptions] = useState<Soil[]>([]);
   const [farmOptions, setFarmOptions] = useState<Farm[]>([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    const fetchSoils = async () => {
+    const fetchData = async () => {
       try {
-        const url = endpoint.SOIL;
-        const soilsData = await fetchDataFromApi(
-          url,
-          user!,
-          method.GET,
-          null,
-          "Error fetching soils data"
-        );
+        const [soilsData, farmsData, fieldData] = await Promise.all([
+          fetchDataFromApi(
+            endpoint.SOIL,
+            user!,
+            method.GET,
+            null,
+            "Error fetching soils data"
+          ),
+          fetchDataFromApi(
+            endpoint.FARM,
+            user!,
+            method.GET,
+            null,
+            "Error fetching farms data"
+          ),
+          fetchDataFromApi(
+            `${endpoint.FIELD}/${id}`,
+            user!,
+            method.GET,
+            null,
+            "Error fetching field data"
+          ),
+        ]);
+
         setSoilOptions(soilsData);
-      } catch (error) {
-        console.error("Error fetching soils data:", error);
-        toast.error(`${error}`);
-      }
-    };
-
-    const fetchFarms = async () => {
-      try {
-        const url = endpoint.FARM;
-        const farmsData = await fetchDataFromApi(
-          url,
-          user!,
-          method.GET,
-          null,
-          "Error fetching farms data"
-        );
         setFarmOptions(farmsData);
-      } catch (error) {
-        console.error("Error fetching farms data:", error);
-        toast.error(`${error}`);
-      }
-    };
-
-    const fetchField = async () => {
-      try {
-        const url = `${endpoint.FIELD}/${id}`;
-        const fieldData = await fetchDataFromApi(
-          url,
-          user!,
-          method.GET,
-          null,
-          "Error fetching field data"
-        );
 
         setValue("name", fieldData.name);
         setValue("farmId", fieldData.farmId);
@@ -97,14 +84,21 @@ export const UpdateField = () => {
           JSON.stringify(fieldData.boundaries.coordinates)
         );
       } catch (error) {
-        console.error("Error fetching field data:", error);
-        toast.error(`${error}`);
+        if (error instanceof Error) {
+          setError("root", {
+            message: error.message,
+          });
+          toast.error(`${error.message}`);
+        } else {
+          console.error("An unexpected error occurred:", error);
+          toast.error(`${error}`);
+        }
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    fetchSoils();
-    fetchFarms();
-    fetchField();
+    fetchData();
   }, [id, user, setValue]);
 
   const onFieldHandler: SubmitHandler<FieldUpdateHandler> = async (
@@ -141,6 +135,10 @@ export const UpdateField = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <FormSkeleton />;
+  }
 
   return (
     <Form onSubmit={handleSubmit(onFieldHandler)}>

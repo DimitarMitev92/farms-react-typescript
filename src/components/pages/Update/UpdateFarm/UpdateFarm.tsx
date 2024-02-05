@@ -1,5 +1,5 @@
 // UpdateFarm.tsx
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
@@ -23,6 +23,7 @@ import { fetchDataFromApi } from "../../../../services/fetchDataFromApi";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FormSkeleton } from "../../Skeleton/SkeletonForm";
 
 export const UpdateFarm: React.FC = () => {
   const {
@@ -38,6 +39,8 @@ export const UpdateFarm: React.FC = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchFarmData = async () => {
@@ -56,6 +59,8 @@ export const UpdateFarm: React.FC = () => {
       } catch (error) {
         console.error("Error fetching farm data:", error);
         toast.error(`${error}`);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -102,6 +107,10 @@ export const UpdateFarm: React.FC = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <FormSkeleton />;
+  }
 
   return (
     <Form onSubmit={handleSubmit(onFarmHandler)}>
