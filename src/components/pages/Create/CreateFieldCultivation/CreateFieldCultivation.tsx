@@ -33,6 +33,7 @@ import { Crop, Cultivation, Machinery } from "../../../../static/interfaces";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FormSkeleton } from "../../Skeleton/SkeletonForm";
 
 export const CreateFieldCultivation = () => {
   const {
@@ -53,6 +54,8 @@ export const CreateFieldCultivation = () => {
   const [machineryOptions, setMachineryOptions] = useState<Machinery[]>([]);
   const [cropOptions, setCropOptions] = useState<Crop[]>([]);
   const [fieldOptions, setFieldOptions] = useState<FieldOption[]>([]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,6 +83,8 @@ export const CreateFieldCultivation = () => {
           console.error("An unexpected error occurred:", error);
           toast.error(`${error}`);
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -122,6 +127,10 @@ export const CreateFieldCultivation = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <FormSkeleton />;
+  }
 
   return (
     <Form onSubmit={handleSubmit(onFieldCultivationHandler)}>

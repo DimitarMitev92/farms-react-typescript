@@ -27,6 +27,7 @@ import { Button } from "../../../../styles/Global.styled";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FormSkeleton } from "../../Skeleton/SkeletonForm";
 
 export const CreateMachinery = () => {
   const {
@@ -39,6 +40,8 @@ export const CreateMachinery = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [farmOptions, setFarmOptions] = useState<Farm[]>([]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +64,8 @@ export const CreateMachinery = () => {
           console.error("An unexpected error occurred:", error);
           toast.error(`${error}`);
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -91,6 +96,10 @@ export const CreateMachinery = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <FormSkeleton />;
+  }
 
   return (
     <Form onSubmit={handleSubmit(onMachineryHandler)}>

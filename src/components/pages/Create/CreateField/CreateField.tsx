@@ -22,6 +22,7 @@ import { Farm, Soil } from "../../../../static/interfaces";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FormSkeleton } from "../../Skeleton/SkeletonForm";
 
 export const CreateField = () => {
   const {
@@ -36,6 +37,8 @@ export const CreateField = () => {
 
   const [soilOptions, setSoilOptions] = useState<Soil[]>([]);
   const [farmOptions, setFarmOptions] = useState<Farm[]>([]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,6 +74,8 @@ export const CreateField = () => {
           console.error("An unexpected error occurred:", error);
           toast.error(`${error}`);
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -102,6 +107,11 @@ export const CreateField = () => {
       });
     }
   };
+
+  if (isLoading) {
+    return <FormSkeleton />;
+  }
+
   return (
     <Form onSubmit={handleSubmit(onFieldHandler)}>
       <FormTitle>Create a field</FormTitle>
