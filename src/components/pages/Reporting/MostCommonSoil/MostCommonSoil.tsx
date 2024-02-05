@@ -48,7 +48,7 @@ export const MostCommonSoil = () => {
         }
       } catch (error) {
         console.error(error);
-        toast.error("Error fetching reportings");
+        toast.error("Error fetching reports");
       } finally {
         setIsLoading(false);
       }
