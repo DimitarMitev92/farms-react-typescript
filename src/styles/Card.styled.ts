@@ -37,6 +37,10 @@ export const CardContainer = styled.div`
   &:hover {
     transform: scale(1.05);
   }
+
+  &:last-child {
+    margin-bottom: 5em;
+  }
 `;
 
 export const CardTitle = styled.h3`
