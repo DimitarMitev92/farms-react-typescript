@@ -37,7 +37,6 @@ export const MostMachinery = () => {
       try {
         if (user) {
           const urlReporting = `${endpoint.REPORTING}/farm/most-machineries`;
-          console.log(urlReporting);
           const fetchedData = await fetchDataFromApi(
             urlReporting,
             user,
@@ -45,7 +44,6 @@ export const MostMachinery = () => {
             null,
             "Error fetching report"
           );
-          console.log(fetchedData);
           setItems(fetchedData);
         }
       } catch (error) {

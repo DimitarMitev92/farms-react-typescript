@@ -25,6 +25,20 @@ export const fetchMachinery = async (user: UserDataFromApi) => {
   );
 };
 
+export const fetchMachineryByFieldId = async (
+  user: UserDataFromApi,
+  fieldId: string
+) => {
+  const url = `${endpoint.FIELD_CULTIVATION}/field/${fieldId}`;
+  return fetchDataFromApi(
+    url,
+    user,
+    method.GET,
+    null,
+    "Error fetching machineries"
+  );
+};
+
 export const fetchCrops = async (user: UserDataFromApi) => {
   const url = endpoint.CROP;
   return fetchDataFromApi(url, user, method.GET, null, "Error fetching crops");

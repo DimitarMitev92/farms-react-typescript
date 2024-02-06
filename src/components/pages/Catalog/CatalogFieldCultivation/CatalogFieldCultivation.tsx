@@ -131,7 +131,7 @@ export const CatalogFieldCultivation = () => {
 
   return (
     <>
-      <Title>Catalog Field cultivations</Title>
+      <Title>Catalog Field Cultivations</Title>
       <CatalogContainer>
         {fieldCultivations.map((fieldCultivation) => (
           <CardContainer key={fieldCultivation.id}>

@@ -36,9 +36,9 @@ export const Title = styled.h2`
 
 export const SubTitle = styled.h3`
   color: ${textColor};
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   text-align: center;
-  margin-top: 2em;
+  margin-top: 0.5em;
 `;
 
 export const ColumnContainer = styled.div`

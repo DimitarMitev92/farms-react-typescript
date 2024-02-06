@@ -26,8 +26,9 @@ import {
   fetchCultivations,
   fetchFields,
   fetchMachinery,
+  fetchMachineryByFieldId,
 } from "./CreateFieldCultivation.logic";
-import { Button } from "../../../../styles/Global.styled";
+import { Button, SubTitle } from "../../../../styles/Global.styled";
 import { catalog } from "../../../../static/endPoints";
 import { Crop, Cultivation, Machinery } from "../../../../static/interfaces";
 
@@ -54,6 +55,8 @@ export const CreateFieldCultivation = () => {
   const [machineryOptions, setMachineryOptions] = useState<Machinery[]>([]);
   const [cropOptions, setCropOptions] = useState<Crop[]>([]);
   const [fieldOptions, setFieldOptions] = useState<FieldOption[]>([]);
+  const [selectedField, setSelectedField] = useState<string | null>(null);
+  const [defaultFieldId, setDefaultFieldId] = useState<string | null>(null);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -72,6 +75,11 @@ export const CreateFieldCultivation = () => {
 
           const fieldData = await fetchFields(user);
           setFieldOptions(fieldData);
+
+          if (fieldData.length > 0) {
+            setDefaultFieldId(fieldData[0].id);
+            setSelectedField(fieldData[0].id);
+          }
         }
       } catch (error) {
         if (error instanceof Error) {
@@ -90,6 +98,20 @@ export const CreateFieldCultivation = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user && selectedField) {
+        const fetchedMachineryData = await fetchMachineryByFieldId(
+          user,
+          selectedField
+        );
+        console.log(fetchedMachineryData);
+        setMachineryOptions(fetchedMachineryData);
+      }
+    };
+    fetchData();
+  }, [selectedField]);
 
   const onFieldCultivationHandler: SubmitHandler<
     FieldCultivationHandler
@@ -128,6 +150,12 @@ export const CreateFieldCultivation = () => {
     }
   };
 
+  const handleSelectedField = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = event.target.value;
+    setSelectedField(selectedId);
+    console.log("Selected field id:", selectedId);
+  };
+
   if (isLoading) {
     return <FormSkeleton />;
   }
@@ -135,12 +163,25 @@ export const CreateFieldCultivation = () => {
   return (
     <Form onSubmit={handleSubmit(onFieldCultivationHandler)}>
       <FormTitle>Create a field cultivation</FormTitle>
+      <SubTitle>Please first select field.</SubTitle>
       {fieldCultivationData.map((el, key) => {
         return (
           <React.Fragment key={key}>
             <Label>{el.placeholder}</Label>
             {el.type === "select" ? (
-              <Select {...register(`${el.registerName}`)}>
+              <Select
+                {...register(`${el.registerName}`)}
+                onChange={
+                  el.registerName === "fieldId"
+                    ? handleSelectedField
+                    : undefined
+                }
+                defaultValue={
+                  el.registerName === "fieldId" && defaultFieldId !== null
+                    ? defaultFieldId
+                    : undefined
+                }
+              >
                 <Option value="" disabled>
                   {el.placeholder}
                 </Option>
@@ -153,8 +194,7 @@ export const CreateFieldCultivation = () => {
                   : el.registerName === "machineryId"
                   ? machineryOptions.map((machinery) => (
                       <Option key={machinery.id} value={machinery.id}>
-                        {machinery.brand} {machinery.model} -{" "}
-                        {machinery.identificationNumber}
+                        {machinery.brand} {machinery.model}
                       </Option>
                     ))
                   : el.registerName === "cropId"
@@ -174,6 +214,7 @@ export const CreateFieldCultivation = () => {
                 {...register(`${el.registerName}`)}
                 type={el.type}
                 placeholder={el.placeholder}
+                disabled={el.registerName === "machineryId" && !selectedField}
               />
             )}
             {errors[el.errors]?.message && (
