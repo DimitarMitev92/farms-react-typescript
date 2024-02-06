@@ -148,9 +148,9 @@ export const CatalogFieldCultivation = () => {
                   fieldCultivation.cultivation.cultivation}
               </CardSubTitle>
               <CardSubTitle>
-                Machinery id:
+                Machinery:
                 {fieldCultivation.machinery &&
-                  fieldCultivation.machinery.identificationNumber}
+                  `${fieldCultivation.machinery.brand} ${fieldCultivation.machinery.model} - ${fieldCultivation.machinery.identificationNumber}`}
               </CardSubTitle>
               {fieldCultivation.startingDate && (
                 <DatesText>

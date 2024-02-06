@@ -59,12 +59,13 @@ export const fetchFieldCultivation = async (user: UserDataFromApi) => {
           null,
           `Failed to fetch field for field cultivation ${data.id}`
         );
-
         return {
           ...data,
           cultivation: { cultivation: responseCultivation.cultivation },
           machinery: {
             identificationNumber: responseMachinery.identificationNumber,
+            brand: responseMachinery.brand,
+            model: responseMachinery.model,
           },
           crop: { crop: responseCrop.crop },
           field: { name: responseField.name },

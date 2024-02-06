@@ -8,7 +8,7 @@ export interface FieldCultivationFroApi {
   updatedAt: string;
   deletedAt: string | null;
   cultivation: { cultivation: string };
-  machinery: { identificationNumber: string };
+  machinery: { identificationNumber: string; brand: string; model: string };
   crop: { crop: string };
   field: { name: string };
 }
