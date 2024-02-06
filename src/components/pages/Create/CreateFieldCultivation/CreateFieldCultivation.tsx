@@ -153,6 +153,7 @@ export const CreateFieldCultivation = () => {
                   : el.registerName === "machineryId"
                   ? machineryOptions.map((machinery) => (
                       <Option key={machinery.id} value={machinery.id}>
+                        {machinery.brand} {machinery.model} -{" "}
                         {machinery.identificationNumber}
                       </Option>
                     ))
@@ -183,7 +184,7 @@ export const CreateFieldCultivation = () => {
       })}
 
       <Button disabled={isSubmitting} type="submit">
-        {isSubmitting ? "Loading..." : "Submit"}
+        {isSubmitting ? "Loading..." : "Create"}
       </Button>
 
       {errors.root && <ErrorMsg>{errors.root.message}</ErrorMsg>}

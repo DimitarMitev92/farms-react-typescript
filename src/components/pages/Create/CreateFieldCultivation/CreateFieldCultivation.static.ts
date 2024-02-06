@@ -21,7 +21,7 @@ export const fieldCultivationData = [
   {
     registerName: "machineryId",
     type: "select",
-    placeholder: "Select machinery id",
+    placeholder: "Select machinery",
     errors: "machineryId",
     errorsMsg: "machineryId.message",
   },

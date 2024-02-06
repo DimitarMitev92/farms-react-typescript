@@ -28,6 +28,7 @@ import {
   Option,
   Input,
   ErrorMsg,
+  FormTitle,
 } from "../../../../styles/Form.styled";
 import React from "react";
 import { Button } from "../../../../styles/Global.styled";
@@ -236,6 +237,7 @@ export const UpdateFieldCultivation = () => {
 
   return (
     <Form onSubmit={handleSubmit(onFieldCultivationHandler)}>
+      <FormTitle>Update a field cultivation</FormTitle>
       {fieldCultivationData.map((el, key) => {
         return (
           <React.Fragment key={key}>
@@ -257,6 +259,7 @@ export const UpdateFieldCultivation = () => {
                   : el.registerName === "machineryId"
                   ? machineryOptions.map((machinery) => (
                       <Option key={machinery.id} value={machinery.id}>
+                        {machinery.brand} {machinery.model} -{" "}
                         {machinery.identificationNumber}
                       </Option>
                     ))
@@ -287,7 +290,7 @@ export const UpdateFieldCultivation = () => {
       })}
 
       <Button disabled={isSubmitting} type="submit">
-        {isSubmitting ? "Loading..." : "Submit"}
+        {isSubmitting ? "Loading..." : "Update"}
       </Button>
 
       {errors.root && <ErrorMsg>{errors.root.message}</ErrorMsg>}

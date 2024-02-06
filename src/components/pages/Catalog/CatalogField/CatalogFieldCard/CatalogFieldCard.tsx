@@ -33,11 +33,11 @@ const FieldCard: React.FC<FieldCardProps> = ({
     if (user) {
       setUserRights(rightsOfUser(user));
     }
-  }, []);
+  }, [user]);
 
   const convertedCoordinates: LatLngTuple[][] =
-    field.boundaries.coordinates.map(
-      (layer) => layer.map((point) => [point[0], point[1]]) as LatLngTuple[]
+    field.boundaries.coordinates.map((layer) =>
+      layer.map(([lng, lat]) => [lat, lng] as LatLngTuple)
     );
 
   return (
@@ -45,7 +45,7 @@ const FieldCard: React.FC<FieldCardProps> = ({
       <MapContainer
         center={convertedCoordinates[0][0]}
         zoom={13}
-        style={{ height: "200px" }}
+        style={{ height: "300px" }} // Adjusted height for better visibility
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

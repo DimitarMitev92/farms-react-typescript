@@ -142,7 +142,7 @@ export const UpdateField = () => {
 
   return (
     <Form onSubmit={handleSubmit(onFieldHandler)}>
-      <FormTitle>Create a field</FormTitle>
+      <FormTitle>Update a field</FormTitle>
       {fieldData.map((el, key) => (
         <React.Fragment key={key}>
           <Label>{el.placeholder}</Label>
@@ -182,7 +182,7 @@ export const UpdateField = () => {
       )}
 
       <Button disabled={isSubmitting} type="submit">
-        {isSubmitting ? "Loading..." : "Submit"}
+        {isSubmitting ? "Loading..." : "Update"}
       </Button>
 
       {errors.root && <ErrorMsg>{errors.root.message}</ErrorMsg>}

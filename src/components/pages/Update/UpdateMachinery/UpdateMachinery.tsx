@@ -123,7 +123,7 @@ export const UpdateMachinery = () => {
 
   return (
     <Form onSubmit={handleSubmit(onMachineryHandler)}>
-      <FormTitle>Create a machinery</FormTitle>
+      <FormTitle>Update a machinery</FormTitle>
       {machineryData.map((el, key) => (
         <React.Fragment key={key}>
           <Label>{el.placeholder}</Label>
@@ -152,7 +152,7 @@ export const UpdateMachinery = () => {
       ))}
 
       <Button disabled={isSubmitting} type="submit">
-        {isSubmitting ? "Loading..." : "Submit"}
+        {isSubmitting ? "Loading..." : "Update"}
       </Button>
 
       {errors.root && <ErrorMsg>{errors.root.message}</ErrorMsg>}

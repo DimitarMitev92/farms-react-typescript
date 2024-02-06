@@ -154,7 +154,7 @@ export const CreateField = () => {
       )}
 
       <Button disabled={isSubmitting} type="submit">
-        {isSubmitting ? "Loading..." : "Submit"}
+        {isSubmitting ? "Loading..." : "Create"}
       </Button>
 
       {errors.root && <ErrorMsg>{errors.root.message}</ErrorMsg>}

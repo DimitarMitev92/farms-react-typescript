@@ -114,7 +114,7 @@ export const UpdateFarm: React.FC = () => {
 
   return (
     <Form onSubmit={handleSubmit(onFarmHandler)}>
-      <FormTitle>Create a farm</FormTitle>
+      <FormTitle>Update a farm</FormTitle>
       {farmData.map((el, key) => {
         return (
           <React.Fragment key={key}>
@@ -132,7 +132,7 @@ export const UpdateFarm: React.FC = () => {
       })}
 
       <Button disabled={isSubmitting} type="submit">
-        {isSubmitting ? "Loading..." : "Submit"}
+        {isSubmitting ? "Loading..." : "Update"}
       </Button>
 
       {errors.root && <ErrorMsg>{errors.root.message}</ErrorMsg>}
