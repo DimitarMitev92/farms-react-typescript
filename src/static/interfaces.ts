@@ -32,6 +32,7 @@ export interface Machinery {
   brand: string;
   model: string;
   identificationNumber: string;
+  identification_number?: string;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

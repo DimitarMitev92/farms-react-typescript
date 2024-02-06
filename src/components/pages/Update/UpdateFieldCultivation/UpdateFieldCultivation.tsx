@@ -31,8 +31,9 @@ import {
   FormTitle,
 } from "../../../../styles/Form.styled";
 import React from "react";
-import { Button } from "../../../../styles/Global.styled";
+import { Button, SubTitle } from "../../../../styles/Global.styled";
 import { FormSkeleton } from "../../Skeleton/SkeletonForm";
+import { fetchMachineryByFieldId } from "../../Create/CreateFieldCultivation/CreateFieldCultivation.logic";
 
 export const UpdateFieldCultivation = () => {
   const {
@@ -59,6 +60,8 @@ export const UpdateFieldCultivation = () => {
     useState<FieldCultivation>();
   const [currentGrowingProcess, setCurrentGrowingProcess] =
     useState<GrowingProcess>();
+  const [selectedField, setSelectedField] = useState<string | null>(null);
+  const [defaultFieldId, setDefaultFieldId] = useState<string | null>(null);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -94,6 +97,11 @@ export const UpdateFieldCultivation = () => {
             null,
             "Error fetching fields data"
           );
+
+          if (fieldData.length > 0) {
+            setDefaultFieldId(fieldData[0].id);
+            setSelectedField(fieldData[0].id);
+          }
 
           setCultivationOptions(cultivationData);
           setMachineryOptions(machineryData);
@@ -144,6 +152,19 @@ export const UpdateFieldCultivation = () => {
     fetchData();
     fetchFieldCultivation();
   }, [id, user]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user && selectedField) {
+        const fetchedMachineryData = await fetchMachineryByFieldId(
+          user,
+          selectedField
+        );
+        setMachineryOptions(fetchedMachineryData);
+      }
+    };
+    fetchData();
+  }, [selectedField]);
 
   useEffect(() => {
     if (currentFieldCultivation && currentGrowingProcess) {
@@ -216,19 +237,9 @@ export const UpdateFieldCultivation = () => {
     }
   };
 
-  const getDefaultOptionValue = (registerName: string) => {
-    switch (registerName) {
-      case "cultivationId":
-        return currentFieldCultivation?.cultivationId || "";
-      case "machineryId":
-        return currentFieldCultivation?.machineryId || "";
-      case "cropId":
-        return currentGrowingProcess?.cropId || "";
-      case "fieldId":
-        return currentGrowingProcess?.fieldId || "";
-      default:
-        return "";
-    }
+  const handleSelectedField = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = event.target.value;
+    setSelectedField(selectedId);
   };
 
   if (isLoading) {
@@ -238,6 +249,7 @@ export const UpdateFieldCultivation = () => {
   return (
     <Form onSubmit={handleSubmit(onFieldCultivationHandler)}>
       <FormTitle>Update a field cultivation</FormTitle>
+      <SubTitle>Please first select field.</SubTitle>
       {fieldCultivationData.map((el, key) => {
         return (
           <React.Fragment key={key}>
@@ -245,7 +257,16 @@ export const UpdateFieldCultivation = () => {
             {el.type === "select" ? (
               <Select
                 {...register(`${el.registerName}`)}
-                defaultValue={getDefaultOptionValue(el.registerName)}
+                onChange={
+                  el.registerName === "fieldId"
+                    ? handleSelectedField
+                    : undefined
+                }
+                defaultValue={
+                  el.registerName === "fieldId" && defaultFieldId !== null
+                    ? defaultFieldId
+                    : undefined
+                }
               >
                 <Option value="" disabled>
                   {el.placeholder}
@@ -260,7 +281,7 @@ export const UpdateFieldCultivation = () => {
                   ? machineryOptions.map((machinery) => (
                       <Option key={machinery.id} value={machinery.id}>
                         {machinery.brand} {machinery.model} -{" "}
-                        {machinery.identificationNumber}
+                        {machinery.identification_number}
                       </Option>
                     ))
                   : el.registerName === "cropId"

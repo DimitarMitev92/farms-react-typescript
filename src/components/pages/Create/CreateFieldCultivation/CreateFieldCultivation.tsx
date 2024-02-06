@@ -106,7 +106,6 @@ export const CreateFieldCultivation = () => {
           user,
           selectedField
         );
-        console.log(fetchedMachineryData);
         setMachineryOptions(fetchedMachineryData);
       }
     };
@@ -153,7 +152,6 @@ export const CreateFieldCultivation = () => {
   const handleSelectedField = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = event.target.value;
     setSelectedField(selectedId);
-    console.log("Selected field id:", selectedId);
   };
 
   if (isLoading) {
@@ -194,7 +192,8 @@ export const CreateFieldCultivation = () => {
                   : el.registerName === "machineryId"
                   ? machineryOptions.map((machinery) => (
                       <Option key={machinery.id} value={machinery.id}>
-                        {machinery.brand} {machinery.model}
+                        {machinery.brand} {machinery.model} -{" "}
+                        {machinery.identification_number}
                       </Option>
                     ))
                   : el.registerName === "cropId"
