@@ -148,7 +148,10 @@ export const CreateField = () => {
         </React.Fragment>
       ))}
       <Label>Boundaries</Label>
-      <TextArea {...register(`boundaries`)} placeholder="Boundaries"></TextArea>
+      <TextArea
+        {...register(`boundaries`)}
+        placeholder="You must submit a polygon"
+      ></TextArea>
       {errors.boundaries && (
         <ErrorMsg>{errors.boundaries.message as string}</ErrorMsg>
       )}

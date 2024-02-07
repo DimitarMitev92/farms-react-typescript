@@ -11,8 +11,9 @@ export const fieldSchema = z.object({
 export const fieldData = [
   {
     registerName: "name",
+    name: "Name",
     type: "text",
-    placeholder: "Name",
+    placeholder: "Field 1",
     errors: "name",
     errorsMsg: "name.message",
   },

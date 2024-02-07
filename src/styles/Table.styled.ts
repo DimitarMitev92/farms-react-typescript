@@ -17,8 +17,13 @@ const fadeInUp = keyframes`
 `;
 
 export const TableContainer = styled.div`
-  margin: 2em;
+  margin: 1em;
+  margin-bottom: 5em;
   animation: ${fadeInUp} 0.5s ease-in-out;
+
+  @media (max-width: 750px) {
+    overflow-x: auto;
+  }
 `;
 
 export const Table = styled.table`

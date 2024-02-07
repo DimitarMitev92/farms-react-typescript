@@ -83,7 +83,7 @@ export const CreateFarm: React.FC = () => {
       <FormTitle>Create a farm</FormTitle>
       {farmData.map((el, key) => (
         <React.Fragment key={key}>
-          <Label>{el.placeholder}</Label>
+          <Label>{el.name}</Label>
           <Input
             {...register(`${el.registerName}`)}
             type={el.type}

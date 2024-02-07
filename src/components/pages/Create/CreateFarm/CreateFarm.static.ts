@@ -22,15 +22,17 @@ export const farmSchema = z.object({
 export const farmData = [
   {
     registerName: "name",
+    name: "Name",
     type: "text",
-    placeholder: "Name",
+    placeholder: "Farm 1",
     errors: "name",
     errorsMsg: "name.message",
   },
   {
     registerName: "location",
+    name: "Location",
     type: "text",
-    placeholder: "Location",
+    placeholder: "10.100100,20.200200",
     errors: "location",
     errorsMsg: "location.message",
   },

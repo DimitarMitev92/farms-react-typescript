@@ -106,7 +106,7 @@ export const CreateMachinery = () => {
       <FormTitle>Create a machinery</FormTitle>
       {machineryData.map((el, key) => (
         <React.Fragment key={key}>
-          <Label>{el.placeholder}</Label>
+          <Label>{el.name}</Label>
           {el.type === "select" ? (
             <Select {...register(`${el.registerName}`)}>
               <Option value="" disabled>
