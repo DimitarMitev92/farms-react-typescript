@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { mainColors } from "../../../static/mainColors";
+import { FiMenu } from "react-icons/fi";
+import { TfiClose } from "react-icons/tfi";
 
 const primaryColor = mainColors.primaryColor;
 const hoverColor = mainColors.hoverColor;
@@ -12,7 +14,6 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: center;
   background-color: ${primaryColor};
-  height: 3em;
 `;
 
 export const HeaderTitle = styled.h1`
@@ -35,6 +36,10 @@ export const UnorderedList = styled.ul`
   display: flex;
   list-style-type: none;
   height: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const ListItem = styled.li`
@@ -43,7 +48,7 @@ export const ListItem = styled.li`
   align-items: center;
   position: relative;
   width: 10em;
-  min-height: 100%;
+  height: 3em;
 
   &:hover {
     background-color: ${hoverColor};
@@ -59,6 +64,7 @@ export const NavLinkAnchor = styled(NavLink)`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 
   &:hover {
     font-style: bold;
@@ -72,7 +78,6 @@ export const DropdownContainer = styled.div`
   height: 100%;
   position: relative;
   display: inline-block;
-  z-index: 100000;
 `;
 
 export const DropdownButton = styled.p`
@@ -98,8 +103,8 @@ export const DropdownContent = styled.div`
   background-color: ${primaryColor};
   text-align: center;
   min-width: 100%;
-  z-index: 100;
   top: 100%;
+  z-index: 10000;
 
   ${DropdownContainer}:hover & {
     display: block;
@@ -113,4 +118,20 @@ export const DropdownItem = styled.div`
   &:hover {
     background-color: ${hoverColor};
   }
+`;
+
+export const BurgerIcon = styled(FiMenu)`
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-top: 0.7em;
+  margin-left: 0.5em;
+  margin-bottom: 0.7em;
+`;
+
+export const BurgerCloseIcon = styled(TfiClose)`
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-top: 0.7em;
+  margin-left: 0.5em;
+  margin-bottom: 0.7em;
 `;
