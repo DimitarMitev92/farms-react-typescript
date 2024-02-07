@@ -8,6 +8,8 @@ import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
   Button,
   ColumnContainer,
+  SearchContainer,
+  SearchInput,
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
@@ -45,6 +47,10 @@ export const CatalogFieldCultivation = () => {
   const [userRights, setUserRights] = useState<
     "OWNER" | "OPERATOR" | "VIEWER" | null
   >(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredFieldCultivations, setFilteredFieldCultivations] = useState<
+    FieldCultivationFroApi[]
+  >([]);
 
   const navigate = useNavigate();
 
@@ -69,6 +75,16 @@ export const CatalogFieldCultivation = () => {
 
     fetchData();
   }, [user, triggerDelete]);
+
+  useEffect(() => {
+    setFilteredFieldCultivations(
+      fieldCultivations.filter((fieldCultivation) =>
+        fieldCultivation.field.name
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [fieldCultivations, searchTerm]);
 
   const handleUpdate = (id: string) => {
     navigate(`${update.FIELD_CULTIVATION}/${id}`);
@@ -133,8 +149,18 @@ export const CatalogFieldCultivation = () => {
   return (
     <CardsWrapper>
       <Title>Catalog Field Cultivations</Title>
+
+      <SearchContainer>
+        <SearchInput
+          type="text"
+          placeholder="Search by field name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </SearchContainer>
+
       <CatalogContainer>
-        {fieldCultivations.map((fieldCultivation) => (
+        {filteredFieldCultivations.map((fieldCultivation) => (
           <CardContainer key={fieldCultivation.id}>
             <CardInfo>
               <CardTitle>
@@ -198,6 +224,9 @@ export const CatalogFieldCultivation = () => {
             </CardInfo>
           </CardContainer>
         ))}
+        {filteredFieldCultivations.length === 0 && (
+          <SubTitle>A field with that name does not exist.</SubTitle>
+        )}
       </CatalogContainer>
 
       {showSoftDeletePopup && (
