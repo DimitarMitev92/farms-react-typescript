@@ -32,6 +32,10 @@ export const Title = styled.h2`
   margin-bottom: 1em;
   text-align: center;
   margin-top: 2em;
+
+  @media (max-width: 500px) {
+    font-size: 1.2em;
+  }
 `;
 
 export const SubTitle = styled.h3`

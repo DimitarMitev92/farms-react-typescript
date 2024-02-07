@@ -33,6 +33,7 @@ export const DeletePopup = styled.div`
   text-align: center;
   z-index: 100000;
   animation: ${fadeIn} 0.2s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0.5, 0.5, 0.5, 0.5);
 `;
 
 export const DeleteButtonPopup = styled(SoftDeleteButtonCard)`

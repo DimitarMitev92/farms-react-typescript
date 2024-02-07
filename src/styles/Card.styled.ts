@@ -34,12 +34,13 @@ export const CardContainer = styled.div`
   padding: 1em;
   margin: 1em;
   width: 18.75em;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.5);
   animation: ${fadeInUp} 0.5s ease-in-out;
   transition: all 0.3s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0.3, 0.3, 0.3, 0.3);
   }
 `;
 

@@ -33,12 +33,34 @@ export const Label = styled.label`
   font-size: 1.2em;
   color: ${textColor};
   margin-top: 0.6em;
+
+  @media (max-width: 768px) {
+    font-size: 1em;
+    margin-top: 0.3em;
+  }
 `;
 
 export const FormTitle = styled.h2`
   font-size: 1.5em;
   color: ${textColor};
   margin-bottom: 1em;
+  @media (max-width: 768px) {
+    font-size: 1.2em;
+    margin-bottom: 0.8em;
+  }
+`;
+
+export const FromSubTitle = styled.h3`
+  font-size: 1.2em;
+  color: red;
+  margin-bottom: 0.5em;
+  text-align: center;
+  margin-top: 0.5em;
+  @media (max-width: 768px) {
+    font-size: 1em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+  }
 `;
 
 export const Input = styled.input`
@@ -53,6 +75,14 @@ export const Input = styled.input`
     outline: none;
     border-color: ${hoverColor};
     box-shadow: 0 0 0.5em ${hoverColor};
+  }
+
+  @media (max-width: 768px) {
+    min-width: 80%;
+  }
+
+  @media (max-width: 500px) {
+    min-width: 95%;
   }
 `;
 
@@ -69,6 +99,13 @@ export const TextArea = styled.textarea`
     border-color: ${primaryColor};
     box-shadow: 0 0 0.5em ${hoverColor};
   }
+
+  @media (max-width: 768px) {
+    min-width: 80%;
+  }
+  @media (max-width: 500px) {
+    min-width: 95%;
+  }
 `;
 
 export const Select = styled.select`
@@ -84,6 +121,13 @@ export const Select = styled.select`
     outline: none;
     border-color: ${hoverColor};
     box-shadow: 0 0 0.5em ${hoverColor};
+  }
+
+  @media (max-width: 768px) {
+    min-width: 80%;
+  }
+  @media (max-width: 500px) {
+    min-width: 95%;
   }
 `;
 
@@ -106,7 +150,7 @@ export const TogglePasswordButton = styled.button`
   font-size: 0.9em;
   cursor: pointer;
   color: #555;
-  margin-left: -2em; /* Adjust as needed */
+  margin-left: -2em;
 `;
 
 export const PasswordInputContainer = styled.div`

@@ -17,6 +17,7 @@ import {
   Select,
   Option,
   FormTitle,
+  FromSubTitle,
 } from "../../../../styles/Form.styled";
 import React from "react";
 import {
@@ -28,7 +29,7 @@ import {
   fetchMachinery,
   fetchMachineryByFieldId,
 } from "./CreateFieldCultivation.logic";
-import { Button, SubTitle } from "../../../../styles/Global.styled";
+import { Button } from "../../../../styles/Global.styled";
 import { catalog } from "../../../../static/endPoints";
 import { Crop, Cultivation, Machinery } from "../../../../static/interfaces";
 
@@ -161,7 +162,7 @@ export const CreateFieldCultivation = () => {
   return (
     <Form onSubmit={handleSubmit(onFieldCultivationHandler)}>
       <FormTitle>Create a field cultivation</FormTitle>
-      <SubTitle>Please first select field.</SubTitle>
+      <FromSubTitle>Please first select field.</FromSubTitle>
       {fieldCultivationData.map((el, key) => {
         return (
           <React.Fragment key={key}>
