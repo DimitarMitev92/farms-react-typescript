@@ -30,14 +30,18 @@ import {
 import { PopupDelete } from "../PopupDelete/PopupDelete";
 import { ApiError } from "../../../static/interfaces";
 import { softDelete } from "../../../services/deleteService";
+import { Search } from "../../Search/Search";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [items, setItems] = useState<IUserFromApi[]>([]);
+  const [users, setUsers] = useState<IUserFromApi[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [triggerDelete, setTriggerDelete] = useState(false);
   const [isShowDeletePopup, setIsShowDeletePopup] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState<IUserFromApi[]>([]);
+
   const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -58,7 +62,7 @@ const Dashboard = () => {
           const usersDataWithoutCurrentUser = fetchedData.filter(
             (item: IUserFromApi) => item.email !== user.user.email
           );
-          setItems(usersDataWithoutCurrentUser);
+          setUsers(usersDataWithoutCurrentUser);
         }
       } catch (error) {
         console.error(error);
@@ -70,6 +74,14 @@ const Dashboard = () => {
 
     fetchData();
   }, [user, triggerDelete]);
+
+  useEffect(() => {
+    setFilteredUsers(
+      users.filter((item) =>
+        item.email.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [users, searchTerm]);
 
   const handleUpdate = (id: string): void => {
     navigate(`${update.USER}/${id}`);
@@ -105,7 +117,7 @@ const Dashboard = () => {
     );
   }
 
-  if (items.length === 0) {
+  if (users.length === 0) {
     return (
       <ColumnContainer>
         <SubTitle>There are no users to display.</SubTitle>
@@ -118,6 +130,14 @@ const Dashboard = () => {
     <>
       <TableContainer>
         <Title>Users</Title>
+
+        <Search
+          text="text"
+          placeholder="Search by user email..."
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+
         <Table>
           <TableHead>
             <TableRow>
@@ -130,7 +150,7 @@ const Dashboard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((item, index) => (
+            {filteredUsers.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{item.email}</TableCell>
                 <TableCell>{item.firstName}</TableCell>
@@ -148,6 +168,9 @@ const Dashboard = () => {
                 </TableCell>
               </TableRow>
             ))}
+            {filteredUsers.length === 0 && (
+              <SubTitle>A user with that email does not exist.</SubTitle>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

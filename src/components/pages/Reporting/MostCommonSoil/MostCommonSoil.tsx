@@ -24,11 +24,15 @@ import {
   TableRow,
 } from "../../../../styles/Table.styled";
 import { IMostCommonSoil } from "./MostCommonSoil.static";
+import { Search } from "../../../Search/Search";
 
 export const MostCommonSoil = () => {
   const [items, setItems] = useState<IMostCommonSoil[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredItems, setFilteredItems] = useState<IMostCommonSoil[]>([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,6 +61,14 @@ export const MostCommonSoil = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setFilteredItems(
+      items.filter((item) =>
+        item.soil.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [items, searchTerm]);
+
   if (isLoading) {
     return (
       <SpinnerContainer>
@@ -77,6 +89,14 @@ export const MostCommonSoil = () => {
   return (
     <TableContainer>
       <Title>Most Common Soil</Title>
+
+      <Search
+        text="text"
+        placeholder="Search by soil..."
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
+
       <Table>
         <TableHead>
           <TableRow>
@@ -85,12 +105,15 @@ export const MostCommonSoil = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {items.map((item, index) => (
+          {filteredItems.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.count}</TableCell>
               <TableCell>{item.soil}</TableCell>
             </TableRow>
           ))}
+          {filteredItems.length === 0 && (
+            <SubTitle>A soil with that name does not exist.</SubTitle>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

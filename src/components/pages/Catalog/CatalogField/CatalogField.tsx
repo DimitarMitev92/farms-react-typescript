@@ -1,16 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import FieldCard from "./CatalogFieldCard/CatalogFieldCard";
 import { UserContext } from "../../../../context/UserContext";
 import { CardsWrapper, CatalogContainer } from "../../../../styles/Card.styled";
-import FieldCard from "./CatalogFieldCard/CatalogFieldCard";
-import { FieldFromApi } from "./CatalogField.static";
-import { fetchFields } from "./CatalogField.logic";
 import { useNavigate } from "react-router-dom";
 import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
   Button,
   ColumnContainer,
-  SearchContainer,
-  SearchInput,
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
@@ -21,6 +17,9 @@ import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FieldFromApi } from "./CatalogField.static";
+import { Search } from "../../../Search/Search";
+import { fetchFields } from "./CatalogField.logic";
 
 export const CatalogField = () => {
   const [fields, setFields] = useState<FieldFromApi[]>([]);
@@ -57,8 +56,8 @@ export const CatalogField = () => {
 
   useEffect(() => {
     setFilteredFields(
-      fields.filter((farm) =>
-        farm.name.toLowerCase().includes(searchTerm.toLowerCase())
+      fields.filter((field) =>
+        field.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
   }, [fields, searchTerm]);
@@ -125,14 +124,12 @@ export const CatalogField = () => {
     <CardsWrapper>
       <Title>Catalog Fields</Title>
 
-      <SearchContainer>
-        <SearchInput
-          type="text"
-          placeholder="Search by field name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </SearchContainer>
+      <Search
+        text="text"
+        placeholder="Search by field name..."
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       <CatalogContainer>
         {filteredFields.map((field) => (

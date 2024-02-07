@@ -24,10 +24,14 @@ import {
 } from "../../../../styles/Table.styled";
 import { IMostMachinery } from "./MostMachinery.static";
 import { useNavigate } from "react-router-dom";
+import { Search } from "../../../Search/Search";
 
 export const MostMachinery = () => {
   const [items, setItems] = useState<IMostMachinery[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredItems, setFilteredItems] = useState<IMostMachinery[]>([]);
+
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -57,6 +61,14 @@ export const MostMachinery = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setFilteredItems(
+      items.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [items, searchTerm]);
+
   if (isLoading) {
     return (
       <SpinnerContainer>
@@ -77,6 +89,12 @@ export const MostMachinery = () => {
   return (
     <TableContainer>
       <Title>Most Machinery</Title>
+      <Search
+        text="text"
+        placeholder="Search by farm name..."
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <Table>
         <TableHead>
           <TableRow>
@@ -86,7 +104,7 @@ export const MostMachinery = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {items.map((item, index) => (
+          {filteredItems.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.count}</TableCell>
               <TableCell>{item.name}</TableCell>
@@ -95,6 +113,9 @@ export const MostMachinery = () => {
               </TableCell>
             </TableRow>
           ))}
+          {filteredItems.length === 0 && (
+            <SubTitle>A user with that email does not exist.</SubTitle>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

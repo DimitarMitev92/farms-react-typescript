@@ -1,14 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../../../context/UserContext";
-import { useNavigate } from "react-router-dom";
-import { fetchMachinery } from "./CatalogMachinery.logic";
-import { permDelete, softDelete } from "../../../../services/deleteService";
-import { MachineryFromApi } from "./CatalogMachinery.static";
 import {
   Button,
   ColumnContainer,
-  SearchContainer,
-  SearchInput,
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
@@ -26,14 +19,20 @@ import {
   SoftDeleteButtonCard,
   UpdateButtonCard,
 } from "../../../../styles/Card.styled";
-import { rightsOfUser } from "../../../../utils/helpers";
+import { useNavigate } from "react-router-dom";
+import { permDelete, softDelete } from "../../../../services/deleteService";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalog";
 import { create, endpoint, update } from "../../../../static/endPoints";
 import { ApiError } from "../../../../static/interfaces";
 import { PopupDelete } from "../../PopupDelete/PopupDelete";
+import { UserContext } from "../../../../context/UserContext";
+import { fetchMachinery } from "./CatalogMachinery.logic";
+import { rightsOfUser } from "../../../../utils/helpers";
+import { MachineryFromApi } from "./CatalogMachinery.static";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Search } from "../../../Search/Search";
 
 export const CatalogMachinery = () => {
   const [machineries, setMachineries] = useState<MachineryFromApi[]>([]);
@@ -146,14 +145,12 @@ export const CatalogMachinery = () => {
     <CardsWrapper>
       <Title>Catalog Machineries</Title>
 
-      <SearchContainer>
-        <SearchInput
-          type="text"
-          placeholder="Search by machinery id..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </SearchContainer>
+      <Search
+        text="text"
+        placeholder="Search by machinery id..."
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       <CatalogContainer>
         {filteredMachineries.map((machinery) => (

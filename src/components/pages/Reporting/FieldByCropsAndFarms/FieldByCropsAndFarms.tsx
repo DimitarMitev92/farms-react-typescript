@@ -24,12 +24,17 @@ import {
   TableRow,
 } from "../../../../styles/Table.styled";
 import { IFieldByCropsAndFarms } from "./FieldByCropAndFarms.static";
+import { Search } from "../../../Search/Search";
 
 export const FieldByCropsAndFarms = () => {
   const [items, setItems] = useState<IFieldByCropsAndFarms[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredItems, setFilteredItems] = useState<IFieldByCropsAndFarms[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +62,14 @@ export const FieldByCropsAndFarms = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setFilteredItems(
+      items.filter((item) =>
+        item.farmname.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [items, searchTerm]);
+
   if (isLoading) {
     return (
       <SpinnerContainer>
@@ -77,6 +90,12 @@ export const FieldByCropsAndFarms = () => {
   return (
     <TableContainer>
       <Title>Fields By Crops And Farms</Title>
+      <Search
+        text="text"
+        placeholder="Search by farm name..."
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <Table>
         <TableHead>
           <TableRow>
@@ -86,13 +105,16 @@ export const FieldByCropsAndFarms = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {items.map((item, index) => (
+          {filteredItems.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.count}</TableCell>
               <TableCell>{item.farmname}</TableCell>
               <TableCell>{item.cropname}</TableCell>
             </TableRow>
           ))}
+          {filteredItems.length === 0 && (
+            <SubTitle>A farm with that name does not exist.</SubTitle>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

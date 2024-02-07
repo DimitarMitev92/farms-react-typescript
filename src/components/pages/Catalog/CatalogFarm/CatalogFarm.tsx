@@ -7,8 +7,6 @@ import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
   Button,
   ColumnContainer,
-  SearchContainer,
-  SearchInput,
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
@@ -20,6 +18,7 @@ import { PopupDelete } from "../../PopupDelete/PopupDelete";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Search } from "../../../Search/Search";
 
 export const CatalogFarm = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
@@ -130,14 +129,12 @@ export const CatalogFarm = () => {
     <CardsWrapper>
       <Title>Catalog Farms</Title>
 
-      <SearchContainer>
-        <SearchInput
-          type="text"
-          placeholder="Search by farm name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </SearchContainer>
+      <Search
+        text="text"
+        placeholder="Search by farm name..."
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       <CatalogContainer>
         {filteredFarms.map((farm) => (

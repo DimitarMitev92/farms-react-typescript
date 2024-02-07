@@ -1,15 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FieldCultivationFroApi } from "./CatalogFieldCultivation.static";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../../../context/UserContext";
-import { fetchFieldCultivation } from "./CatalogFieldCultivation.logic";
-import { rightsOfUser } from "../../../../utils/helpers";
-import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
   Button,
   ColumnContainer,
-  SearchContainer,
-  SearchInput,
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
@@ -27,13 +19,20 @@ import {
   SoftDeleteButtonCard,
   UpdateButtonCard,
 } from "../../../../styles/Card.styled";
+import { useNavigate } from "react-router-dom";
+import { permDelete, softDelete } from "../../../../services/deleteService";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalog";
 import { create, endpoint, update } from "../../../../static/endPoints";
 import { ApiError } from "../../../../static/interfaces";
 import { PopupDelete } from "../../PopupDelete/PopupDelete";
+import { UserContext } from "../../../../context/UserContext";
+import { fetchFieldCultivation } from "./CatalogFieldCultivation.logic";
+import { rightsOfUser } from "../../../../utils/helpers";
+import { FieldCultivationFroApi } from "./CatalogFieldCultivation.static";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Search } from "../../../Search/Search";
 
 export const CatalogFieldCultivation = () => {
   const [fieldCultivations, setFieldCultivations] = useState<
@@ -150,14 +149,12 @@ export const CatalogFieldCultivation = () => {
     <CardsWrapper>
       <Title>Catalog Field Cultivations</Title>
 
-      <SearchContainer>
-        <SearchInput
-          type="text"
-          placeholder="Search by field name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </SearchContainer>
+      <Search
+        text="text"
+        placeholder="Search by field name..."
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       <CatalogContainer>
         {filteredFieldCultivations.map((fieldCultivation) => (
