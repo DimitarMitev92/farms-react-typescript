@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { mainColors } from "../static/mainColors";
 
 const primaryColor = mainColors.primaryColor;
-const hoverTextColor = mainColors.hoverTextColor;
+const textColor = mainColors.textColor;
 const hoverColor = mainColors.hoverColor;
 
 const fadeInUp = keyframes`
@@ -33,7 +33,7 @@ export const Table = styled.table`
 
 export const TableHead = styled.thead`
   background-color: ${primaryColor};
-  color: ${hoverTextColor};
+  color: ${textColor};
 `;
 
 export const TableHeadCell = styled.th`
