@@ -12,6 +12,7 @@ export const routes = {
   register: auth.REGISTER,
   login: auth.LOGIN,
   logout: auth.LOGOUT,
+  dashboard: auth.DASHBOARD,
   catalogFarm: catalog.FARM,
   catalogField: catalog.FIELD,
   catalogMachinery: catalog.MACHINERY,

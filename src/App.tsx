@@ -29,6 +29,8 @@ import { UserDataFromApi } from "./static/interfaces";
 import { ToastContainer } from "react-toastify";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { Spinner, SpinnerContainer } from "./styles/Global.styled";
+import Dashboard from "./components/pages/Dashboard/Dashboard";
+import { OwnerRoute } from "./guards/OwnerRoute";
 
 function App() {
   const [user, setUser] = useState<UserDataFromApi | null>(null);
@@ -86,6 +88,10 @@ function App() {
             <Route path={routes.register} element={<Register />} />
             <Route path={routes.login} element={<Login />} />
             <Route element={<PrivateRoutes />}>
+              <Route
+                path={routes.dashboard}
+                element={<OwnerRoute element={<Dashboard />} />}
+              />
               <Route path={routes.logout} element={<Logout />} />
               {/* Catalog components */}
               <Route path={routes.catalogFarm} element={<CatalogFarm />} />

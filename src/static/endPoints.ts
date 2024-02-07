@@ -11,6 +11,7 @@ export const endpoint = {
   USER: "http://localhost:8080/user",
   LOGIN: "http://localhost:8080/auth/login",
   REGISTER: "http://localhost:8080/auth/register",
+  DASHBOARD: "http://localhost:5173/auth/dashboard",
 };
 
 export const mainRoute = {
@@ -63,6 +64,7 @@ export const auth = {
   REGISTER: "/auth/register",
   LOGIN: "/auth/login",
   LOGOUT: "/auth/logout",
+  DASHBOARD: "/auth/dashboard",
 };
 
 export const rightsUser = {

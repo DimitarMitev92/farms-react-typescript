@@ -12,8 +12,9 @@ import {
 } from "./Header.style";
 import {
   publicHeaderData,
-  privateHeaderDataOwnerAndOperator,
   privateHeaderDataViewer,
+  privateHeaderDataOwner,
+  privateHeaderDataOperator,
 } from "./Header.static";
 import { DropdownCatalog } from "./Dropdowns/DropdownCatalog/DropdownCatalog";
 import { DropdownCreate } from "./Dropdowns/DropdownCreate/DropdownCreate";
@@ -57,7 +58,8 @@ export const Header = () => {
                 })}
               {user &&
                 user?.user.rights !== "VIEWER" &&
-                privateHeaderDataOwnerAndOperator.map(({ name, to }, key) => (
+                user?.user.rights !== "OWNER" &&
+                privateHeaderDataOperator.map(({ name, to }, key) => (
                   <ListItem key={key}>
                     {name === "Catalog" &&
                       renderDropdown(name, <DropdownCatalog />)}
@@ -68,6 +70,29 @@ export const Header = () => {
                     {name !== "Catalog" &&
                       name !== "Create" &&
                       name !== "Reporting" &&
+                      to !== undefined && (
+                        <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
+                      )}
+                  </ListItem>
+                ))}
+              {user &&
+                user?.user.rights !== "VIEWER" &&
+                user?.user.rights !== "OPERATOR" &&
+                privateHeaderDataOwner.map(({ name, to }, key) => (
+                  <ListItem key={key}>
+                    {name === "Catalog" &&
+                      renderDropdown(name, <DropdownCatalog />)}
+                    {name === "Create" &&
+                      renderDropdown(name, <DropdownCreate />)}
+                    {name === "Reporting" &&
+                      renderDropdown(name, <DropdownReporting />)}
+                    {name === "Dashboard" && to !== undefined && (
+                      <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
+                    )}
+                    {name !== "Catalog" &&
+                      name !== "Create" &&
+                      name !== "Reporting" &&
+                      name !== "Dashboard" &&
                       to !== undefined && (
                         <NavLinkAnchor to={to}>{name}</NavLinkAnchor>
                       )}

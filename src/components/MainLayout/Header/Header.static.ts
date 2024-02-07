@@ -5,7 +5,15 @@ export const publicHeaderData = [
   { name: "Login", to: auth.LOGIN },
 ];
 
-export const privateHeaderDataOwnerAndOperator = [
+export const privateHeaderDataOperator = [
+  { name: "Catalog" },
+  { name: "Create" },
+  { name: "Reporting" },
+  { name: "Logout", to: auth.LOGOUT },
+];
+
+export const privateHeaderDataOwner = [
+  { name: "Dashboard", to: auth.DASHBOARD },
   { name: "Catalog" },
   { name: "Create" },
   { name: "Reporting" },
