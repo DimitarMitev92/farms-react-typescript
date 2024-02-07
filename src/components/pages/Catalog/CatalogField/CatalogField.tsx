@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
-import { CatalogContainer } from "../../../../styles/Card.styled";
+import { CardsWrapper, CatalogContainer } from "../../../../styles/Card.styled";
 import FieldCard from "./CatalogFieldCard/CatalogFieldCard";
 import { FieldFromApi } from "./CatalogField.static";
 import { fetchFields } from "./CatalogField.logic";
@@ -110,7 +110,7 @@ export const CatalogField = () => {
   }
 
   return (
-    <>
+    <CardsWrapper>
       <Title>Catalog Fields</Title>
       <CatalogContainer>
         {fields.map((field) => (
@@ -141,6 +141,6 @@ export const CatalogField = () => {
           onCancel={handleCancelDelete}
         />
       )}
-    </>
+    </CardsWrapper>
   );
 };

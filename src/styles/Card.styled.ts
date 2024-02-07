@@ -23,6 +23,10 @@ const fadeInUp = keyframes`
   }
 `;
 
+export const CardsWrapper = styled.section`
+  margin-bottom: 4em;
+`;
+
 export const CardContainer = styled.div`
   min-width: 22em;
   border: 1px solid ${mainColors.primaryColor};

@@ -16,6 +16,7 @@ import {
   CardInfo,
   CardSubTitle,
   CardTitle,
+  CardsWrapper,
   CatalogContainer,
   DatesContainer,
   DatesText,
@@ -126,7 +127,7 @@ export const CatalogMachinery = () => {
   }
 
   return (
-    <>
+    <CardsWrapper>
       <Title>Catalog Machineries</Title>
 
       <CatalogContainer>
@@ -200,6 +201,6 @@ export const CatalogMachinery = () => {
           onCancel={handleCancelDelete}
         />
       )}
-    </>
+    </CardsWrapper>
   );
 };

@@ -17,6 +17,7 @@ import {
   CardInfo,
   CardSubTitle,
   CardTitle,
+  CardsWrapper,
   CatalogContainer,
   DatesContainer,
   DatesText,
@@ -130,7 +131,7 @@ export const CatalogFieldCultivation = () => {
   }
 
   return (
-    <>
+    <CardsWrapper>
       <Title>Catalog Field Cultivations</Title>
       <CatalogContainer>
         {fieldCultivations.map((fieldCultivation) => (
@@ -216,6 +217,6 @@ export const CatalogFieldCultivation = () => {
           onCancel={handleCancelDelete}
         />
       )}
-    </>
+    </CardsWrapper>
   );
 };

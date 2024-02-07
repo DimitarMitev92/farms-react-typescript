@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FarmCard } from "./CatalogFarmCard/CatalogFarmCard";
 import { UserContext } from "../../../../context/UserContext";
-import { CatalogContainer } from "../../../../styles/Card.styled";
+import { CardsWrapper, CatalogContainer } from "../../../../styles/Card.styled";
 import { useNavigate } from "react-router-dom";
 import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
@@ -115,7 +115,7 @@ export const CatalogFarm = () => {
   }
 
   return (
-    <>
+    <CardsWrapper>
       <Title>Catalog Farms</Title>
       <CatalogContainer>
         {farms.map((farm) => (
@@ -146,6 +146,6 @@ export const CatalogFarm = () => {
           onCancel={handleCancelDelete}
         />
       )}
-    </>
+    </CardsWrapper>
   );
 };
