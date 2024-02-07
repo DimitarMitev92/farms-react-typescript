@@ -7,14 +7,14 @@ const hoverTextColor = mainColors.hoverTextColor;
 const pulseAnimation = keyframes`
   0% {
     transform: scale(0.95);
-    opacity: 0.7;
+    opacity: 0.8;
   }
   50% {
-    transform: scale(1.01);
+    transform: scale(1);
     opacity: 1;
   }
   100% {
-    transform: scale(1);
+    transform: scale(0.95);
     opacity: 0.8;
   }
 `;
@@ -23,6 +23,7 @@ export const SkeletonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1em;
   animation: ${pulseAnimation} 1.5s infinite alternate;
 `;
