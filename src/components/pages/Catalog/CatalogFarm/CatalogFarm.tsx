@@ -149,6 +149,9 @@ export const CatalogFarm = () => {
             onPermDelete={handlePermDelete}
           />
         ))}
+        {filteredFarms.length === 0 && (
+          <SubTitle>A farm with that name does not exist.</SubTitle>
+        )}
       </CatalogContainer>
 
       {showSoftDeletePopup && (

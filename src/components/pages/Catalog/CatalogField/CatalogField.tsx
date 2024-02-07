@@ -9,6 +9,8 @@ import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
   Button,
   ColumnContainer,
+  SearchContainer,
+  SearchInput,
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
@@ -27,6 +29,8 @@ export const CatalogField = () => {
   const [showSoftDeletePopup, setShowSoftDeletePopup] = useState(false);
   const [showPermDeletePopup, setShowPermDeletePopup] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredFields, setFilteredFields] = useState<FieldFromApi[]>([]);
 
   const navigate = useNavigate();
 
@@ -50,6 +54,14 @@ export const CatalogField = () => {
 
     fetchData();
   }, [user, triggerDelete]);
+
+  useEffect(() => {
+    setFilteredFields(
+      fields.filter((farm) =>
+        farm.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [fields, searchTerm]);
 
   const handleUpdate = (id: string) => {
     navigate(`${update.FIELD}/${id}`);
@@ -112,8 +124,18 @@ export const CatalogField = () => {
   return (
     <CardsWrapper>
       <Title>Catalog Fields</Title>
+
+      <SearchContainer>
+        <SearchInput
+          type="text"
+          placeholder="Search by field name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </SearchContainer>
+
       <CatalogContainer>
-        {fields.map((field) => (
+        {filteredFields.map((field) => (
           <FieldCard
             key={field.id}
             field={field}
