@@ -34,7 +34,7 @@ export const Title = styled.h2`
   margin-top: 2em;
 
   @media (max-width: 500px) {
-    font-size: 1.2em;
+    font-size: 1em;
   }
 `;
 
@@ -80,4 +80,24 @@ export const NotFoundContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+`;
+
+export const SearchInput = styled.input`
+  padding: 0.5em;
+  font-size: 16px;
+  border: 2px solid ${primaryColor};
+  border-radius: 4px;
+  margin-right: 0.5em;
+
+  &:focus {
+    outline: none;
+    border-color: ${hoverColor};
+  }
 `;

@@ -7,6 +7,8 @@ import { permDelete, softDelete } from "../../../../services/deleteService";
 import {
   Button,
   ColumnContainer,
+  SearchContainer,
+  SearchInput,
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
@@ -26,6 +28,8 @@ export const CatalogFarm = () => {
   const [showSoftDeletePopup, setShowSoftDeletePopup] = useState(false);
   const [showPermDeletePopup, setShowPermDeletePopup] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredFarms, setFilteredFarms] = useState<Farm[]>([]);
 
   const navigate = useNavigate();
 
@@ -55,6 +59,14 @@ export const CatalogFarm = () => {
 
     fetchData();
   }, [user, triggerDelete]);
+
+  useEffect(() => {
+    setFilteredFarms(
+      farms.filter((farm) =>
+        farm.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [farms, searchTerm]);
 
   const handleUpdate = (id: string) => {
     navigate(`${update.FARM}/${id}`);
@@ -117,8 +129,18 @@ export const CatalogFarm = () => {
   return (
     <CardsWrapper>
       <Title>Catalog Farms</Title>
+
+      <SearchContainer>
+        <SearchInput
+          type="text"
+          placeholder="Search by farm name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </SearchContainer>
+
       <CatalogContainer>
-        {farms.map((farm) => (
+        {filteredFarms.map((farm) => (
           <FarmCard
             key={farm.id}
             farm={farm}
