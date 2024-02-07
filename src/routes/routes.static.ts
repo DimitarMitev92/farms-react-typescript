@@ -25,6 +25,7 @@ export const routes = {
   updateField: updateRouteId.FIELD,
   updateMachinery: updateRouteId.MACHINERY,
   updateFieldCultivation: updateRouteId.FIELD_CULTIVATION,
+  updateUser: updateRouteId.USER,
   reportingMostMachineries: reporting.MOST_MACHINERIES,
   reportingFieldCropsFarms: reporting.FIELD_BY_CROPS_AND_FARMS,
   reportingMostCommonSoil: reporting.MOST_COMMON_SOIL,

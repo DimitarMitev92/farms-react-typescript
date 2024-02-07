@@ -37,7 +37,7 @@ export const UnorderedList = styled.ul`
   list-style-type: none;
   height: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 850px) {
     flex-direction: column;
   }
 `;

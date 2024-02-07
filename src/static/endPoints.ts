@@ -11,7 +11,7 @@ export const endpoint = {
   USER: "http://localhost:8080/user",
   LOGIN: "http://localhost:8080/auth/login",
   REGISTER: "http://localhost:8080/auth/register",
-  DASHBOARD: "http://localhost:5173/auth/dashboard",
+  DASHBOARD: "http://localhost:8080/auth",
 };
 
 export const mainRoute = {
@@ -45,6 +45,7 @@ export const update = {
   FIELD: "/update/field",
   FIELD_CULTIVATION: "/update/field-cultivation",
   MACHINERY: "/update/machinery",
+  USER: "/update/user",
 };
 
 export const updateRouteId = {
@@ -52,6 +53,7 @@ export const updateRouteId = {
   FIELD: "/update/field/:id",
   MACHINERY: "/update/machinery/:id",
   FIELD_CULTIVATION: "/update/field-cultivation/:id",
+  USER: "/update/user/:id",
 };
 
 export const reporting = {

@@ -31,6 +31,7 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import { Spinner, SpinnerContainer } from "./styles/Global.styled";
 import Dashboard from "./components/pages/Dashboard/Dashboard";
 import { OwnerRoute } from "./guards/OwnerRoute";
+import { UpdateUser } from "./components/pages/Update/UpdateUser/UpdateUser";
 
 function App() {
   const [user, setUser] = useState<UserDataFromApi | null>(null);
@@ -116,6 +117,10 @@ function App() {
                 element={<CreateFieldCultivation />}
               />
               {/* Update components */}
+              <Route
+                path={routes.updateUser}
+                element={<OwnerRoute element={<UpdateUser />} />}
+              />
               <Route path={routes.updateFarm} element={<UpdateFarm />} />
               <Route path={routes.updateField} element={<UpdateField />} />
               <Route
