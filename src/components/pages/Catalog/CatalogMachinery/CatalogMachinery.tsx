@@ -7,6 +7,8 @@ import { MachineryFromApi } from "./CatalogMachinery.static";
 import {
   Button,
   ColumnContainer,
+  SearchContainer,
+  SearchInput,
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
@@ -43,6 +45,10 @@ export const CatalogMachinery = () => {
   const [userRights, setUserRights] = useState<
     "OWNER" | "OPERATOR" | "VIEWER" | null
   >(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredMachineries, setFilteredMachineries] = useState<
+    MachineryFromApi[]
+  >([]);
 
   const navigate = useNavigate();
 
@@ -67,6 +73,16 @@ export const CatalogMachinery = () => {
 
     fetchData();
   }, [user, triggerDelete]);
+
+  useEffect(() => {
+    setFilteredMachineries(
+      machineries.filter((machinery) =>
+        machinery.identificationNumber
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [machineries, searchTerm]);
 
   const handleUpdate = (id: string) => {
     navigate(`${update.MACHINERY}/${id}`);
@@ -130,8 +146,17 @@ export const CatalogMachinery = () => {
     <CardsWrapper>
       <Title>Catalog Machineries</Title>
 
+      <SearchContainer>
+        <SearchInput
+          type="text"
+          placeholder="Search by machinery id..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </SearchContainer>
+
       <CatalogContainer>
-        {machineries.map((machinery) => (
+        {filteredMachineries.map((machinery) => (
           <CardContainer key={machinery.id}>
             <CardInfo>
               <CardTitle>Brand: {machinery.brand}</CardTitle>
@@ -182,6 +207,9 @@ export const CatalogMachinery = () => {
             </CardInfo>
           </CardContainer>
         ))}
+        {filteredMachineries.length === 0 && (
+          <SubTitle>A machinery with that id does not exist.</SubTitle>
+        )}
       </CatalogContainer>
 
       {showSoftDeletePopup && (

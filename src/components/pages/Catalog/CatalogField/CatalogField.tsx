@@ -144,6 +144,9 @@ export const CatalogField = () => {
             onPermDelete={handlePermDelete}
           />
         ))}
+        {filteredFields.length === 0 && (
+          <SubTitle>A field with that name does not exist.</SubTitle>
+        )}
       </CatalogContainer>
 
       {showSoftDeletePopup && (
