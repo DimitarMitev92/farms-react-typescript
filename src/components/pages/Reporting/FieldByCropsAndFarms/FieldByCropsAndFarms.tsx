@@ -113,7 +113,9 @@ export const FieldByCropsAndFarms = () => {
             </TableRow>
           ))}
           {filteredItems.length === 0 && (
-            <SubTitle>A farm with that name does not exist.</SubTitle>
+            <TableRow>
+              <TableCell>A farm with that name does not exist.</TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>

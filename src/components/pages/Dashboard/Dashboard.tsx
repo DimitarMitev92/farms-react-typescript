@@ -169,7 +169,9 @@ const Dashboard = () => {
               </TableRow>
             ))}
             {filteredUsers.length === 0 && (
-              <SubTitle>A user with that email does not exist.</SubTitle>
+              <TableRow>
+                <TableCell>A user with that email does not exist.</TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>

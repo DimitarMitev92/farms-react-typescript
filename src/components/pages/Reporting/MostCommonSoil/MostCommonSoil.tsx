@@ -112,7 +112,9 @@ export const MostCommonSoil = () => {
             </TableRow>
           ))}
           {filteredItems.length === 0 && (
-            <SubTitle>A soil with that name does not exist.</SubTitle>
+            <TableRow>
+              <TableCell>A soil with that name does not exist.</TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>
