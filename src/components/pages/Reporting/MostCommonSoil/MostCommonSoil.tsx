@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { endpoint, method } from "../../../../static/endPoints";
@@ -31,7 +31,6 @@ export const MostCommonSoil = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredItems, setFilteredItems] = useState<IMostCommonSoil[]>([]);
 
   const navigate = useNavigate();
 
@@ -61,11 +60,9 @@ export const MostCommonSoil = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    setFilteredItems(
-      items.filter((item) =>
-        item.soil.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+  const filteredItemsMemo = useMemo(() => {
+    return items.filter((item) =>
+      item.soil.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [items, searchTerm]);
 
@@ -105,13 +102,13 @@ export const MostCommonSoil = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredItems.map((item, index) => (
+          {filteredItemsMemo.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.count}</TableCell>
               <TableCell>{item.soil}</TableCell>
             </TableRow>
           ))}
-          {filteredItems.length === 0 && (
+          {filteredItemsMemo.length === 0 && (
             <TableRow>
               <TableCell>A soil with that name does not exist.</TableCell>
             </TableRow>

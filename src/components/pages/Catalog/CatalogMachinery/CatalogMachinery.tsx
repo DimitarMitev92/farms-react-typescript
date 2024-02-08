@@ -33,9 +33,6 @@ export const CatalogMachinery = () => {
     "OWNER" | "OPERATOR" | "VIEWER" | null
   >(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredMachineries, setFilteredMachineries] = useState<
-    MachineryFromApi[]
-  >([]);
 
   const navigate = useNavigate();
 
@@ -60,16 +57,6 @@ export const CatalogMachinery = () => {
 
     fetchData();
   }, [user, triggerDelete]);
-
-  useEffect(() => {
-    setFilteredMachineries(
-      machineries.filter((machinery) =>
-        machinery.identificationNumber
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [machineries, searchTerm]);
 
   const handleConfirmSoftDelete = async () => {
     try {
@@ -163,7 +150,7 @@ export const CatalogMachinery = () => {
 
       <CatalogContainer>
         {machineriesCardsMemo}
-        {filteredMachineries.length === 0 && (
+        {filteredMachineriesMemo.length === 0 && (
           <SubTitle>A machinery with that id does not exist.</SubTitle>
         )}
       </CatalogContainer>

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { endpoint, method } from "../../../../static/endPoints";
@@ -32,9 +32,6 @@ export const FieldByCropsAndFarms = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredItems, setFilteredItems] = useState<IFieldByCropsAndFarms[]>(
-    []
-  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,11 +59,9 @@ export const FieldByCropsAndFarms = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    setFilteredItems(
-      items.filter((item) =>
-        item.farmname.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+  const filteredItemsMemo = useMemo(() => {
+    return items.filter((item) =>
+      item.farmname.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [items, searchTerm]);
 
@@ -105,14 +100,14 @@ export const FieldByCropsAndFarms = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredItems.map((item, index) => (
+          {filteredItemsMemo.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.count}</TableCell>
               <TableCell>{item.farmname}</TableCell>
               <TableCell>{item.cropname}</TableCell>
             </TableRow>
           ))}
-          {filteredItems.length === 0 && (
+          {filteredItemsMemo.length === 0 && (
             <TableRow>
               <TableCell>A farm with that name does not exist.</TableCell>
             </TableRow>

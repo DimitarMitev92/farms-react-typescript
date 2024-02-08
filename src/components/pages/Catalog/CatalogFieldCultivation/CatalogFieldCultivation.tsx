@@ -35,9 +35,6 @@ export const CatalogFieldCultivation = () => {
     "OWNER" | "OPERATOR" | "VIEWER" | null
   >(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredFieldCultivations, setFilteredFieldCultivations] = useState<
-    FieldCultivationFroApi[]
-  >([]);
 
   const navigate = useNavigate();
 
@@ -62,16 +59,6 @@ export const CatalogFieldCultivation = () => {
 
     fetchData();
   }, [user, triggerDelete]);
-
-  useEffect(() => {
-    setFilteredFieldCultivations(
-      fieldCultivations.filter((fieldCultivation) =>
-        fieldCultivation.field.name
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [fieldCultivations, searchTerm]);
 
   const handleConfirmSoftDelete = async () => {
     try {
@@ -169,7 +156,7 @@ export const CatalogFieldCultivation = () => {
 
       <CatalogContainer>
         {fieldCultivationsCardsMemo}
-        {filteredFieldCultivations.length === 0 && (
+        {filteredFieldCultivationsMemo.length === 0 && (
           <SubTitle>A field with that name does not exist.</SubTitle>
         )}
       </CatalogContainer>

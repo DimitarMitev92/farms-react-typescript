@@ -40,7 +40,6 @@ const Dashboard = () => {
   const [isShowDeletePopup, setIsShowDeletePopup] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState<IUserFromApi[]>([]);
 
   const { user } = useContext(UserContext);
 
@@ -74,14 +73,6 @@ const Dashboard = () => {
 
     fetchData();
   }, [user, triggerDelete]);
-
-  useEffect(() => {
-    setFilteredUsers(
-      users.filter((item) =>
-        item.email.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [users, searchTerm]);
 
   const filteredUsersMemo = useMemo(() => {
     return users.filter((item) =>
@@ -174,7 +165,7 @@ const Dashboard = () => {
                 </TableCell>
               </TableRow>
             ))}
-            {filteredUsers.length === 0 && (
+            {filteredUsersMemo.length === 0 && (
               <TableRow>
                 <TableCell>A user with that email does not exist.</TableCell>
               </TableRow>

@@ -28,8 +28,6 @@ export const CatalogFarm = () => {
   const [showPermDeletePopup, setShowPermDeletePopup] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [filteredFarms, setFilteredFarms] = useState<Farm[]>([]);
 
   const navigate = useNavigate();
 
@@ -59,14 +57,6 @@ export const CatalogFarm = () => {
 
     fetchData();
   }, [user, triggerDelete]);
-
-  useEffect(() => {
-    setFilteredFarms(
-      farms.filter((farm) =>
-        farm.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [farms, searchTerm]);
 
   const handleConfirmSoftDelete = async () => {
     try {

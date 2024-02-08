@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 
 import { toast } from "react-toastify";
@@ -30,7 +30,6 @@ export const MostMachinery = () => {
   const [items, setItems] = useState<IMostMachinery[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredItems, setFilteredItems] = useState<IMostMachinery[]>([]);
 
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
@@ -61,11 +60,9 @@ export const MostMachinery = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    setFilteredItems(
-      items.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+  const filteredItemsMemo = useMemo(() => {
+    return items.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [items, searchTerm]);
 
@@ -104,7 +101,7 @@ export const MostMachinery = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredItems.map((item, index) => (
+          {filteredItemsMemo.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.count}</TableCell>
               <TableCell>{item.name}</TableCell>
@@ -113,7 +110,7 @@ export const MostMachinery = () => {
               </TableCell>
             </TableRow>
           ))}
-          {filteredItems.length === 0 && (
+          {filteredItemsMemo.length === 0 && (
             <TableRow>
               <TableCell>A user with that email does not exist.</TableCell>
             </TableRow>

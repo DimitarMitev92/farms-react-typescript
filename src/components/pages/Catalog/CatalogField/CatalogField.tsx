@@ -29,7 +29,6 @@ export const CatalogField = () => {
   const [showPermDeletePopup, setShowPermDeletePopup] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredFields, setFilteredFields] = useState<FieldFromApi[]>([]);
 
   const navigate = useNavigate();
 
@@ -53,14 +52,6 @@ export const CatalogField = () => {
 
     fetchData();
   }, [user, triggerDelete]);
-
-  useEffect(() => {
-    setFilteredFields(
-      fields.filter((field) =>
-        field.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [fields, searchTerm]);
 
   const filteredFieldMemo = useMemo(() => {
     return fields.filter((field) =>
@@ -151,7 +142,7 @@ export const CatalogField = () => {
 
       <CatalogContainer>
         {fieldCardsMemo}
-        {filteredFields.length === 0 && (
+        {filteredFieldMemo.length === 0 && (
           <SubTitle>A field with that name does not exist.</SubTitle>
         )}
       </CatalogContainer>
