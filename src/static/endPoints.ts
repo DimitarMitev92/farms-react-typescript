@@ -10,6 +10,7 @@ export const endpoint = {
   REPORTING: "http://localhost:8080/reporting",
   USER: "http://localhost:8080/user",
   LOGIN: "http://localhost:8080/auth/login",
+  CHANGE_PASSWORD: "http://localhost:8080/auth/change-password",
   REGISTER: "http://localhost:8080/auth/register",
   DASHBOARD: "http://localhost:8080/auth",
 };

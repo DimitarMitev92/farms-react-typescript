@@ -74,6 +74,17 @@ export const Button = styled.button`
   }
 `;
 
+export const Anchor = styled.a`
+  color: ${textColor};
+  text-decoration: underline;
+  margin: 0.5em;
+  cursor: pointer;
+
+  &:hover {
+    color: ${primaryColor};
+  }
+`;
+
 export const NotFoundContainer = styled.div`
   min-height: 90vh;
   display: flex;
