@@ -5,20 +5,7 @@ import {
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
-import {
-  ButtonContainer,
-  CardContainer,
-  CardInfo,
-  CardSubTitle,
-  CardTitle,
-  CardsWrapper,
-  CatalogContainer,
-  DatesContainer,
-  DatesText,
-  PermDeleteButtonCard,
-  SoftDeleteButtonCard,
-  UpdateButtonCard,
-} from "../../../../styles/Card.styled";
+import { CardsWrapper, CatalogContainer } from "../../../../styles/Card.styled";
 import { useNavigate } from "react-router-dom";
 import { permDelete, softDelete } from "../../../../services/deleteService";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalog";
@@ -33,6 +20,7 @@ import { MachineryFromApi } from "./CatalogMachinery.static";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Search } from "../../../Search/Search";
+import { MachineryCard } from "./CatalogMachineryCard/CatalogMachineryCard";
 
 export const CatalogMachinery = () => {
   const [machineries, setMachineries] = useState<MachineryFromApi[]>([]);
@@ -154,55 +142,14 @@ export const CatalogMachinery = () => {
 
       <CatalogContainer>
         {filteredMachineries.map((machinery) => (
-          <CardContainer key={machinery.id}>
-            <CardInfo>
-              <CardTitle>Brand: {machinery.brand}</CardTitle>
-              <CardSubTitle>Model: {machinery.model}</CardSubTitle>
-              <CardSubTitle>
-                Farm: {machinery.farm && machinery.farm.name}
-              </CardSubTitle>
-
-              <CardSubTitle>
-                Identification number: {machinery.identificationNumber}
-              </CardSubTitle>
-
-              <DatesContainer>
-                <DatesText>
-                  Created at:{" "}
-                  {new Date(machinery.createdAt).toLocaleDateString()}
-                </DatesText>
-                <DatesText>
-                  Updated at:{" "}
-                  {new Date(machinery.updatedAt).toLocaleDateString()}
-                </DatesText>
-              </DatesContainer>
-            </CardInfo>
-            <CardInfo>
-              <ButtonContainer>
-                {(userRights === "OWNER" || userRights === "OPERATOR") && (
-                  <>
-                    <UpdateButtonCard
-                      onClick={() => handleUpdate(machinery.id)}
-                    >
-                      Update
-                    </UpdateButtonCard>
-                    <SoftDeleteButtonCard
-                      onClick={() => handleSoftDelete(machinery.id)}
-                    >
-                      Delete
-                    </SoftDeleteButtonCard>
-                  </>
-                )}
-                {userRights === "OWNER" && (
-                  <PermDeleteButtonCard
-                    onClick={() => handlePermDelete(machinery.id)}
-                  >
-                    Perm Delete
-                  </PermDeleteButtonCard>
-                )}
-              </ButtonContainer>
-            </CardInfo>
-          </CardContainer>
+          <MachineryCard
+            key={machinery.id}
+            machinery={machinery}
+            userRights={userRights}
+            handleUpdate={handleUpdate}
+            handleSoftDelete={handleSoftDelete}
+            handlePermDelete={handlePermDelete}
+          />
         ))}
         {filteredMachineries.length === 0 && (
           <SubTitle>A machinery with that id does not exist.</SubTitle>

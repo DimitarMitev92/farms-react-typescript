@@ -11,16 +11,7 @@ import {
   SoftDeleteButtonCard,
   UpdateButtonCard,
 } from "../../../../../styles/Card.styled";
-import { FieldCultivationFroApi } from "../CatalogFieldCultivation.static";
-
-interface CardContainerProps {
-  key: string;
-  fieldCultivation: FieldCultivationFroApi;
-  userRights: "OWNER" | "OPERATOR" | "VIEWER" | null;
-  handleUpdate: (id: string) => void;
-  handleSoftDelete: (id: string) => Promise<void>; // Adjusted type
-  handlePermDelete: (id: string) => Promise<void>; // Adjusted type
-}
+import { CardContainerProps } from "./CatalogFieldCultivationCard.static";
 
 export const FieldCultivationCard: React.FC<CardContainerProps> = ({
   fieldCultivation,
