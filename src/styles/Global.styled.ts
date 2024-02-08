@@ -72,6 +72,11 @@ export const Button = styled.button`
     background-color: ${hoverColor};
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.8em 1.6em;
+    font-size: 14px;
+  }
 `;
 
 export const Anchor = styled.a`
