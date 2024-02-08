@@ -76,14 +76,6 @@ export const Input = styled.input`
     border-color: ${hoverColor};
     box-shadow: 0 0 0.5em ${hoverColor};
   }
-
-  @media (max-width: 768px) {
-    min-width: 80%;
-  }
-
-  @media (max-width: 500px) {
-    min-width: 95%;
-  }
 `;
 
 export const TextArea = styled.textarea`
@@ -98,13 +90,6 @@ export const TextArea = styled.textarea`
     outline: none;
     border-color: ${primaryColor};
     box-shadow: 0 0 0.5em ${hoverColor};
-  }
-
-  @media (max-width: 768px) {
-    min-width: 80%;
-  }
-  @media (max-width: 500px) {
-    min-width: 95%;
   }
 `;
 
@@ -122,25 +107,11 @@ export const Select = styled.select`
     border-color: ${hoverColor};
     box-shadow: 0 0 0.5em ${hoverColor};
   }
-
-  @media (max-width: 768px) {
-    min-width: 80%;
-  }
-  @media (max-width: 500px) {
-    min-width: 95%;
-  }
 `;
 
 export const Option = styled.option`
   &:hover {
     background-color: ${hoverColor};
-  }
-
-  @media (max-width: 768px) {
-    min-width: 80%;
-  }
-  @media (max-width: 500px) {
-    min-width: 95%;
   }
 `;
 
