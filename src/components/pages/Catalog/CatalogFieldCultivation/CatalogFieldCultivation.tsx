@@ -5,20 +5,7 @@ import {
   SubTitle,
   Title,
 } from "../../../../styles/Global.styled";
-import {
-  ButtonContainer,
-  CardContainer,
-  CardInfo,
-  CardSubTitle,
-  CardTitle,
-  CardsWrapper,
-  CatalogContainer,
-  DatesContainer,
-  DatesText,
-  PermDeleteButtonCard,
-  SoftDeleteButtonCard,
-  UpdateButtonCard,
-} from "../../../../styles/Card.styled";
+import { CardsWrapper, CatalogContainer } from "../../../../styles/Card.styled";
 import { useNavigate } from "react-router-dom";
 import { permDelete, softDelete } from "../../../../services/deleteService";
 import { SkeletonCatalog } from "../../Skeleton/SkeletonCatalog";
@@ -33,6 +20,7 @@ import { FieldCultivationFroApi } from "./CatalogFieldCultivation.static";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Search } from "../../../Search/Search";
+import { FieldCultivationCard } from "./CatalogFieldCultivationCard/CatalogFieldCultivationCard";
 
 export const CatalogFieldCultivation = () => {
   const [fieldCultivations, setFieldCultivations] = useState<
@@ -158,68 +146,14 @@ export const CatalogFieldCultivation = () => {
 
       <CatalogContainer>
         {filteredFieldCultivations.map((fieldCultivation) => (
-          <CardContainer key={fieldCultivation.id}>
-            <CardInfo>
-              <CardTitle>
-                Field: {fieldCultivation.field && fieldCultivation.field.name}
-              </CardTitle>
-              <CardSubTitle>
-                Crop: {fieldCultivation.crop && fieldCultivation.crop.crop}
-              </CardSubTitle>
-              <CardSubTitle>
-                Cultivation:
-                {fieldCultivation.cultivation &&
-                  fieldCultivation.cultivation.cultivation}
-              </CardSubTitle>
-              <CardSubTitle>
-                Machinery:
-                {fieldCultivation.machinery &&
-                  `${fieldCultivation.machinery.brand} ${fieldCultivation.machinery.model} - ${fieldCultivation.machinery.identificationNumber}`}
-              </CardSubTitle>
-              {fieldCultivation.startingDate && (
-                <DatesText>
-                  Starting date:
-                  {new Date(fieldCultivation.startingDate).toLocaleDateString()}
-                </DatesText>
-              )}
-
-              <DatesContainer>
-                <DatesText>
-                  Created at:
-                  {new Date(fieldCultivation.createdAt).toLocaleDateString()}
-                </DatesText>
-                <DatesText>
-                  Updated at:
-                  {new Date(fieldCultivation.updatedAt).toLocaleDateString()}
-                </DatesText>
-              </DatesContainer>
-            </CardInfo>
-            <CardInfo>
-              <ButtonContainer>
-                {(userRights === "OWNER" || userRights === "OPERATOR") && (
-                  <>
-                    <UpdateButtonCard
-                      onClick={() => handleUpdate(fieldCultivation.id)}
-                    >
-                      Update
-                    </UpdateButtonCard>
-                    <SoftDeleteButtonCard
-                      onClick={() => handleSoftDelete(fieldCultivation.id)}
-                    >
-                      Delete
-                    </SoftDeleteButtonCard>
-                  </>
-                )}
-                {userRights === "OWNER" && (
-                  <PermDeleteButtonCard
-                    onClick={() => handlePermDelete(fieldCultivation.id)}
-                  >
-                    Perm Delete
-                  </PermDeleteButtonCard>
-                )}
-              </ButtonContainer>
-            </CardInfo>
-          </CardContainer>
+          <FieldCultivationCard
+            key={fieldCultivation.id}
+            fieldCultivation={fieldCultivation}
+            userRights={userRights}
+            handleUpdate={handleUpdate}
+            handleSoftDelete={handleSoftDelete}
+            handlePermDelete={handlePermDelete}
+          />
         ))}
         {filteredFieldCultivations.length === 0 && (
           <SubTitle>A field with that name does not exist.</SubTitle>

@@ -52,7 +52,7 @@ export const changePasswordLoginData = [
     errorsMsg: "newPassword.message",
   },
   {
-    name: "Compare New Password",
+    name: "Confirm New Password",
     registerName: "compareNewPassword",
     type: "password",
     placeholder: "Password",

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import FieldCard from "./CatalogFieldCard/CatalogFieldCard";
 import { UserContext } from "../../../../context/UserContext";
 import { CardsWrapper, CatalogContainer } from "../../../../styles/Card.styled";
@@ -62,19 +62,37 @@ export const CatalogField = () => {
     );
   }, [fields, searchTerm]);
 
-  const handleUpdate = (id: string) => {
-    navigate(`${update.FIELD}/${id}`);
-  };
+  const filteredFieldMemo = useMemo(() => {
+    return fields.filter((field) =>
+      field.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [fields, searchTerm]);
 
-  const handleSoftDelete = async (id: string) => {
-    setDeleteItemId(id);
-    setShowSoftDeletePopup(true);
-  };
+  const fieldCardsMemo = useMemo(() => {
+    const handleUpdate = (id: string) => {
+      navigate(`${update.FIELD}/${id}`);
+    };
 
-  const handlePermDelete = async (id: string) => {
-    setDeleteItemId(id);
-    setShowPermDeletePopup(true);
-  };
+    const handleSoftDelete = async (id: string) => {
+      setDeleteItemId(id);
+      setShowSoftDeletePopup(true);
+    };
+
+    const handlePermDelete = async (id: string) => {
+      setDeleteItemId(id);
+      setShowPermDeletePopup(true);
+    };
+
+    return filteredFieldMemo.map((field) => (
+      <FieldCard
+        key={field.id}
+        field={field}
+        onUpdate={handleUpdate}
+        onSoftDelete={handleSoftDelete}
+        onPermDelete={handlePermDelete}
+      />
+    ));
+  }, [filteredFieldMemo]);
 
   const handleConfirmSoftDelete = async () => {
     try {
@@ -132,15 +150,7 @@ export const CatalogField = () => {
       />
 
       <CatalogContainer>
-        {filteredFields.map((field) => (
-          <FieldCard
-            key={field.id}
-            field={field}
-            onUpdate={handleUpdate}
-            onSoftDelete={handleSoftDelete}
-            onPermDelete={handlePermDelete}
-          />
-        ))}
+        {fieldCardsMemo}
         {filteredFields.length === 0 && (
           <SubTitle>A field with that name does not exist.</SubTitle>
         )}

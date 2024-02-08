@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { FarmCard } from "./CatalogFarmCard/CatalogFarmCard";
 import { UserContext } from "../../../../context/UserContext";
 import { CardsWrapper, CatalogContainer } from "../../../../styles/Card.styled";
@@ -28,6 +28,7 @@ export const CatalogFarm = () => {
   const [showPermDeletePopup, setShowPermDeletePopup] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [filteredFarms, setFilteredFarms] = useState<Farm[]>([]);
 
   const navigate = useNavigate();
@@ -67,20 +68,6 @@ export const CatalogFarm = () => {
     );
   }, [farms, searchTerm]);
 
-  const handleUpdate = (id: string) => {
-    navigate(`${update.FARM}/${id}`);
-  };
-
-  const handleSoftDelete = async (id: string) => {
-    setDeleteItemId(id);
-    setShowSoftDeletePopup(true);
-  };
-
-  const handlePermDelete = async (id: string) => {
-    setDeleteItemId(id);
-    setShowPermDeletePopup(true);
-  };
-
   const handleConfirmSoftDelete = async () => {
     try {
       if (user) {
@@ -112,6 +99,38 @@ export const CatalogFarm = () => {
     setShowPermDeletePopup(false);
   };
 
+  const filteredFarmsMemo = useMemo(() => {
+    return farms.filter((farm) =>
+      farm.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [farms, searchTerm]);
+
+  const farmCardsMemo = useMemo(() => {
+    const handleUpdate = (id: string) => {
+      navigate(`${update.FARM}/${id}`);
+    };
+
+    const handleSoftDelete = async (id: string) => {
+      setDeleteItemId(id);
+      setShowSoftDeletePopup(true);
+    };
+
+    const handlePermDelete = async (id: string) => {
+      setDeleteItemId(id);
+      setShowPermDeletePopup(true);
+    };
+
+    return filteredFarmsMemo.map((farm) => (
+      <FarmCard
+        key={farm.id}
+        farm={farm}
+        onUpdate={handleUpdate}
+        onSoftDelete={handleSoftDelete}
+        onPermDelete={handlePermDelete}
+      />
+    ));
+  }, [filteredFarmsMemo]);
+
   if (isLoading) {
     return <SkeletonCatalog />;
   }
@@ -137,16 +156,8 @@ export const CatalogFarm = () => {
       />
 
       <CatalogContainer>
-        {filteredFarms.map((farm) => (
-          <FarmCard
-            key={farm.id}
-            farm={farm}
-            onUpdate={handleUpdate}
-            onSoftDelete={handleSoftDelete}
-            onPermDelete={handlePermDelete}
-          />
-        ))}
-        {filteredFarms.length === 0 && (
+        {farmCardsMemo}
+        {filteredFarmsMemo.length === 0 && (
           <SubTitle>A farm with that name does not exist.</SubTitle>
         )}
       </CatalogContainer>
