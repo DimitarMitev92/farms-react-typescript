@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { IUserFromApi } from "./Dashboard.static";
 import { UserContext } from "../../../context/UserContext";
 import { catalog, endpoint, method, update } from "../../../static/endPoints";
@@ -83,6 +83,12 @@ const Dashboard = () => {
     );
   }, [users, searchTerm]);
 
+  const filteredUsersMemo = useMemo(() => {
+    return users.filter((item) =>
+      item.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [users, searchTerm]);
+
   const handleUpdate = (id: string): void => {
     navigate(`${update.USER}/${id}`);
   };
@@ -150,7 +156,7 @@ const Dashboard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredUsers.map((item, index) => (
+            {filteredUsersMemo.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{item.email}</TableCell>
                 <TableCell>{item.firstName}</TableCell>
