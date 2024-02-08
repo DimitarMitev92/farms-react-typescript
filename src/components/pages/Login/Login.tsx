@@ -32,6 +32,7 @@ export const Login: React.FC = () => {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormLoginData>({
     resolver: zodResolver(loginChangePasswordSchema),
@@ -48,12 +49,12 @@ export const Login: React.FC = () => {
 
   const toggleChangePasswordForm = () => {
     setChangePasswordForm(!changePasswordForm);
+    reset();
   };
 
   const onLoginHandler: SubmitHandler<FormLoginData> = async (userObj) => {
     try {
       const parsedData = loginChangePasswordSchema.parse(userObj);
-      console.log(parsedData);
       if (changePasswordForm) {
         if (parsedData.newPassword !== parsedData.compareNewPassword) {
           throw new Error("Passwords mismatch!");
@@ -76,8 +77,6 @@ export const Login: React.FC = () => {
               password: userObj.password?.toString(),
             }),
       };
-      console.log(url);
-      console.log(options);
 
       const userDataFromApi = await signService(url, options);
       setItem("user", JSON.stringify(userDataFromApi));
