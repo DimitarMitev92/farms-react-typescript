@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   Button,
   ColumnContainer,
@@ -71,20 +71,6 @@ export const CatalogMachinery = () => {
     );
   }, [machineries, searchTerm]);
 
-  const handleUpdate = (id: string) => {
-    navigate(`${update.MACHINERY}/${id}`);
-  };
-
-  const handleSoftDelete = async (id: string) => {
-    setDeleteItemId(id);
-    setShowSoftDeletePopup(true);
-  };
-
-  const handlePermDelete = async (id: string) => {
-    setDeleteItemId(id);
-    setShowPermDeletePopup(true);
-  };
-
   const handleConfirmSoftDelete = async () => {
     try {
       if (user) {
@@ -116,6 +102,41 @@ export const CatalogMachinery = () => {
     setShowPermDeletePopup(false);
   };
 
+  const filteredMachineriesMemo = useMemo(() => {
+    return machineries.filter((machinery) =>
+      machinery.identificationNumber
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    );
+  }, [machineries, searchTerm]);
+
+  const machineriesCardsMemo = useMemo(() => {
+    const handleUpdate = (id: string) => {
+      navigate(`${update.MACHINERY}/${id}`);
+    };
+
+    const handleSoftDelete = async (id: string) => {
+      setDeleteItemId(id);
+      setShowSoftDeletePopup(true);
+    };
+
+    const handlePermDelete = async (id: string) => {
+      setDeleteItemId(id);
+      setShowPermDeletePopup(true);
+    };
+
+    return filteredMachineriesMemo.map((machinery: MachineryFromApi) => (
+      <MachineryCard
+        key={machinery.id}
+        machinery={machinery}
+        userRights={userRights}
+        handleUpdate={handleUpdate}
+        handleSoftDelete={handleSoftDelete}
+        handlePermDelete={handlePermDelete}
+      />
+    ));
+  }, [filteredMachineriesMemo]);
+
   if (isLoading) {
     return <SkeletonCatalog />;
   }
@@ -141,16 +162,7 @@ export const CatalogMachinery = () => {
       />
 
       <CatalogContainer>
-        {filteredMachineries.map((machinery) => (
-          <MachineryCard
-            key={machinery.id}
-            machinery={machinery}
-            userRights={userRights}
-            handleUpdate={handleUpdate}
-            handleSoftDelete={handleSoftDelete}
-            handlePermDelete={handlePermDelete}
-          />
-        ))}
+        {machineriesCardsMemo}
         {filteredMachineries.length === 0 && (
           <SubTitle>A machinery with that id does not exist.</SubTitle>
         )}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   Button,
   ColumnContainer,
@@ -73,20 +73,6 @@ export const CatalogFieldCultivation = () => {
     );
   }, [fieldCultivations, searchTerm]);
 
-  const handleUpdate = (id: string) => {
-    navigate(`${update.FIELD_CULTIVATION}/${id}`);
-  };
-
-  const handleSoftDelete = async (id: string) => {
-    setDeleteItemId(id);
-    setShowSoftDeletePopup(true);
-  };
-
-  const handlePermDelete = async (id: string) => {
-    setDeleteItemId(id);
-    setShowPermDeletePopup(true);
-  };
-
   const handleConfirmSoftDelete = async () => {
     try {
       if (user) {
@@ -118,6 +104,43 @@ export const CatalogFieldCultivation = () => {
     setShowPermDeletePopup(false);
   };
 
+  const filteredFieldCultivationsMemo = useMemo(() => {
+    return fieldCultivations.filter((fieldCultivation) =>
+      fieldCultivation.field.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    );
+  }, [fieldCultivations, searchTerm]);
+
+  const fieldCultivationsCardsMemo = useMemo(() => {
+    const handleUpdate = (id: string) => {
+      navigate(`${update.FIELD_CULTIVATION}/${id}`);
+    };
+
+    const handleSoftDelete = async (id: string) => {
+      setDeleteItemId(id);
+      setShowSoftDeletePopup(true);
+    };
+
+    const handlePermDelete = async (id: string) => {
+      setDeleteItemId(id);
+      setShowPermDeletePopup(true);
+    };
+
+    return filteredFieldCultivationsMemo.map(
+      (fieldCultivation: FieldCultivationFroApi) => (
+        <FieldCultivationCard
+          key={fieldCultivation.id}
+          fieldCultivation={fieldCultivation}
+          userRights={userRights}
+          handleUpdate={handleUpdate}
+          handleSoftDelete={handleSoftDelete}
+          handlePermDelete={handlePermDelete}
+        />
+      )
+    );
+  }, [filteredFieldCultivationsMemo]);
+
   if (isLoading) {
     return <SkeletonCatalog />;
   }
@@ -145,16 +168,7 @@ export const CatalogFieldCultivation = () => {
       />
 
       <CatalogContainer>
-        {filteredFieldCultivations.map((fieldCultivation) => (
-          <FieldCultivationCard
-            key={fieldCultivation.id}
-            fieldCultivation={fieldCultivation}
-            userRights={userRights}
-            handleUpdate={handleUpdate}
-            handleSoftDelete={handleSoftDelete}
-            handlePermDelete={handlePermDelete}
-          />
-        ))}
+        {fieldCultivationsCardsMemo}
         {filteredFieldCultivations.length === 0 && (
           <SubTitle>A field with that name does not exist.</SubTitle>
         )}
