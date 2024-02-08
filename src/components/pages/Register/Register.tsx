@@ -81,7 +81,7 @@ export const Register: React.FC = () => {
       <FormTitle>Register</FormTitle>
       {registerData.map((el, key) => (
         <React.Fragment key={key}>
-          <Label>{el.placeholder}</Label>
+          <Label>{el.name}</Label>
           {el.type === "password" ? (
             <PasswordInputContainer>
               <Input

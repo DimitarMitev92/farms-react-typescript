@@ -135,6 +135,13 @@ export const Option = styled.option`
   &:hover {
     background-color: ${hoverColor};
   }
+
+  @media (max-width: 768px) {
+    min-width: 80%;
+  }
+  @media (max-width: 500px) {
+    min-width: 95%;
+  }
 `;
 
 export const ErrorMsg = styled.div`

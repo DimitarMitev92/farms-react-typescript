@@ -9,28 +9,32 @@ export const schema = z.object({
 
 export const registerData = [
   {
+    name: "First Name",
     registerName: "firstName",
     type: "text",
-    placeholder: "First name",
+    placeholder: "Dimitar",
     errors: "firstName",
     errorsMsg: "firstName.message",
   },
 
   {
+    name: "Last Name",
     registerName: "lastName",
     type: "text",
-    placeholder: "Last name",
+    placeholder: "Mitev",
     errors: "lastName",
     errorsMsg: "lastName.message",
   },
   {
+    name: "Email",
     registerName: "email",
     type: "email",
-    placeholder: "Email",
+    placeholder: "d.mitev@email.com",
     errors: "email",
     errorsMsg: "email.message",
   },
   {
+    name: "Password",
     registerName: "password",
     type: "password",
     placeholder: "Password",
