@@ -19,17 +19,31 @@ import {
 import { DropdownCatalog } from "./Dropdowns/DropdownCatalog/DropdownCatalog";
 import { DropdownCreate } from "./Dropdowns/DropdownCreate/DropdownCreate";
 import { DropdownReporting } from "./Dropdowns/DropdownReporting/DropdownReporting";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../context/UserContext";
 
 export const Header = () => {
   const { user } = useContext(UserContext);
 
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const handleResize = () => {
+    if (window.innerWidth > 850) setMenuOpen(true);
+    if (window.innerWidth <= 850) setMenuOpen(false);
+    setWindowWidth(window.innerWidth);
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const renderDropdown = (name: string, content: JSX.Element) => (
     <DropdownContainer>
@@ -43,8 +57,10 @@ export const Header = () => {
         <HeaderTitle>{`${user.user.firstName}: ${user.user.rights}`}</HeaderTitle>
       )}
       <HeaderContainer>
-        {!menuOpen && <BurgerIcon onClick={toggleMenu} />}
-        {menuOpen && <BurgerCloseIcon onClick={toggleMenu} />}
+        {!menuOpen && windowWidth <= 850 && <BurgerIcon onClick={toggleMenu} />}
+        {menuOpen && windowWidth <= 850 && (
+          <BurgerCloseIcon onClick={toggleMenu} />
+        )}
         <NavBar>
           {menuOpen && (
             <UnorderedList>
