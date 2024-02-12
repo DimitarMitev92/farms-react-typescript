@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const fieldSchema = z.object({
   name: z.string().nonempty({ message: "Name is required." }),
-  boundaries: z.string().nonempty({ message: "Boundaries is required." }),
+  boundaries: z.string().nonempty({ message: "Boundaries are required." }),
   soilId: z.string().nonempty({ message: "Soil is required." }),
   farmId: z.string().nonempty({ message: "Farm is required" }),
 });
