@@ -118,7 +118,7 @@ export const UpdateFarm: React.FC = () => {
       {farmData.map((el, key) => {
         return (
           <React.Fragment key={key}>
-            <Label>{el.placeholder}</Label>
+            <Label>{el.name}</Label>
             <Input
               {...register(`${el.registerName}`)}
               type={el.type}

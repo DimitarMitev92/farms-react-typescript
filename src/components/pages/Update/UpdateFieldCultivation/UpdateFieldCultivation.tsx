@@ -253,7 +253,7 @@ export const UpdateFieldCultivation = () => {
       {fieldCultivationData.map((el, key) => {
         return (
           <React.Fragment key={key}>
-            <Label>{el.placeholder}</Label>
+            <Label>{el.name}</Label>
             {el.type === "select" ? (
               <Select
                 {...register(`${el.registerName}`)}
