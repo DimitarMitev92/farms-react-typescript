@@ -14,6 +14,7 @@ export const fieldCultivationSchema = z.object({
 
 export const fieldCultivationData = [
   {
+    name: "Field",
     registerName: "fieldId",
     type: "select",
     placeholder: "Select field",
@@ -21,6 +22,7 @@ export const fieldCultivationData = [
     errorsMsg: "fieldId.message",
   },
   {
+    name: "Machinery",
     registerName: "machineryId",
     type: "select",
     placeholder: "Select machinery",
@@ -28,6 +30,7 @@ export const fieldCultivationData = [
     errorsMsg: "machineryId.message",
   },
   {
+    name: "Cultivation",
     registerName: "cultivationId",
     type: "select",
     placeholder: "Select cultivation",
@@ -36,6 +39,7 @@ export const fieldCultivationData = [
   },
 
   {
+    name: "Crop",
     registerName: "cropId",
     type: "select",
     placeholder: "Select crop",
@@ -44,6 +48,7 @@ export const fieldCultivationData = [
   },
 
   {
+    name: "Starting date",
     registerName: "startingDate",
     type: "date",
     placeholder: "Select date",

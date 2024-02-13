@@ -117,7 +117,7 @@ export const CreateField = () => {
       <FormTitle>Create a field</FormTitle>
       {fieldData.map((el, key) => (
         <React.Fragment key={key}>
-          <Label>{el.placeholder}</Label>
+          <Label>{el.name}</Label>
           {el.type === "select" ? (
             <Select {...register(`${el.registerName}`)}>
               <Option value="" disabled>

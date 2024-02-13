@@ -10,14 +10,15 @@ export const fieldSchema = z.object({
 
 export const fieldData = [
   {
-    registerName: "name",
     name: "Name",
+    registerName: "name",
     type: "text",
     placeholder: "Field 1",
     errors: "name",
     errorsMsg: "name.message",
   },
   {
+    name: "Soil",
     registerName: "soilId",
     type: "select",
     placeholder: "Select soil",
@@ -25,6 +26,7 @@ export const fieldData = [
     errorsMsg: "soilId.message",
   },
   {
+    name: "Farm",
     registerName: "farmId",
     type: "select",
     placeholder: "Select Farm",
